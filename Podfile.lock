@@ -85,7 +85,7 @@ PODS:
   - Protobuf (3.10.0)
   - ReachabilitySwift (5.0.0)
   - SnapKit (4.2.0)
-  - SwiftKeychainWrapper (3.2.0)
+  - SwiftKeychainWrapper (3.4.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -101,7 +101,7 @@ DEPENDENCIES:
   - SwiftKeychainWrapper
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - Crashlytics
     - Fabric
@@ -141,8 +141,8 @@ SPEC CHECKSUMS:
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
+  SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
 
 PODFILE CHECKSUM: 01ab4b31d7971519a8db1852677f291cc75103b8
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
