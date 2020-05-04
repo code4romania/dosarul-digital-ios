@@ -19,7 +19,7 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 Pods/Pods.xcodeproj/xcuserdata/
-MonitorizareVot.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+MonitorizareVot.xcworkspace/xcshareddata
 MonitorizareVot.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 xcuserdata/
 

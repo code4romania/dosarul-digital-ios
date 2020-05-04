@@ -101,7 +101,7 @@ class MVViewController: UIViewController {
         if let phone = Bundle.main.infoDictionary?["SUPPORT_PHONE"] as? String {
             let phoneCallPath = "telprompt://\(phone)"
             if let phoneCallURL = NSURL(string: phoneCallPath) {
-                UIApplication.shared.openURL(phoneCallURL as URL)
+                UIApplication.shared.open(phoneCallURL as URL, options: [:], completionHandler: nil)
             }
         } else {
             let error = UIAlertController.error(withMessage: "No phone support available")

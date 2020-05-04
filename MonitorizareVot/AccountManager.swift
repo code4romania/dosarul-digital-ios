@@ -43,7 +43,7 @@ class AccountManager: NSObject, AccountManagerType {
             if let value = newValue {
                 KeychainWrapper.standard.set(value, forKey: SettingKey.token)
             } else {
-                KeychainWrapper.standard.remove(key: SettingKey.token)
+                KeychainWrapper.standard.removeObject(forKey: SettingKey.token)
             }
         } get {
             return KeychainWrapper.standard.string(forKey: SettingKey.token)

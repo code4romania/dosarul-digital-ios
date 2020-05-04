@@ -146,7 +146,7 @@ class AppRouter: NSObject {
     private func openAppUrl() {
         let url = AppUpdateManager.shared.applicationURL
         if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }

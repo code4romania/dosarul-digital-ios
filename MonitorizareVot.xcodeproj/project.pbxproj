@@ -35,9 +35,6 @@
 		286D38662364398C0091B23F /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D38642364398C0091B23F /* QuestionListViewController.swift */; };
 		286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286D38652364398C0091B23F /* QuestionListViewController.xib */; };
 		286D3869236439990091B23F /* QuestionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3868236439990091B23F /* QuestionListViewModel.swift */; };
-		28735F83226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 28735F82226B19F600B4DB0B /* CustomConfiguration.xcconfig */; };
-		28735F84226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 28735F82226B19F600B4DB0B /* CustomConfiguration.xcconfig */; };
-		28735F85226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 28735F82226B19F600B4DB0B /* CustomConfiguration.xcconfig */; };
 		2879CA372381BA5E00CE4DC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879CA362381BA5E00CE4DC7 /* AppRouter.swift */; };
 		2879CA3A2381C04F00CE4DC7 /* EmptyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2879CA382381C04F00CE4DC7 /* EmptyDetailsViewController.swift */; };
 		2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2879CA392381C04F00CE4DC7 /* EmptyDetailsViewController.xib */; };
@@ -99,9 +96,6 @@
 		64726B5FB8079F4FDA2D91E0 /* Pods_MonitorizareVotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2E1514E94213D72327CF3C /* Pods_MonitorizareVotUITests.framework */; };
 		67EE98CB22A296F7006E4762 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE98CA22A296F7006E4762 /* Logger.swift */; };
 		67EE98CE22A29D87006E4762 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67EE98CD22A29D87006E4762 /* GoogleService-Info.plist */; };
-		754005A02460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */; };
-		754005A12460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */; };
-		754005A22460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */; };
 		C79A3041BFF1FED83C00E5F3 /* Pods_MonitorizareVotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3827A6E40E14823BEBEB13D9 /* Pods_MonitorizareVotTests.framework */; };
 		E74087241DDC90E800D9332F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74087231DDC90E800D9332F /* AppDelegate.swift */; };
 		E7E8EB4B1DDB7344009EBE01 /* UIColor+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E8EB4A1DDB7344009EBE01 /* UIColor+Presets.swift */; };
@@ -762,7 +756,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = Code4Ro;
 				TargetAttributes = {
 					EF4BD3801D9D08DE0042BEC7 = {
@@ -773,16 +767,15 @@
 					};
 					EF4BD39C1D9D08DE0042BEC7 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = "\"\"";
 						LastSwiftMigration = 1100;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						TestTargetID = EF4BD3801D9D08DE0042BEC7;
 					};
 					EF4BD3A71D9D08DE0042BEC7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = P2EQL76LN6;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						TestTargetID = EF4BD3801D9D08DE0042BEC7;
 					};
 				};
@@ -839,9 +832,7 @@
 				2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */,
 				28508623236D9C6000189D94 /* Launch Screen.storyboard in Resources */,
 				286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */,
-				28735F83226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */,
 				28DBDAB4236F57C7004EAD83 /* OnboardingViewController.xib in Resources */,
-				754005A02460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,8 +840,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28735F84226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */,
-				754005A12460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,8 +847,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28735F85226B19F600B4DB0B /* CustomConfiguration.xcconfig in Resources */,
-				754005A22460D51400C6C1D9 /* LocalConfiguration.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,7 +1168,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1235,7 +1222,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1255,9 +1242,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 11;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T2HK2Y4E5M;
 				INFOPLIST_FILE = MonitorizareVot/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1281,7 +1269,7 @@
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = T2HK2Y4E5M;
 				INFOPLIST_FILE = MonitorizareVot/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1297,10 +1285,16 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MonitorizareVotTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = code4ro.MonitorizareVotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MonitorizareVotTests/MonitorizareVotTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1314,10 +1308,16 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MonitorizareVotTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = code4ro.MonitorizareVotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MonitorizareVotTests/MonitorizareVotTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonitorizareVot.app/MonitorizareVot";
