@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import MonitorizareVot
+@testable import CaseFile
 
 class APITests: XCTestCase {
     

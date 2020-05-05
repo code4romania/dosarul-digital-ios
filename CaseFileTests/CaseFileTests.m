@@ -2,11 +2,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface MonitorizareVotTests : XCTestCase
+@interface CaseFileTests : XCTestCase
 
 @end
 
-@implementation MonitorizareVotTests
+@implementation CaseFileTests
 
 - (void)setUp {
     [super setUp];

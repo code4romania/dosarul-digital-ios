@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-               BuildableName = "MonitorizareVot.app"
-               BlueprintName = "MonitorizareVot"
-               ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+               BuildableName = "CaseFile.app"
+               BlueprintName = "CaseFile"
+               ReferencedContainer = "container:CaseFile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,9 +31,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "MonitorizareVot.app"
-            BlueprintName = "MonitorizareVot"
-            ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+            BuildableName = "CaseFile.app"
+            BlueprintName = "CaseFile"
+            ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -42,9 +42,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EF4BD39C1D9D08DE0042BEC7"
-               BuildableName = "MonitorizareVotTests.xctest"
-               BlueprintName = "MonitorizareVotTests"
-               ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+               BuildableName = "CaseFileTests.xctest"
+               BlueprintName = "CaseFileTests"
+               ReferencedContainer = "container:CaseFile.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -54,7 +54,7 @@
                BlueprintIdentifier = "2817EA202358FA8E0029AD4C"
                BuildableName = "APITests.xctest"
                BlueprintName = "APITests"
-               ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+               ReferencedContainer = "container:CaseFile.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -74,9 +74,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "MonitorizareVot.app"
-            BlueprintName = "MonitorizareVot"
-            ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+            BuildableName = "CaseFile.app"
+            BlueprintName = "CaseFile"
+            ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -91,9 +91,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "MonitorizareVot.app"
-            BlueprintName = "MonitorizareVot"
-            ReferencedContainer = "container:MonitorizareVot.xcodeproj">
+            BuildableName = "CaseFile.app"
+            BlueprintName = "CaseFile"
+            ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
