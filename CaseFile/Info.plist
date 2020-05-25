@@ -45,8 +45,10 @@
 	<string>$(TEST_PHONE)</string>
 	<key>TEST_PIN</key>
 	<string>$(TEST_PIN)</string>
-	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen</string>
+	<key>UILaunchStoryboardName~iphone</key>
+	<string>LaunchScreen-iPhone.xib</string>
+	<key>UILaunchStoryboardName~ipad</key>
+	<string>LaunchScreen-iPad.xib</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

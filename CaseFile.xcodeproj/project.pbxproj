@@ -31,7 +31,6 @@
 		281A4B8B236D7B85001AD277 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281A4B89236D7B85001AD277 /* LoginViewController.swift */; };
 		281A4B8C236D7B85001AD277 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 281A4B8A236D7B85001AD277 /* LoginViewController.xib */; };
 		281A4B8E236D7B90001AD277 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281A4B8D236D7B90001AD277 /* LoginViewModel.swift */; };
-		28508623236D9C6000189D94 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28508622236D9C6000189D94 /* Launch Screen.storyboard */; };
 		286D38662364398C0091B23F /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D38642364398C0091B23F /* QuestionListViewController.swift */; };
 		286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286D38652364398C0091B23F /* QuestionListViewController.xib */; };
 		286D3869236439990091B23F /* QuestionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3868236439990091B23F /* QuestionListViewModel.swift */; };
@@ -286,6 +285,8 @@
 		75E8387C246199D000DB9146 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDABD23701DBD004EAD83 /* InfoPlist.strings */; };
 		75E8387D246199D000DB9146 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDABD23701DBD004EAD83 /* InfoPlist.strings */; };
 		75EEA499247C57080048CC07 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA498247C57080048CC07 /* String+Validation.swift */; };
+		75EEA49F247C5C390048CC07 /* LaunchScreen-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75EEA49E247C5C390048CC07 /* LaunchScreen-iPhone.xib */; };
+		75EEA4A1247C5C6E0048CC07 /* LaunchScreen-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75EEA4A0247C5C6E0048CC07 /* LaunchScreen-iPad.xib */; };
 		90F4420F4804687DFD73CA0C /* Pods_CaseFile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC107437D8991B77B9120E7 /* Pods_CaseFile.framework */; };
 		BDE7F237EF9AE4525C615F51 /* Pods_CaseFileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C56439B09E411073366724 /* Pods_CaseFileTests.framework */; };
 		E74087241DDC90E800D9332F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74087231DDC90E800D9332F /* AppDelegate.swift */; };
@@ -352,7 +353,6 @@
 		281A4B89236D7B85001AD277 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		281A4B8A236D7B85001AD277 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		281A4B8D236D7B90001AD277 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		28508622236D9C6000189D94 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		286D38642364398C0091B23F /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
 		286D38652364398C0091B23F /* QuestionListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionListViewController.xib; sourceTree = "<group>"; };
 		286D3868236439990091B23F /* QuestionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewModel.swift; sourceTree = "<group>"; };
@@ -429,6 +429,8 @@
 		75E837BC2461987B00DB9146 /* CaseFileUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaseFileUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		75E837BD2461987B00DB9146 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		75EEA498247C57080048CC07 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
+		75EEA49E247C5C390048CC07 /* LaunchScreen-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "LaunchScreen-iPhone.xib"; sourceTree = "<group>"; };
+		75EEA4A0247C5C6E0048CC07 /* LaunchScreen-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "LaunchScreen-iPad.xib"; sourceTree = "<group>"; };
 		7F4B4D98801626552C357D41 /* Pods-MonitorizareVotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonitorizareVotUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonitorizareVotUITests/Pods-MonitorizareVotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		820EA50D34B51075DDE182DD /* Pods_CaseFileUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaseFileUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8568BFAF53A4EF007FEDD0F1 /* Pods-CaseFileUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaseFileUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaseFileUITests/Pods-CaseFileUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -797,8 +799,9 @@
 				EF4BD3841D9D08DE0042BEC7 /* Supporting Files */,
 				EF903E361DA25E3800D5BC9C /* Resources */,
 				28B3DA7E23A4E3E400BEF6C0 /* Localizations */,
-				28508622236D9C6000189D94 /* Launch Screen.storyboard */,
 				EF4BD3981D9D08DE0042BEC7 /* Info.plist */,
+				75EEA49E247C5C390048CC07 /* LaunchScreen-iPhone.xib */,
+				75EEA4A0247C5C6E0048CC07 /* LaunchScreen-iPad.xib */,
 				EF4BD3901D9D08DE0042BEC7 /* s.xcdatamodeld */,
 			);
 			path = CaseFile;
@@ -1027,6 +1030,7 @@
 				28FB66B523699D7400336DBA /* TextEntryViewController.xib in Resources */,
 				281A4B83236CBD30001AD277 /* SectionPickerViewController.xib in Resources */,
 				28C363902364512E0084065C /* QuestionTableCell.xib in Resources */,
+				75EEA4A1247C5C6E0048CC07 /* LaunchScreen-iPad.xib in Resources */,
 				EF13D1571DCF24A800349B43 /* Assets.xcassets in Resources */,
 				281A4B8C236D7B85001AD277 /* LoginViewController.xib in Resources */,
 				2810413D236C2EC300B7422C /* NoteHistoryTableCell.xib in Resources */,
@@ -1034,6 +1038,7 @@
 				28DBDAB823701B10004EAD83 /* OnboardingLanguageViewController.xib in Resources */,
 				28E72456233F58010096454D /* SectionDetailsViewController.xib in Resources */,
 				27EDBD2221465D190060DB8A /* Localizable.strings in Resources */,
+				75EEA49F247C5C390048CC07 /* LaunchScreen-iPhone.xib in Resources */,
 				28104131236B5CA500B7422C /* AttachNoteViewController.xib in Resources */,
 				28844A57233F94FD00DEEA44 /* GenericPickerViewController.xib in Resources */,
 				28DBDAB2236F4DA8004EAD83 /* OnboardingChildViewController.xib in Resources */,
@@ -1042,7 +1047,6 @@
 				28DBDABB23701DBD004EAD83 /* InfoPlist.strings in Resources */,
 				289E1E8D235F2ABE000C92A0 /* FormSetTableCell.xib in Resources */,
 				2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */,
-				28508623236D9C6000189D94 /* Launch Screen.storyboard in Resources */,
 				286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */,
 				28DBDAB4236F57C7004EAD83 /* OnboardingViewController.xib in Resources */,
 			);
