@@ -19,12 +19,12 @@ extension UIColor {
     static var chooserButtonBorder = UIColor(hexCode: 0x333E48).withAlphaComponent(0.3)
     static var chooserButtonBackground = UIColor.clear
     static var chooserButtonSelectedBackground = navigationBarBackground
-
-    static var actionButtonForeground = UIColor(hexCode: 0x81175C)
-    static var actionButtonForegroundDisabled = actionButtonForeground.withAlphaComponent(0.4)
-    static var actionButtonBackground = actionButtonForeground.withAlphaComponent(0.065)
-    static var actionButtonBackgroundHighlighted = actionButtonForeground.withAlphaComponent(0.14)
-    static var actionButtonBackgroundDisabled = actionButtonForeground.withAlphaComponent(0.026)
+    
+    static var actionButtonBackground = UIColor(hexCode: 0x3468EF)
+    static var actionButtonBackgroundHighlighted = UIColor(hexCode: 0x2258E3)
+    static var actionButtonBackgroundDisabled = UIColor(hexCode: 0x3468EF).withAlphaComponent(0.2)
+    static var actionButtonForeground = UIColor.white
+    static var actionButtonForegroundDisabled = UIColor(hexCode: 0x3468EF)
 
     static var attachButtonForeground = actionButtonForeground
     static var attachButtonForegroundDisabled = attachButtonForeground.withAlphaComponent(0.4)

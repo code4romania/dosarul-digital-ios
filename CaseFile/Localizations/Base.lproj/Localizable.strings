@@ -33,8 +33,10 @@
 "Label_SelectOption" = "Select an option";
 "Label_DevelopedBy" = "developed by";
 
-"Label_TelephoneTextInput_Placeholder" = "Phone number";
-"Label_CodeTextInput_Placeholder" = "Code";
+"Label_Login" = "Login";
+"Label_Login_Description" = "Please fill your account details\nto log in";
+"Label_EmailTextInput_Placeholder" = "Email";
+"Label_PasswordTextInput_Placeholder" = "Password";
 
 "Label_AddNote" = "Add a note";
 "Label_TypeNote" = "Type your note here";

@@ -13,16 +13,21 @@ class LoginViewController: MVViewController {
     
     var model: LoginViewModel = LoginViewModel()
     
-    @IBOutlet weak var vmLogoImageView: UIImageView!
+    @IBOutlet weak var loginTitle: UILabel!
+    @IBOutlet weak var loginDescription: UILabel!
+    @IBOutlet weak var vmLogoView: UIView!
+    @IBOutlet weak var vmLogoPlainView: UIImageView!
+    @IBOutlet weak var vmLogoBubblesView: UIImageView!
     @IBOutlet weak var outerCardContainer: UIView!
-    @IBOutlet weak var cardContainer: UIView!
-    @IBOutlet weak var phoneContainer: UIView!
-    @IBOutlet weak var codeContainer: UIView!
-    @IBOutlet weak var developedByLabel: UILabel!
-    @IBOutlet weak var phoneTextField: UITextField!
-    @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var emailContainer: UIView!
+    @IBOutlet weak var passwordContainer: UIView!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var loginButton: ActionButton!
+    @IBOutlet weak var backgroundPlainAspectRatioIpadConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backgroundBubblesAspectRatioIpadConstraint: NSLayoutConstraint!
+    var loginViewBottomToKeyboardConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,30 +49,37 @@ class LoginViewController: MVViewController {
     }
     
     fileprivate func configureViews() {
-        outerCardContainer.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor).isActive = true
+        loginViewBottomToKeyboardConstraint = outerCardContainer.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor,
+                                                                                         constant: -32)
         outerCardContainer.layer.shadowColor = UIColor.cardDarkerShadow.cgColor
         outerCardContainer.layer.shadowOffset = .zero
         outerCardContainer.layer.shadowRadius = Configuration.shadowRadius
         outerCardContainer.layer.shadowOpacity = Configuration.shadowOpacity
-        cardContainer.layer.cornerRadius = Configuration.buttonCornerRadius
-        cardContainer.backgroundColor = .cardBackground
-        phoneContainer.layer.cornerRadius = Configuration.buttonCornerRadius
-        phoneContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
-        phoneContainer.layer.borderWidth = 1
-        codeContainer.layer.cornerRadius = Configuration.buttonCornerRadius
-        codeContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
-        codeContainer.layer.borderWidth = 1
+        outerCardContainer.layer.cornerRadius = Configuration.buttonCornerRadius
+        outerCardContainer.backgroundColor = .cardBackground
         
-        let toggleButton = UIButton()
-        toggleButton.setImage(UIImage(named: "eye.slash.fill"), for: .selected)
-        toggleButton.setImage(UIImage(named: "eye.fill"), for: .normal)
-        toggleButton.tintColor = .clear
-        toggleButton.alpha = 0.4
-        toggleButton.isSelected = codeTextField.isSecureTextEntry
-        toggleButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
-        toggleButton.addTarget(self, action: #selector(toggleCodeInputVisibility(_:)), for: .touchUpInside)
-        codeTextField.rightView = toggleButton
-        codeTextField.rightViewMode = .always
+        emailContainer.layer.cornerRadius = Configuration.buttonCornerRadius
+        emailContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
+        emailContainer.layer.borderWidth = 1
+        passwordContainer.layer.cornerRadius = Configuration.buttonCornerRadius
+        passwordContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
+        passwordContainer.layer.borderWidth = 1
+        
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            vmLogoPlainView.image = UIImage(named: "bg-login-ipad")
+            vmLogoBubblesView.image = UIImage(named: "bg-login-over-ipad")
+            backgroundPlainAspectRatioIpadConstraint.isActive = true
+            backgroundBubblesAspectRatioIpadConstraint.isActive = true
+        case .phone:
+            vmLogoPlainView.image = UIImage(named: "bg-login")
+            vmLogoBubblesView.image = UIImage(named: "bg-login-over")
+            backgroundPlainAspectRatioIpadConstraint.isActive = false
+            backgroundBubblesAspectRatioIpadConstraint.isActive = false
+        default:
+            break
+        }
+        view.layoutIfNeeded()
     }
     
     // MARK: - UI
@@ -79,8 +91,8 @@ class LoginViewController: MVViewController {
     
     fileprivate func updateInterface() {
         updateLoginButtonState()
-        phoneTextField.text = model.phoneNumber
-        codeTextField.text = model.code
+        emailTextField.text = model.emailAddress
+        passwordTextField.text = model.password
         if model.isLoading {
             loader.startAnimating()
         } else {
@@ -89,10 +101,12 @@ class LoginViewController: MVViewController {
     }
     
     private func setupStaticText() {
-        phoneTextField.placeholder = "Label_TelephoneTextInput_Placeholder".localized
-        codeTextField.placeholder = "Label_CodeTextInput_Placeholder".localized
+        loginTitle.text = "Label_Login".localized
+        loginDescription.text = "Label_Login_Description".localized
+        emailTextField.placeholder = "Label_EmailTextInput_Placeholder".localized
+        passwordTextField.placeholder = "Label_PasswordTextInput_Placeholder".localized
         
-        updateVersionLabel()
+//        updateVersionLabel()
     }
     
     private func updateVersionLabel() {
@@ -103,17 +117,17 @@ class LoginViewController: MVViewController {
         #if DEBUG
         versionString += "(\(build))"
         #endif
-        
-        developedByLabel.text = "\(versionString) " + "Label_DevelopedBy".localized
     }
     
     fileprivate func setVMLogo(visible: Bool, animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.2) {
-                self.vmLogoImageView.alpha = visible ? 1 : 0
+                self.vmLogoView.alpha = visible ? 1 : 0
+                self.loginViewBottomToKeyboardConstraint.isActive = !visible
             }
         } else {
-            vmLogoImageView.alpha = visible ? 1 : 0
+            vmLogoView.alpha = visible ? 1 : 0
+            loginViewBottomToKeyboardConstraint.isActive = visible
         }
     }
     
@@ -135,7 +149,7 @@ class LoginViewController: MVViewController {
     
     @objc private func toggleCodeInputVisibility(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        codeTextField.isSecureTextEntry = sender.isSelected
+        passwordTextField.isSecureTextEntry = sender.isSelected
     }
     
     func askForPushNotificationsPermissions() {
@@ -155,16 +169,20 @@ class LoginViewController: MVViewController {
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        setVMLogo(visible: false, animated: true)
+        if (UIDevice.current.userInterfaceIdiom != .pad) {
+            setVMLogo(visible: false, animated: true)
+        }
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == phoneTextField {
-            codeTextField.becomeFirstResponder()
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
-            setVMLogo(visible: true, animated: true)
+            if (UIDevice.current.userInterfaceIdiom != .pad) {
+                setVMLogo(visible: true, animated: true)
+            }
             login()
         }
         return true
@@ -173,10 +191,10 @@ extension LoginViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let updated = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         switch textField {
-        case phoneTextField:
-            model.phoneNumber = updated
-        case codeTextField:
-            model.code = updated
+        case emailTextField:
+            model.emailAddress = updated
+        case passwordTextField:
+            model.password = updated
         default:
             break
         }

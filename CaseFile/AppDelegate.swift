@@ -103,7 +103,7 @@ extension AppDelegate {
             window?.overrideUserInterfaceStyle = .light
         }
         
-        AppRouter.shared.showAppEntry()
+        AppRouter.shared.goToLogin()
     }
     
     

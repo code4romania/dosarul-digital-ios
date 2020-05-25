@@ -19,8 +19,8 @@ enum LoginViewModelError: Error {
 }
 
 class LoginViewModel: NSObject {
-    var phoneNumber: String?
-    var code: String?
+    var emailAddress: String?
+    var password: String?
     
     var onUpdate: (() -> Void)?
     
@@ -31,12 +31,12 @@ class LoginViewModel: NSObject {
     }
     
     var isReady: Bool {
-        guard let phoneNumber = phoneNumber,
-            let code = code,
-            phoneNumber.count > 5,
-            code.count > 3,
+        guard let emailAddress = emailAddress,
+            let password = password,
+            emailAddress.isEmail,
+            password.count != 0,
             !isLoading else {
-            return false
+                return false
         }
         return true
     }
@@ -58,14 +58,14 @@ class LoginViewModel: NSObject {
         let prefilledPhone = Bundle.main.infoDictionary?["TEST_PHONE"] as? String ?? ""
         let prefilledPin = Bundle.main.infoDictionary?["TEST_PIN"] as? String ?? ""
         if prefilledPin.count > 0 {
-            self.phoneNumber = prefilledPhone
-            self.code = prefilledPin
+            self.emailAddress = prefilledPhone
+            self.password = prefilledPin
             onUpdate?()
         }
     }
     
     func login(then callback: @escaping (LoginViewModelError?) -> Void) {
-        guard let phone = phoneNumber, let pin = code else { return }
+        guard let phone = emailAddress, let pin = password else { return }
         isLoading = true
         onUpdate?()
         APIManager.shared.login(withPhone: phone, pin: pin) { error in
