@@ -5,8 +5,8 @@ import UIKit
 
 extension UIColor {
     
-    static let navigationBarBackground = UIColor(hexCode: 0xFFCC00)
-    static let navigationBarTint = UIColor(hexCode: 0x333E48)
+    static let navigationBarBackground = UIColor(hexCode: 0x3468EF)
+    static let navigationBarTint = UIColor(hexCode: 0xFFFFF)
     
     // Important: We need to make these checks until we have the minimum deployment set to iOS 11
 

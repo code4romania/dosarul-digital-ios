@@ -86,12 +86,6 @@
 "Cancel" = "Anulează";
 "Other" = "Altele";
 
-"Onboarding.Title.Station" = "Alege-ți secția de votare";
-"Onboarding.Title.Forms" = "Completează formularele";
-"Onboarding.Title.Notes" = "Adaugă note";
-
-"Onboarding.Text.Station" = "PASUL 1:\nDefinește secția de votare în care te afli, alegând județul și numărul acesteia.\n\nPASUL 2:\nAdaugă câteva detalii (mediul urban/rural, detalii despre președintele de secție, ora sosirii). Nu-ți face griji, poți să modifici informațiile mai târziu.";
-"Onboarding.Text.Forms" = "Pentru a detecta problemele, îți punem la dispoziție câteva formulare cu regulile standard ale unei secții de votare.\n\nÎn fiecare formular poți semnala dacă anumite proceduri au fost urmate sau nu.";
-"Onboarding.Text.Notes" = "Ai observat o problemă care nu apare în formular? Folosește butonul de ‘Adaugă notă’, scrie un mesaj și/sau anexează o imagine.";
-
-"Onboarding.Go" = "Spre aplicație";
+"Onboarding.Title" = "Bine ai venit!";
+"Onboarding.Description" = "Aplicația Case File te va ajuta să menții un jurnal de sănătate dedicat pentru fiecare dintre beneficiarii tăi.\n\nAdaugă în baza de date toate persoanele cu care vii în contact în mod regulat, pe care le ai în grijă, și completează la fiecare vizită câteva informații despre starea lor de sănătate pentru o minimă monitorizare, stocată digitală, care poate fi transferată către un doctor actunci când este cazul.\n\nÎn funcție de condiția pacientului, vei avea chestionare dedicate care să te ajute să pui întrebările corecte pentru a analiza starea sa generală.";
+"Onboarding.Continue" = "Continuă";

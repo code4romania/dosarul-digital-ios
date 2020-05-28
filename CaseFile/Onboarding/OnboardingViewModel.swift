@@ -8,26 +8,13 @@
 
 import UIKit
 
-struct OnboardingChildModel {
-    var image: UIImage
-    var title: String
-    var markdownText: String
-}
-
 class OnboardingViewModel: NSObject {
     static var shouldShowOnboarding: Bool { return !PreferencesManager.shared.wasOnboardingShown }
     
-    var currentPage: Int = 0
+    let navigationImage = UIImage(named: "logo-case-file-white")
+    let image = UIImage(named: "onboarding")
+    var topText = "Onboarding.Title".localized
+    var mainText = "Onboarding.Description".localized
+    var proceed = "Onboarding.Continue".localized
     
-    let children = [
-        OnboardingChildModel(image: UIImage(named: "onboarding-station")!,
-                             title: "Onboarding.Title.Station".localized,
-                             markdownText: "Onboarding.Text.Station".localized),
-        OnboardingChildModel(image: UIImage(named: "onboarding-forms")!,
-                             title: "Onboarding.Title.Forms".localized,
-                             markdownText: "Onboarding.Text.Forms".localized),
-        OnboardingChildModel(image: UIImage(named: "onboarding-notes")!,
-                             title: "Onboarding.Title.Notes".localized,
-                             markdownText: "Onboarding.Text.Notes".localized)
-    ]
 }

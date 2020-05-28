@@ -142,7 +142,8 @@ class LoginViewController: MVViewController {
                 MVAnalytics.shared.log(event: .loginFailed(error: error.localizedDescription))
             } else {
                 self?.proceedToNextScreen()
-                self?.askForPushNotificationsPermissions()
+                // TODO: Do we ask for push notifications?
+//                self?.askForPushNotificationsPermissions()
             }
         }
     }
@@ -162,14 +163,18 @@ class LoginViewController: MVViewController {
     }
     
     func proceedToNextScreen() {
-        AppRouter.shared.proceedToAuthenticated()
+//        if OnboardingViewModel.shouldShowOnboarding {
+            AppRouter.shared.goToOnboarding()
+//        } else {
+//            AppRouter.shared.goToForms(from: self)
+//        }
     }
 }
 
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if (UIDevice.current.userInterfaceIdiom != .pad) {
+        if AppRouter.shared.isPhone {
             setVMLogo(visible: false, animated: true)
         }
         return true
@@ -180,7 +185,7 @@ extension LoginViewController: UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
-            if (UIDevice.current.userInterfaceIdiom != .pad) {
+            if AppRouter.shared.isPhone {
                 setVMLogo(visible: true, animated: true)
             }
             login()

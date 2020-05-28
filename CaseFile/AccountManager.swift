@@ -24,6 +24,7 @@ class AccountManager: NSObject, AccountManagerType {
     enum SettingKey {
         static let udid = "udid"
         static let token = "token"
+        static let email = "email"
     }
     
     static let shared: AccountManagerType = AccountManager()
@@ -47,6 +48,18 @@ class AccountManager: NSObject, AccountManagerType {
             }
         } get {
             return KeychainWrapper.standard.string(forKey: SettingKey.token)
+        }
+    }
+    
+    var email: String? {
+        set {
+            if let value = newValue {
+                KeychainWrapper.standard.set(value, forKey: SettingKey.email)
+            } else {
+                KeychainWrapper.standard.removeObject(forKey: SettingKey.email)
+            }
+        } get {
+            return KeychainWrapper.standard.string(forKey: SettingKey.email)
         }
     }
 }

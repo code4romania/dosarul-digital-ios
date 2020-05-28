@@ -66,13 +66,8 @@
 		28DBDAA6236F33CD004EAD83 /* MVAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAA5236F33CD004EAD83 /* MVAnalytics.swift */; };
 		28DBDAAB236F4A8E004EAD83 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAA9236F4A8E004EAD83 /* OnboardingViewController.swift */; };
 		28DBDAAE236F4A9B004EAD83 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAD236F4A9B004EAD83 /* OnboardingViewModel.swift */; };
-		28DBDAB1236F4DA8004EAD83 /* OnboardingChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAF236F4DA8004EAD83 /* OnboardingChildViewController.swift */; };
-		28DBDAB2236F4DA8004EAD83 /* OnboardingChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB0236F4DA8004EAD83 /* OnboardingChildViewController.xib */; };
 		28DBDAB4236F57C7004EAD83 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB3236F57C7004EAD83 /* OnboardingViewController.xib */; };
-		28DBDAB723701B10004EAD83 /* OnboardingLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAB523701B10004EAD83 /* OnboardingLanguageViewController.swift */; };
-		28DBDAB823701B10004EAD83 /* OnboardingLanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB623701B10004EAD83 /* OnboardingLanguageViewController.xib */; };
 		28DBDABB23701DBD004EAD83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDABD23701DBD004EAD83 /* InfoPlist.strings */; };
-		28DBDAC023701F3E004EAD83 /* OnboardingLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDABF23701F3E004EAD83 /* OnboardingLanguageViewModel.swift */; };
 		28E72455233F58010096454D /* SectionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E72453233F58010096454D /* SectionDetailsViewController.swift */; };
 		28E72456233F58010096454D /* SectionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E72454233F58010096454D /* SectionDetailsViewController.xib */; };
 		28E72458233F58100096454D /* SectionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E72457233F58100096454D /* SectionDetailsViewModel.swift */; };
@@ -93,6 +88,12 @@
 		28FB66B523699D7400336DBA /* TextEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28FB66B323699D7400336DBA /* TextEntryViewController.xib */; };
 		67EE98CB22A296F7006E4762 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE98CA22A296F7006E4762 /* Logger.swift */; };
 		67EE98CE22A29D87006E4762 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67EE98CD22A29D87006E4762 /* GoogleService-Info.plist */; };
+		75539E90247D3B0B00DD05C5 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */; };
+		75539E92247D3B3600DD05C5 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */; };
+		7578E227247FDAF500773EAC /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */; };
+		7578E228247FDAF600773EAC /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */; };
+		7578E229247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */; };
+		7578E22A247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */; };
 		75E837BE2461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
 		75E837BF2461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
 		75E837C02461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
@@ -195,19 +196,9 @@
 		75E838222461999800DB9146 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAD236F4A9B004EAD83 /* OnboardingViewModel.swift */; };
 		75E838232461999800DB9146 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAA9236F4A8E004EAD83 /* OnboardingViewController.swift */; };
 		75E838242461999800DB9146 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB3236F57C7004EAD83 /* OnboardingViewController.xib */; };
-		75E838252461999800DB9146 /* OnboardingChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAF236F4DA8004EAD83 /* OnboardingChildViewController.swift */; };
-		75E838262461999800DB9146 /* OnboardingChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB0236F4DA8004EAD83 /* OnboardingChildViewController.xib */; };
-		75E838272461999800DB9146 /* OnboardingLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDABF23701F3E004EAD83 /* OnboardingLanguageViewModel.swift */; };
-		75E838282461999800DB9146 /* OnboardingLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAB523701B10004EAD83 /* OnboardingLanguageViewController.swift */; };
-		75E838292461999800DB9146 /* OnboardingLanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB623701B10004EAD83 /* OnboardingLanguageViewController.xib */; };
 		75E8382A2461999900DB9146 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAD236F4A9B004EAD83 /* OnboardingViewModel.swift */; };
 		75E8382B2461999900DB9146 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAA9236F4A8E004EAD83 /* OnboardingViewController.swift */; };
 		75E8382C2461999900DB9146 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB3236F57C7004EAD83 /* OnboardingViewController.xib */; };
-		75E8382D2461999900DB9146 /* OnboardingChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAAF236F4DA8004EAD83 /* OnboardingChildViewController.swift */; };
-		75E8382E2461999900DB9146 /* OnboardingChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB0236F4DA8004EAD83 /* OnboardingChildViewController.xib */; };
-		75E8382F2461999900DB9146 /* OnboardingLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDABF23701F3E004EAD83 /* OnboardingLanguageViewModel.swift */; };
-		75E838302461999900DB9146 /* OnboardingLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAB523701B10004EAD83 /* OnboardingLanguageViewController.swift */; };
-		75E838312461999900DB9146 /* OnboardingLanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DBDAB623701B10004EAD83 /* OnboardingLanguageViewController.xib */; };
 		75E838322461999E00DB9146 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281A4B8D236D7B90001AD277 /* LoginViewModel.swift */; };
 		75E838332461999E00DB9146 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281A4B89236D7B85001AD277 /* LoginViewController.swift */; };
 		75E838342461999E00DB9146 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 281A4B8A236D7B85001AD277 /* LoginViewController.xib */; };
@@ -390,14 +381,9 @@
 		28DBDAA5236F33CD004EAD83 /* MVAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVAnalytics.swift; sourceTree = "<group>"; };
 		28DBDAA9236F4A8E004EAD83 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		28DBDAAD236F4A9B004EAD83 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		28DBDAAF236F4DA8004EAD83 /* OnboardingChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChildViewController.swift; sourceTree = "<group>"; };
-		28DBDAB0236F4DA8004EAD83 /* OnboardingChildViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingChildViewController.xib; sourceTree = "<group>"; };
 		28DBDAB3236F57C7004EAD83 /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
-		28DBDAB523701B10004EAD83 /* OnboardingLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguageViewController.swift; sourceTree = "<group>"; };
-		28DBDAB623701B10004EAD83 /* OnboardingLanguageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingLanguageViewController.xib; sourceTree = "<group>"; };
 		28DBDABC23701DBD004EAD83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28DBDABE23701DCA004EAD83 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		28DBDABF23701F3E004EAD83 /* OnboardingLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguageViewModel.swift; sourceTree = "<group>"; };
 		28E72453233F58010096454D /* SectionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDetailsViewController.swift; sourceTree = "<group>"; };
 		28E72454233F58010096454D /* SectionDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionDetailsViewController.xib; sourceTree = "<group>"; };
 		28E72457233F58100096454D /* SectionDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -426,6 +412,8 @@
 		67EE98CA22A296F7006E4762 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		67EE98CD22A29D87006E4762 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalConfiguration.xcconfig; sourceTree = "<group>"; };
+		75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		75E837BC2461987B00DB9146 /* CaseFileUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaseFileUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		75E837BD2461987B00DB9146 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		75EEA498247C57080048CC07 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
@@ -623,11 +611,6 @@
 				28DBDAAD236F4A9B004EAD83 /* OnboardingViewModel.swift */,
 				28DBDAA9236F4A8E004EAD83 /* OnboardingViewController.swift */,
 				28DBDAB3236F57C7004EAD83 /* OnboardingViewController.xib */,
-				28DBDAAF236F4DA8004EAD83 /* OnboardingChildViewController.swift */,
-				28DBDAB0236F4DA8004EAD83 /* OnboardingChildViewController.xib */,
-				28DBDABF23701F3E004EAD83 /* OnboardingLanguageViewModel.swift */,
-				28DBDAB523701B10004EAD83 /* OnboardingLanguageViewController.swift */,
-				28DBDAB623701B10004EAD83 /* OnboardingLanguageViewController.xib */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -889,6 +872,8 @@
 		F553E3751DF9A54D000D0902 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */,
+				75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */,
 				F553E3B11DF9D67A000D0902 /* Note+CoreDataClass.swift */,
 				F553E3B21DF9D67A000D0902 /* Note+CoreDataProperties.swift */,
 				F553E3B31DF9D67A000D0902 /* Question+CoreDataClass.swift */,
@@ -1035,13 +1020,11 @@
 				281A4B8C236D7B85001AD277 /* LoginViewController.xib in Resources */,
 				2810413D236C2EC300B7422C /* NoteHistoryTableCell.xib in Resources */,
 				28E7245D233F59260096454D /* SectionHUDViewController.xib in Resources */,
-				28DBDAB823701B10004EAD83 /* OnboardingLanguageViewController.xib in Resources */,
 				28E72456233F58010096454D /* SectionDetailsViewController.xib in Resources */,
 				27EDBD2221465D190060DB8A /* Localizable.strings in Resources */,
 				75EEA49F247C5C390048CC07 /* LaunchScreen-iPhone.xib in Resources */,
 				28104131236B5CA500B7422C /* AttachNoteViewController.xib in Resources */,
 				28844A57233F94FD00DEEA44 /* GenericPickerViewController.xib in Resources */,
-				28DBDAB2236F4DA8004EAD83 /* OnboardingChildViewController.xib in Resources */,
 				289E1E85235F2674000C92A0 /* FormListViewController.xib in Resources */,
 				28844A5D233F9AB700DEEA44 /* TimePickerViewController.xib in Resources */,
 				28DBDABB23701DBD004EAD83 /* InfoPlist.strings in Resources */,
@@ -1073,10 +1056,8 @@
 				75E83842246199A600DB9146 /* EmptyDetailsViewController.xib in Resources */,
 				75E83850246199AD00DB9146 /* SectionPickerViewController.xib in Resources */,
 				75E83878246199C300DB9146 /* Assets.xcassets in Resources */,
-				75E838262461999800DB9146 /* OnboardingChildViewController.xib in Resources */,
 				75E8383D246199A600DB9146 /* TimePickerViewController.xib in Resources */,
 				75E8386B246199BA00DB9146 /* NoteViewController.xib in Resources */,
-				75E838292461999800DB9146 /* OnboardingLanguageViewController.xib in Resources */,
 				75E8380D2461998600DB9146 /* NoteHistoryTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1102,10 +1083,8 @@
 				75E8384D246199A700DB9146 /* EmptyDetailsViewController.xib in Resources */,
 				75E83856246199AD00DB9146 /* SectionPickerViewController.xib in Resources */,
 				75E83879246199C400DB9146 /* Assets.xcassets in Resources */,
-				75E8382E2461999900DB9146 /* OnboardingChildViewController.xib in Resources */,
 				75E83848246199A700DB9146 /* TimePickerViewController.xib in Resources */,
 				75E83877246199BB00DB9146 /* NoteViewController.xib in Resources */,
-				75E838312461999900DB9146 /* OnboardingLanguageViewController.xib in Resources */,
 				75E838132461998700DB9146 /* NoteHistoryTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1251,7 +1230,6 @@
 				281A4B8E236D7B90001AD277 /* LoginViewModel.swift in Sources */,
 				28104130236B5CA500B7422C /* AttachNoteViewController.swift in Sources */,
 				28E72463233F66210096454D /* ActionButton.swift in Sources */,
-				28DBDAB723701B10004EAD83 /* OnboardingLanguageViewController.swift in Sources */,
 				281A4B85236CBD3C001AD277 /* SectionPickerViewModel.swift in Sources */,
 				28E7245F233F5E620096454D /* UIImage+Utils.swift in Sources */,
 				28844A52233F775E00DEEA44 /* SectionHUDViewModel.swift in Sources */,
@@ -1260,7 +1238,6 @@
 				28844A50233F6F3B00DEEA44 /* ChooserButton.swift in Sources */,
 				28844A59233F994600DEEA44 /* GenericPickerViewModel.swift in Sources */,
 				2817EA182358CF5F0029AD4C /* ApiURL.swift in Sources */,
-				28DBDAB1236F4DA8004EAD83 /* OnboardingChildViewController.swift in Sources */,
 				F553E3BC1DF9D67A000D0902 /* Question+CoreDataProperties.swift in Sources */,
 				286D38662364398C0091B23F /* QuestionListViewController.swift in Sources */,
 				289E1E8C235F2ABE000C92A0 /* FormSetTableCell.swift in Sources */,
@@ -1271,6 +1248,7 @@
 				28104142236C3FD500B7422C /* Alerts.swift in Sources */,
 				28C3639523646D480084065C /* DefaultTableHeader.swift in Sources */,
 				EF3DC3951DE9DB02006F9D73 /* CoreDataInitialiser.swift in Sources */,
+				75539E90247D3B0B00DD05C5 /* User+CoreDataClass.swift in Sources */,
 				2817EA1C2358F2140029AD4C /* PreferencesManager.swift in Sources */,
 				F553E3BB1DF9D67A000D0902 /* Question+CoreDataClass.swift in Sources */,
 				281A4B82236CBD30001AD277 /* SectionPickerViewController.swift in Sources */,
@@ -1297,8 +1275,8 @@
 				28FB66A52366EAC700336DBA /* QuestionAnswerViewModel.swift in Sources */,
 				28DBDAA4236EE26D004EAD83 /* UIViewController+Helpers.swift in Sources */,
 				28FB66A9236706CA00336DBA /* QuestionCollectionCell.swift in Sources */,
-				28DBDAC023701F3E004EAD83 /* OnboardingLanguageViewModel.swift in Sources */,
 				28104136236B5DE000B7422C /* NoteViewController.swift in Sources */,
+				75539E92247D3B3600DD05C5 /* User+CoreDataProperties.swift in Sources */,
 				28DBDAA2236EDDCA004EAD83 /* NotificationsManager.swift in Sources */,
 				28844A56233F94FD00DEEA44 /* GenericPickerViewController.swift in Sources */,
 				28B3DA8023A4F50E00BEF6C0 /* AppUpdateManager.swift in Sources */,
@@ -1336,9 +1314,9 @@
 				75E8381A2461999100DB9146 /* ActionButton.swift in Sources */,
 				75E8381D2461999100DB9146 /* DropdownButton.swift in Sources */,
 				75E8385B246199B300DB9146 /* FormListViewController.swift in Sources */,
-				75E838272461999800DB9146 /* OnboardingLanguageViewModel.swift in Sources */,
 				75E838152461998B00DB9146 /* SectionHUDViewController.swift in Sources */,
 				75E8385A246199B300DB9146 /* FormListViewModel.swift in Sources */,
+				7578E229247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */,
 				75E838322461999E00DB9146 /* LoginViewModel.swift in Sources */,
 				75E837C1246198BD00DB9146 /* APIManager.swift in Sources */,
 				75E837DE2461994500DB9146 /* Question+CoreDataClass.swift in Sources */,
@@ -1369,10 +1347,10 @@
 				75E838062461998000DB9146 /* QuestionCollectionCell.swift in Sources */,
 				75E83851246199AD00DB9146 /* SectionDetailsViewModel.swift in Sources */,
 				75E8383B246199A600DB9146 /* TimePickerViewModel.swift in Sources */,
-				75E838282461999800DB9146 /* OnboardingLanguageViewController.swift in Sources */,
 				75E837C52461990E00DB9146 /* Alerts.swift in Sources */,
 				75E838082461998600DB9146 /* FormSetTableCell.swift in Sources */,
 				75E8386A246199BA00DB9146 /* NoteViewController.swift in Sources */,
+				7578E227247FDAF500773EAC /* User+CoreDataClass.swift in Sources */,
 				75E83841246199A600DB9146 /* EmptyDetailsViewController.swift in Sources */,
 				75E837D42461993300DB9146 /* ApiURL.swift in Sources */,
 				75E837DF2461994500DB9146 /* Question+CoreDataProperties.swift in Sources */,
@@ -1388,7 +1366,6 @@
 				75E8380C2461998600DB9146 /* NoteHistoryTableCell.swift in Sources */,
 				75E837FA2461994A00DB9146 /* MVAnalytics.swift in Sources */,
 				75E837F52461994A00DB9146 /* UIImage+Utils.swift in Sources */,
-				75E838252461999800DB9146 /* OnboardingChildViewController.swift in Sources */,
 				75E837DC2461994500DB9146 /* Note+CoreDataClass.swift in Sources */,
 				75E838232461999800DB9146 /* OnboardingViewController.swift in Sources */,
 				75E837E32461994500DB9146 /* SectionInfo+CoreDataProperties.swift in Sources */,
@@ -1418,6 +1395,7 @@
 				75E837D92461993A00DB9146 /* AccountManager.swift in Sources */,
 				75E83876246199BB00DB9146 /* NoteViewController.swift in Sources */,
 				75E837EE2461994600DB9146 /* SectionInfo+CoreDataClass.swift in Sources */,
+				7578E22A247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */,
 				75E838202461999200DB9146 /* AttachButton.swift in Sources */,
 				75E83875246199BB00DB9146 /* NoteViewModel.swift in Sources */,
 				75E83847246199A700DB9146 /* TimePickerViewController.swift in Sources */,
@@ -1443,11 +1421,11 @@
 				75E837FF2461994B00DB9146 /* ReachabilityManager.swift in Sources */,
 				75E837F12461994600DB9146 /* CoreDataInitialiser.swift in Sources */,
 				75E8384C246199A700DB9146 /* EmptyDetailsViewController.swift in Sources */,
-				75E838302461999900DB9146 /* OnboardingLanguageViewController.swift in Sources */,
 				75E838362461999F00DB9146 /* LoginViewController.swift in Sources */,
 				75E837E92461994600DB9146 /* Note+CoreDataProperties.swift in Sources */,
 				75E838072461998100DB9146 /* QuestionCollectionCell.swift in Sources */,
 				75E83873246199BB00DB9146 /* AttachNoteViewController.swift in Sources */,
+				7578E228247FDAF600773EAC /* User+CoreDataClass.swift in Sources */,
 				75E83846246199A700DB9146 /* TimePickerViewModel.swift in Sources */,
 				75E8380E2461998700DB9146 /* FormSetTableCell.swift in Sources */,
 				75E838002461994B00DB9146 /* RemoteConfigManager.swift in Sources */,
@@ -1458,12 +1436,10 @@
 				75E837ED2461994600DB9146 /* Answer+CoreDataProperties.swift in Sources */,
 				75E837CB2461991E00DB9146 /* LocalStorage.swift in Sources */,
 				75E837D52461993300DB9146 /* ApiURL.swift in Sources */,
-				75E8382D2461999900DB9146 /* OnboardingChildViewController.swift in Sources */,
 				75E83872246199BB00DB9146 /* AttachNoteViewModel.swift in Sources */,
 				75E83849246199A700DB9146 /* TextEntryViewController.swift in Sources */,
 				75E837EC2461994600DB9146 /* Answer+CoreDataClass.swift in Sources */,
 				75E837CD2461992100DB9146 /* ApplicationData.swift in Sources */,
-				75E8382F2461999900DB9146 /* OnboardingLanguageViewModel.swift in Sources */,
 				75E838122461998700DB9146 /* NoteHistoryTableCell.swift in Sources */,
 				75E8381E2461999200DB9146 /* ActionButton.swift in Sources */,
 				75E837F22461994600DB9146 /* RemoteSyncer.swift in Sources */,

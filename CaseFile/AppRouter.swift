@@ -23,8 +23,8 @@ class AppRouter: NSObject {
     }
 
     func showAppEntry() {
-        if OnboardingViewModel.shouldShowOnboarding {
-            goToOnboarding()
+        if AccountManager.shared.accessToken != nil {
+            goToDashboard()
         } else {
             goToLogin()
         }
@@ -57,9 +57,16 @@ class AppRouter: NSObject {
         let entryViewController = LoginViewController()
         window?.rootViewController = entryViewController
     }
-    
+
     func goToOnboarding() {
-        let entryViewController = OnboardingLanguageViewController()
+        let onboardingViewController = OnboardingViewController()
+        let navigation = UINavigationController(rootViewController: onboardingViewController)
+        window?.rootViewController = navigation
+    }
+    
+    func goToDashboard() {
+        // TODO: dashboard instead of onboarding
+        let entryViewController = OnboardingViewController()
         let navigation = UINavigationController(rootViewController: entryViewController)
         window?.rootViewController = navigation
     }

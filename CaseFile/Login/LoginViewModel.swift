@@ -69,11 +69,12 @@ class LoginViewModel: NSObject {
         isLoading = true
         onUpdate?()
         APIManager.shared.login(withPhone: phone, pin: pin) { error in
-            if let error = error {
-                callback(.generic(reason: error.localizedDescription))
-            } else {
+            // TODO: API response
+//            if let error = error {
+//                callback(.generic(reason: error.localizedDescription))
+//            } else {
                 callback(nil)
-            }
+//            }
             self.isLoading = false
             self.onUpdate?()
         }
