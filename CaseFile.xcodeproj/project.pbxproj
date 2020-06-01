@@ -94,6 +94,18 @@
 		7578E228247FDAF600773EAC /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */; };
 		7578E229247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */; };
 		7578E22A247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */; };
+		75D0845F247FFD300034499D /* PatientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0845E247FFD300034499D /* PatientsViewModel.swift */; };
+		75D08462247FFD3F0034499D /* PatientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D08460247FFD3F0034499D /* PatientsViewController.swift */; };
+		75D08463247FFD3F0034499D /* PatientsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75D08461247FFD3F0034499D /* PatientsViewController.xib */; };
+		75D0846624800D070034499D /* NavigationDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846424800D060034499D /* NavigationDrawer.swift */; };
+		75D0846724800D070034499D /* NavigationDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846424800D060034499D /* NavigationDrawer.swift */; };
+		75D0846824800D070034499D /* NavigationDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846424800D060034499D /* NavigationDrawer.swift */; };
+		75D0846D248047780034499D /* DrawerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846C248047780034499D /* DrawerButton.swift */; };
+		75D0846E248047780034499D /* DrawerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846C248047780034499D /* DrawerButton.swift */; };
+		75D0846F248047780034499D /* DrawerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0846C248047780034499D /* DrawerButton.swift */; };
+		75D08471248050FE0034499D /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D08470248050FE0034499D /* BaseNavigationController.swift */; };
+		75D08472248050FE0034499D /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D08470248050FE0034499D /* BaseNavigationController.swift */; };
+		75D08473248050FE0034499D /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D08470248050FE0034499D /* BaseNavigationController.swift */; };
 		75E837BE2461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
 		75E837BF2461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
 		75E837C02461987B00DB9146 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E837BD2461987B00DB9146 /* BackgroundView.swift */; };
@@ -414,6 +426,12 @@
 		7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalConfiguration.xcconfig; sourceTree = "<group>"; };
 		75539E8F247D3B0A00DD05C5 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		75539E91247D3B3600DD05C5 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		75D0845E247FFD300034499D /* PatientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientsViewModel.swift; sourceTree = "<group>"; };
+		75D08460247FFD3F0034499D /* PatientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientsViewController.swift; sourceTree = "<group>"; };
+		75D08461247FFD3F0034499D /* PatientsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientsViewController.xib; sourceTree = "<group>"; };
+		75D0846424800D060034499D /* NavigationDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDrawer.swift; sourceTree = "<group>"; };
+		75D0846C248047780034499D /* DrawerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerButton.swift; sourceTree = "<group>"; };
+		75D08470248050FE0034499D /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		75E837BC2461987B00DB9146 /* CaseFileUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaseFileUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		75E837BD2461987B00DB9146 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		75EEA498247C57080048CC07 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
@@ -629,6 +647,7 @@
 			isa = PBXGroup;
 			children = (
 				28E72462233F66210096454D /* ActionButton.swift */,
+				75D0846C248047780034499D /* DrawerButton.swift */,
 				28844A4F233F6F3B00DEEA44 /* ChooserButton.swift */,
 				28FB66AB23670B3500336DBA /* AttachButton.swift */,
 				281A4B86236CC625001AD277 /* DropdownButton.swift */,
@@ -705,6 +724,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		75D0845D247FFD180034499D /* Patients */ = {
+			isa = PBXGroup;
+			children = (
+				75D0845E247FFD300034499D /* PatientsViewModel.swift */,
+				75D08460247FFD3F0034499D /* PatientsViewController.swift */,
+				75D08461247FFD3F0034499D /* PatientsViewController.xib */,
+			);
+			path = Patients;
+			sourceTree = "<group>";
+		};
 		75E837BB2461984800DB9146 /* Branding */ = {
 			isa = PBXGroup;
 			children = (
@@ -729,6 +758,7 @@
 				28DBDAA1236EDDCA004EAD83 /* NotificationsManager.swift */,
 				28DBDAA5236F33CD004EAD83 /* MVAnalytics.swift */,
 				2879CA362381BA5E00CE4DC7 /* AppRouter.swift */,
+				75D0846424800D060034499D /* NavigationDrawer.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -827,12 +857,14 @@
 		EF4BD3DE1D9E64720042BEC7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				75D0845D247FFD180034499D /* Patients */,
 				28DBDAA8236F4A7B004EAD83 /* Onboarding */,
 				281A4B88236D7B64001AD277 /* Login */,
 				28FB66B723699D8500336DBA /* Utility */,
 				28FB66B823699DA000336DBA /* PollingStation */,
 				289E1E81235F2665000C92A0 /* FormList */,
 				286D3863236439680091B23F /* Form */,
+				75D08470248050FE0034499D /* BaseNavigationController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1028,6 +1060,7 @@
 				289E1E85235F2674000C92A0 /* FormListViewController.xib in Resources */,
 				28844A5D233F9AB700DEEA44 /* TimePickerViewController.xib in Resources */,
 				28DBDABB23701DBD004EAD83 /* InfoPlist.strings in Resources */,
+				75D08463247FFD3F0034499D /* PatientsViewController.xib in Resources */,
 				289E1E8D235F2ABE000C92A0 /* FormSetTableCell.xib in Resources */,
 				2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */,
 				286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */,
@@ -1123,6 +1156,7 @@
 				"${BUILT_PRODUCTS_DIR}/Keyboard+LayoutGuide/KeyboardLayoutGuide.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -1134,6 +1168,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeyboardLayoutGuide.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -1236,7 +1271,9 @@
 				28DBDAA6236F33CD004EAD83 /* MVAnalytics.swift in Sources */,
 				28FB66AE236854C900336DBA /* RemoteSyncer.swift in Sources */,
 				28844A50233F6F3B00DEEA44 /* ChooserButton.swift in Sources */,
+				75D0845F247FFD300034499D /* PatientsViewModel.swift in Sources */,
 				28844A59233F994600DEEA44 /* GenericPickerViewModel.swift in Sources */,
+				75D0846D248047780034499D /* DrawerButton.swift in Sources */,
 				2817EA182358CF5F0029AD4C /* ApiURL.swift in Sources */,
 				F553E3BC1DF9D67A000D0902 /* Question+CoreDataProperties.swift in Sources */,
 				286D38662364398C0091B23F /* QuestionListViewController.swift in Sources */,
@@ -1261,6 +1298,7 @@
 				28FB66A22366EAAC00336DBA /* QuestionAnswerViewController.swift in Sources */,
 				E7E8EB4B1DDB7344009EBE01 /* UIColor+Presets.swift in Sources */,
 				289E1E84235F2674000C92A0 /* FormListViewController.swift in Sources */,
+				75D0846624800D070034499D /* NavigationDrawer.swift in Sources */,
 				F553E3BA1DF9D67A000D0902 /* Note+CoreDataProperties.swift in Sources */,
 				F553E3B01DF9C675000D0902 /* NoteContainer.swift in Sources */,
 				289E1E87235F2A77000C92A0 /* FormListViewModel.swift in Sources */,
@@ -1289,6 +1327,7 @@
 				28E7245C233F59260096454D /* SectionHUDViewController.swift in Sources */,
 				271595B521465EBA00BECC9C /* String+Localization.swift in Sources */,
 				286D3869236439990091B23F /* QuestionListViewModel.swift in Sources */,
+				75D08462247FFD3F0034499D /* PatientsViewController.swift in Sources */,
 				E74087241DDC90E800D9332F /* AppDelegate.swift in Sources */,
 				2879CA3A2381C04F00CE4DC7 /* EmptyDetailsViewController.swift in Sources */,
 				28A7DCB6235CC7EB000B00C4 /* ApiModels.swift in Sources */,
@@ -1297,6 +1336,7 @@
 				28C4343C2370C5C9001E6268 /* UITableView+HeaderAutoLayout.swift in Sources */,
 				67EE98CB22A296F7006E4762 /* Logger.swift in Sources */,
 				F553E3BE1DF9D67A000D0902 /* Answer+CoreDataProperties.swift in Sources */,
+				75D08471248050FE0034499D /* BaseNavigationController.swift in Sources */,
 				281A4B8B236D7B85001AD277 /* LoginViewController.swift in Sources */,
 				75E837BE2461987B00DB9146 /* BackgroundView.swift in Sources */,
 				28844A5C233F9AB700DEEA44 /* TimePickerViewController.swift in Sources */,
@@ -1316,6 +1356,7 @@
 				75E8385B246199B300DB9146 /* FormListViewController.swift in Sources */,
 				75E838152461998B00DB9146 /* SectionHUDViewController.swift in Sources */,
 				75E8385A246199B300DB9146 /* FormListViewModel.swift in Sources */,
+				75D0846E248047780034499D /* DrawerButton.swift in Sources */,
 				7578E229247FDAFA00773EAC /* User+CoreDataProperties.swift in Sources */,
 				75E838322461999E00DB9146 /* LoginViewModel.swift in Sources */,
 				75E837C1246198BD00DB9146 /* APIManager.swift in Sources */,
@@ -1347,8 +1388,10 @@
 				75E838062461998000DB9146 /* QuestionCollectionCell.swift in Sources */,
 				75E83851246199AD00DB9146 /* SectionDetailsViewModel.swift in Sources */,
 				75E8383B246199A600DB9146 /* TimePickerViewModel.swift in Sources */,
+				75D0846724800D070034499D /* NavigationDrawer.swift in Sources */,
 				75E837C52461990E00DB9146 /* Alerts.swift in Sources */,
 				75E838082461998600DB9146 /* FormSetTableCell.swift in Sources */,
+				75D08472248050FE0034499D /* BaseNavigationController.swift in Sources */,
 				75E8386A246199BA00DB9146 /* NoteViewController.swift in Sources */,
 				7578E227247FDAF500773EAC /* User+CoreDataClass.swift in Sources */,
 				75E83841246199A600DB9146 /* EmptyDetailsViewController.swift in Sources */,
@@ -1410,17 +1453,20 @@
 				75E837C62461990F00DB9146 /* Alerts.swift in Sources */,
 				75E837FD2461994B00DB9146 /* UIImage+Utils.swift in Sources */,
 				75E8382A2461999900DB9146 /* OnboardingViewModel.swift in Sources */,
+				75D08473248050FE0034499D /* BaseNavigationController.swift in Sources */,
 				75E837CF2461992400DB9146 /* UITableView+HeaderAutoLayout.swift in Sources */,
 				75E837C2246198BD00DB9146 /* APIManager.swift in Sources */,
 				75E8381F2461999200DB9146 /* ChooserButton.swift in Sources */,
 				75E837EF2461994600DB9146 /* SectionInfo+CoreDataProperties.swift in Sources */,
 				75E837D12461992800DB9146 /* Logger.swift in Sources */,
+				75D0846F248047780034499D /* DrawerButton.swift in Sources */,
 				75E838052461997800DB9146 /* DefaultTableHeader.swift in Sources */,
 				75E83870246199BB00DB9146 /* QuestionAnswerViewController.swift in Sources */,
 				75E837C02461987B00DB9146 /* BackgroundView.swift in Sources */,
 				75E837FF2461994B00DB9146 /* ReachabilityManager.swift in Sources */,
 				75E837F12461994600DB9146 /* CoreDataInitialiser.swift in Sources */,
 				75E8384C246199A700DB9146 /* EmptyDetailsViewController.swift in Sources */,
+				75D0846824800D070034499D /* NavigationDrawer.swift in Sources */,
 				75E838362461999F00DB9146 /* LoginViewController.swift in Sources */,
 				75E837E92461994600DB9146 /* Note+CoreDataProperties.swift in Sources */,
 				75E838072461998100DB9146 /* QuestionCollectionCell.swift in Sources */,

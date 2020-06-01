@@ -92,6 +92,7 @@ extension AppDelegate {
     
     fileprivate func configureAppearance() {
         UINavigationBar.appearance().tintColor = UIColor.navigationBarTint
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.navigationBarTint]
         UINavigationBar.appearance().backgroundColor = .navigationBarBackground
         UINavigationBar.appearance().barTintColor = .navigationBarBackground
     }

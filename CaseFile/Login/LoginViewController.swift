@@ -163,11 +163,11 @@ class LoginViewController: MVViewController {
     }
     
     func proceedToNextScreen() {
-//        if OnboardingViewModel.shouldShowOnboarding {
+        if OnboardingViewModel.shouldShowOnboarding {
             AppRouter.shared.goToOnboarding()
-//        } else {
-//            AppRouter.shared.goToForms(from: self)
-//        }
+        } else {
+            AppRouter.shared.goToDashboard()
+        }
     }
 }
 

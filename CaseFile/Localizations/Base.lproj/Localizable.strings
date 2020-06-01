@@ -19,6 +19,12 @@
 "Button_Submit" = "Trimite";
 "Button_AddPhotoVideo" = "Adaugă o poză sau video";
 
+"Label_MyPatients" = "Pacienții mei";
+"Label_Info" = "Info";
+"Label_Contacts" = "Contacte rapide";
+"Label_Settings" = "Setări";
+"Label_LogOut" = "Log Out";
+
 "Label_CountyLocation" = "În ce mediu se află secția?";
 "Label_CountyPresidentGender" = "Președintele secției este";
 "Label_CountyArriveTime" = "Ora sosirii în secție";

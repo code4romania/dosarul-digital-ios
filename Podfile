@@ -15,6 +15,7 @@ target 'CaseFile' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'ReachabilitySwift'
   pod 'Keyboard+LayoutGuide'
+  pod 'SideMenu'
 
   # Pods for CaseFile
 

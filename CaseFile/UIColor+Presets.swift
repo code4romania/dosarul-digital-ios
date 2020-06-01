@@ -6,7 +6,10 @@ import UIKit
 extension UIColor {
     
     static let navigationBarBackground = UIColor(hexCode: 0x3468EF)
-    static let navigationBarTint = UIColor(hexCode: 0xFFFFF)
+    static let navigationBarTint = UIColor(hexCode: 0xFFFFFF)
+    
+    static let navigationDrawerBackground = UIColor(hexCode: 0x23278A)
+    static let navigationDrawerForeground = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
     
     // Important: We need to make these checks until we have the minimum deployment set to iOS 11
 
@@ -25,6 +28,11 @@ extension UIColor {
     static var actionButtonBackgroundDisabled = UIColor(hexCode: 0x3468EF).withAlphaComponent(0.2)
     static var actionButtonForeground = UIColor.white
     static var actionButtonForegroundDisabled = UIColor(hexCode: 0x3468EF)
+    
+    static var drawerButtonBackground = UIColor(hexCode: 0x23278A)
+    static var drawerButtonBackgroundHighlighted = UIColor(white: 1, alpha: 0.1)
+    static var drawerButtonForeground = UIColor.white
+    static var drawerButtonForegroundHighlighted = UIColor(hexCode: 0x8CE4ED)
 
     static var attachButtonForeground = actionButtonForeground
     static var attachButtonForegroundDisabled = attachButtonForeground.withAlphaComponent(0.4)

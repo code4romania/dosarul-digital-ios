@@ -7,26 +7,40 @@
 //
 
 import UIKit
+import SideMenu
 
 /// Handles navigation inside the app
-class AppRouter: NSObject {
+class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource {
+    
     static let shared = AppRouter()
+    private let drawerWidth: CGFloat = 288
+    private let navigationDrawer = NavigationDrawer()
     
     var isPad: Bool { return UIDevice.current.userInterfaceIdiom == .pad }
     var isPhone: Bool { return UIDevice.current.userInterfaceIdiom == .phone }
     
-    var window: UIWindow? { return AppDelegate.shared.window }
-    var splitViewController: UISplitViewController? { return AppDelegate.shared.window?.rootViewController as? UISplitViewController }
+    var window: UIWindow? {
+        return AppDelegate.shared.window
+    }
+    var splitViewController: UISplitViewController? {
+        return AppDelegate.shared.window?.rootViewController as? UISplitViewController
+    }
     var navigationController: UINavigationController? {
         return splitViewController?.viewControllers.first as? UINavigationController
         ?? AppDelegate.shared.window?.rootViewController as? UINavigationController
     }
-
+    
+    override init() {
+        super.init()
+        navigationDrawer.dataSource = self
+        navigationDrawer.delegate = self
+    }
+    
     func showAppEntry() {
         if AccountManager.shared.accessToken != nil {
             goToDashboard()
         } else {
-            goToLogin()
+            goToLogin(animated:false)
         }
         
         RemoteConfigManager.shared.afterLoad {
@@ -53,9 +67,16 @@ class AppRouter: NSObject {
         }
     }
     
-    func goToLogin() {
+    func goToLogin(animated: Bool) {
         let entryViewController = LoginViewController()
-        window?.rootViewController = entryViewController
+        if let window = window, animated == true {
+            window.rootViewController = entryViewController
+            let options: UIView.AnimationOptions = .transitionCrossDissolve
+            let duration: TimeInterval = 0.3
+            UIView.transition(with: window, duration: duration, options: options, animations: {}, completion: nil)
+        } else {
+            window?.rootViewController = entryViewController
+        }
     }
 
     func goToOnboarding() {
@@ -66,8 +87,8 @@ class AppRouter: NSObject {
     
     func goToDashboard() {
         // TODO: dashboard instead of onboarding
-        let entryViewController = OnboardingViewController()
-        let navigation = UINavigationController(rootViewController: entryViewController)
+        let dashgoardViewController = PatientsViewController()
+        let navigation = UINavigationController(rootViewController: dashgoardViewController)
         window?.rootViewController = navigation
     }
     
@@ -156,4 +177,96 @@ class AppRouter: NSObject {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    
+    /// Navigation drawer
+    func showNavigationDrawer() {
+        let menu = SideMenuNavigationController(rootViewController: navigationDrawer)
+        menu.presentationStyle = .menuSlideIn
+        menu.presentationStyle.presentingEndAlpha = 0.5
+        menu.leftSide = true
+        menu.menuWidth = drawerWidth
+        menu.statusBarEndAlpha = 0
+        menu.pushStyle = .replace
+        menu.navigationBar.isHidden = true
+        navigationController?.present(menu, animated: true, completion: nil)
+    }
+    
+    func navigationDrawer(_ navigationDrawer: NavigationDrawer, viewControllerAt index: Int) -> UIViewController {
+        return PatientsViewController()
+    }
+    
+    func navigationDrawer(_ navigationDrawer: NavigationDrawer, didTapButtonAt index: Int) {
+        switch index {
+        case 0:
+            navigationDrawer.navigationController?.pushViewController(PatientsViewController(), animated: true)
+        case 1:
+            break
+        case 2:
+            break
+        case 3:
+            break
+        case 4:
+            self.goToLogin(animated: true)
+        default:
+            break
+        }
+    }
+    
+    func headerImage(for navigationDrawer: NavigationDrawer) -> UIImage? {
+        return UIImage(named: "logo-case-file")
+    }
+    
+    func width(for navigationDrawer: NavigationDrawer) -> CGFloat {
+        return drawerWidth
+    }
+    
+    func numberOfViewControllers(in navigationDrawer: NavigationDrawer) -> Int {
+        return 5
+    }
+    
+    func navigationDrawer(_ navigationDrawer: NavigationDrawer, titleForButtonAt index: Int) -> String? {
+        switch index {
+        case 0:
+            return "Label_MyPatients".localized
+        case 1:
+            return "Label_Info".localized
+        case 2:
+            return "Label_Contacts".localized
+        case 3:
+            return "Label_Settings".localized
+        case 4:
+            return "Label_LogOut".localized
+        default:
+            return nil
+        }
+    }
+    
+    func navigationDrawer(_ navigationDrawer: NavigationDrawer, imageForButtonAt index: Int) -> UIImage? {
+        switch index {
+        case 0:
+            return UIImage(named: "icon-drawer-home")
+        case 1:
+            return UIImage(named: "icon-drawer-info")
+        case 2:
+            return UIImage(named: "icon-drawer-contacts")
+        case 3:
+            return UIImage(named: "icon-drawer-settings")
+        case 4:
+            return UIImage(named: "icon-drawer-logout")
+        default:
+            return nil
+        }
+    }
+    
+    func navigationDrawer(_ navigationDrawer: NavigationDrawer, positionForButtonAt index: Int) -> NavigationDrawerItemPosition {
+        switch index {
+        case 3:
+            fallthrough
+        case 4:
+            return .bottom
+        default:
+            return .top
+        }
+    }
+    
 }
