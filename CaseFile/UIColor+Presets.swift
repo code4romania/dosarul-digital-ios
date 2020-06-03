@@ -47,6 +47,11 @@ extension UIColor {
 
     static var textViewContainerBorder = UIColor(hexCode: 0xDDDDDD)
     static var textViewContainerBg = UIColor(hexCode: 0xFCFCFC)
+    
+    static var viewBackgroundPrimary = UIColor(hexCode: 0xFEFEFE)
+    
+    static var cn_lightGray = UIColor(hexCode: 0x989898)
+    static var cn_lightBlue = UIColor(hexCode: 0x3468EF)
 
     convenience init(hexCode: UInt32) {
         var alpha = hexCode >> 24 & 0xFF

@@ -35,6 +35,7 @@ class OnboardingChildViewController: UIViewController {
     }
     
     func updateInterface() {
+        view.backgroundColor = UIColor.viewBackgroundPrimary
         imageView.image = model.image
         titleLabel.text = model.title
         detailsLabel.text = model.markdownText

@@ -80,7 +80,13 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
 
     func goToOnboarding() {
-        let onboardingViewController = OnboardingViewController()
+        let entryViewController = OnboardingViewController()
+        let navigation = UINavigationController(rootViewController: entryViewController)
+        window?.rootViewController = navigation
+    }
+    
+    func goToWelcomeScreen() {
+        let onboardingViewController = WelcomeViewController()
         let navigation = UINavigationController(rootViewController: onboardingViewController)
         window?.rootViewController = navigation
     }
@@ -186,7 +192,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         menu.leftSide = true
         menu.menuWidth = drawerWidth
         menu.statusBarEndAlpha = 0
-        menu.pushStyle = .replace
+        menu.pushStyle = .preserveAndHideBackButton
         menu.navigationBar.isHidden = true
         navigationController?.present(menu, animated: true, completion: nil)
     }

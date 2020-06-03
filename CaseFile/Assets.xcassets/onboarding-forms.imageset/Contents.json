@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "illustratie chestionar.png",
       "idiom" : "universal",
-      "filename" : "onboarding-forms.png",
       "scale" : "1x"
     },
     {
+      "filename" : "illustratie chestionar@2x.png",
       "idiom" : "universal",
-      "filename" : "onboarding-forms@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "illustratie chestionar@3x.png",
       "idiom" : "universal",
-      "filename" : "onboarding-forms@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

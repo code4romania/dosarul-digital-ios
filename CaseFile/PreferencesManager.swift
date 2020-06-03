@@ -29,6 +29,7 @@ class PreferencesManager: NSObject, PreferencesManagerType {
         case sectionName = "PreferenceSectionName"
         case languageLocale = "PreferenceLanguageLocale"
         case languageName = "PreferenceLanguageName"
+        case newAppToken = "PreferenceAppToken"
     }
     
     var county: String? {
@@ -57,9 +58,9 @@ class PreferencesManager: NSObject, PreferencesManagerType {
     
     var wasOnboardingShown: Bool {
         set {
-            setValue(newValue, forKey: .wasOnboardingShown)
+            setValue(newValue, forKey: .wasOnboardingShown, suffix: AccountManager.shared.email!)
         } get {
-            return getValue(forKey: .wasOnboardingShown) as? Bool ?? false
+            return getValue(forKey: .wasOnboardingShown, suffix: AccountManager.shared.email!) as? Bool ?? false
         }
     }
     
@@ -79,20 +80,37 @@ class PreferencesManager: NSObject, PreferencesManagerType {
         }
     }
     
-    var wasAppStartedBefore: Bool { return wasOnboardingShown }
+    var wasAppStartedBefore: Bool {
+        get {
+            var newApp = false
+            if getValue(forKey: .newAppToken) == nil {
+                setValue(UUID().uuidString, forKey: .newAppToken)
+                newApp = true
+            }
+            return newApp
+        }
+    }
     
     // MARK: - Helpers
     
     fileprivate func setValue(_ value: Any?, forKey key: SettingKey) {
+        self .setValue(value, forKey: key, suffix: "")
+    }
+    
+    fileprivate func setValue(_ value: Any?, forKey key: SettingKey, suffix: String) {
         if let value = value {
-            UserDefaults.standard.set(value, forKey: key.rawValue)
+            UserDefaults.standard.set(value, forKey: key.rawValue + suffix)
         } else {
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            UserDefaults.standard.removeObject(forKey: key.rawValue + suffix)
         }
         UserDefaults.standard.synchronize()
     }
 
     fileprivate func getValue(forKey key: SettingKey) -> Any? {
-        return UserDefaults.standard.object(forKey: key.rawValue)
+        return self .getValue(forKey: key, suffix: "")
     }
+    
+    fileprivate func getValue(forKey key: SettingKey, suffix: String) -> Any? {
+           return UserDefaults.standard.object(forKey: key.rawValue + suffix)
+       }
 }

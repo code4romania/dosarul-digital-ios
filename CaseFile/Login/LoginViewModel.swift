@@ -69,6 +69,7 @@ class LoginViewModel: NSObject {
         isLoading = true
         onUpdate?()
         APIManager.shared.login(withPhone: phone, pin: pin) { error in
+            AccountManager.shared.email = self.emailAddress
             // TODO: API response
 //            if let error = error {
 //                callback(.generic(reason: error.localizedDescription))

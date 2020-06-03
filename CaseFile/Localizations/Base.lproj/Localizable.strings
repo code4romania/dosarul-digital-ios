@@ -18,6 +18,9 @@
 "Button_AddNoteToQuestion" = "Adaugă o notă întrebării";
 "Button_Submit" = "Trimite";
 "Button_AddPhotoVideo" = "Adaugă o poză sau video";
+"Button_OnboardingNext" = "ÎNAINTE";
+"Button_OnboardingPrevious" = "ÎNAPOI";
+"Button_OnboardingStart" = "START";
 
 "Label_MyPatients" = "Pacienții mei";
 "Label_Info" = "Info";
@@ -95,3 +98,12 @@
 "Onboarding.Title" = "Bine ai venit!";
 "Onboarding.Description" = "Aplicația Case File te va ajuta să menții un jurnal de sănătate dedicat pentru fiecare dintre beneficiarii tăi.\n\nAdaugă în baza de date toate persoanele cu care vii în contact în mod regulat, pe care le ai în grijă, și completează la fiecare vizită câteva informații despre starea lor de sănătate pentru o minimă monitorizare, stocată digitală, care poate fi transferată către un doctor actunci când este cazul.\n\nÎn funcție de condiția pacientului, vei avea chestionare dedicate care să te ajute să pui întrebările corecte pentru a analiza starea sa generală.";
 "Onboarding.Continue" = "Continuă";
+
+"Onboarding.Title.Patient" = "Creează lista ta de pacienți";
+"Onboarding.Text.Patient" = "Adaugă un pacient nou și completează datele personale ale acestuia.";
+"Onboarding.Title.Forms" = "Poți completa chestionare";
+"Onboarding.Text.Forms" = "Alege din lista alocată fiecărui pacient un chestionar potrivit și răspunde la întrebări.";
+"Onboarding.Title.Notes" = "Atașează note și fotografii";
+"Onboarding.Text.Notes" = "Dacă ai de adăugat informații în plus la răspunsurile unei întrebări apasă butonul “Adaugă o notă”";
+"Onboarding.Title.Send" = "Trimite fișa pacientului pe email";
+"Onboarding.Text.Send" = "Fișa pacientului conține datele despre pacient și răspunsurile la chestionare. Apasă “Trimite fișa” și alege adresa de email a medicului curant.";

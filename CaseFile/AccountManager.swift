@@ -16,6 +16,9 @@ protocol AccountManagerType: NSObject {
     
     /// The logged in user's access token. Nil means unauthenticated
     var accessToken: String? { get set }
+    
+    /// The user's email
+    var email: String? { get set }
 }
 
 

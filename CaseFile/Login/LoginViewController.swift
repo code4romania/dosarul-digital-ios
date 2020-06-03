@@ -166,11 +166,10 @@ class LoginViewController: MVViewController {
         if OnboardingViewModel.shouldShowOnboarding {
             AppRouter.shared.goToOnboarding()
         } else {
-            AppRouter.shared.goToDashboard()
+            AppRouter.shared.goToWelcomeScreen()
         }
     }
 }
-
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
