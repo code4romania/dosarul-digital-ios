@@ -9,16 +9,22 @@
 import UIKit
 
 enum LocalFilename {
-    case pollingStations
+    case counties
+    case cities(countyId: Int)
     case forms
     case form(id: Int)
     
     var fullName: String {
         var name: String
         switch self {
-        case .pollingStations:  name = "polling-stations"
-        case .forms:            name = "forms"
-        case .form(let id):     name = "form-details-\(id)"
+        case .counties:
+            name = "counties"
+        case .cities(let countyId):
+            name = "cities-\(countyId)"
+        case .forms:
+            name = "forms"
+        case .form(let id):
+            name = "form-details-\(id)"
         }
         return name + ".json"
     }
@@ -26,9 +32,12 @@ enum LocalFilename {
 
 protocol LocalStorageType: NSObject {
     
-    var counties: [CountyResponse]? { set get }
+    func getCounties() -> [CountyResponse]?
+    func setCounties(_ counties: [CountyResponse]?)
+    func getCities(countyId: Int) -> [CityResponse]?
+    func setCities(_ cities: [CityResponse]?, for countyId: Int)
     var forms: [FormResponse]? { set get }
-
+    
     func getCounty(withCode code: String) -> CountyResponse?
     func getFormSummary(withCode code: String) -> FormResponse?
     func loadForm(withId formId: Int) -> [FormSectionResponse]?
@@ -46,15 +55,27 @@ class LocalStorage: NSObject, LocalStorageType {
     
     // MARK: - Public
     
-    var counties: [CountyResponse]? {
-        set {
-            if let newValue = newValue {
-                save(codable: newValue, withFilename: .pollingStations)
-            } else {
-                delete(fileWithName: .pollingStations)
-            }
-        } get {
-            return load(type: [CountyResponse].self, withFilename: .pollingStations)
+    func getCounties() -> [CountyResponse]? {
+        return load(type: [CountyResponse].self, withFilename: .counties)
+    }
+    
+    func setCounties(_ counties: [CountyResponse]?) {
+        if let counties = counties {
+            save(codable: counties, withFilename: .counties)
+        } else {
+            delete(fileWithName: .counties)
+        }
+    }
+    
+    func getCities(countyId: Int) -> [CityResponse]? {
+        return load(type: [CityResponse].self, withFilename: .cities(countyId: countyId))
+    }
+    
+    func setCities(_ cities: [CityResponse]?, for countyId: Int) {
+        if let cities = cities {
+            save(codable: cities, withFilename: .cities(countyId: countyId))
+        } else {
+            delete(fileWithName: .cities(countyId: countyId))
         }
     }
     
@@ -84,7 +105,7 @@ class LocalStorage: NSObject, LocalStorageType {
     }
     
     func getCounty(withCode code: String) -> CountyResponse? {
-        guard let counties = counties else { return nil }
+        guard let counties = getCounties() else { return nil }
         return counties.filter { $0.code == code }.first
     }
 

@@ -8,9 +8,13 @@
 
 import Foundation
 
-struct GenericPickerValue {
+struct GenericPickerValue: CustomStringConvertible {
     var id: Any
     var displayName: String
+    
+    var description: String {
+        return displayName
+    }
 }
 
 class GenericPickerViewModel: NSObject {

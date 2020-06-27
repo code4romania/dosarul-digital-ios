@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FormDropdownCell" customModule="CaseFile" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FormDropdownCell" rowHeight="121" id="KGk-i7-Jjw" customClass="FormDropdownCell" customModule="CaseFile" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-MN-Y6P">
+                        <rect key="frame" x="16" y="8" width="288" height="45"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.24313725490196078" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hS-dM-RbU" customClass="DropdownButton" customModule="CaseFile" customModuleProvider="target">
+                        <rect key="frame" x="16" y="63" width="288" height="50"/>
+                        <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="1cd-Bt-Mu1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="selecteaza data"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="buttonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KBP-I3-WJ1"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7hS-dM-RbU" firstAttribute="top" secondItem="0QI-MN-Y6P" secondAttribute="bottom" constant="10" id="Bgr-Xi-Exm"/>
+                    <constraint firstItem="0QI-MN-Y6P" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Ki0-Ge-oWc"/>
+                    <constraint firstItem="7hS-dM-RbU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="OBi-nM-aoe"/>
+                    <constraint firstItem="0QI-MN-Y6P" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Ob6-0z-Em1"/>
+                    <constraint firstAttribute="trailing" secondItem="7hS-dM-RbU" secondAttribute="trailing" constant="16" id="XRI-rL-ehO"/>
+                    <constraint firstAttribute="bottom" secondItem="7hS-dM-RbU" secondAttribute="bottom" constant="8" id="soH-TT-vEs"/>
+                    <constraint firstAttribute="trailing" secondItem="0QI-MN-Y6P" secondAttribute="trailing" constant="16" id="zct-KG-VDu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dropdown" destination="7hS-dM-RbU" id="Tb1-mX-Zy8"/>
+                <outlet property="label" destination="0QI-MN-Y6P" id="6P6-Pt-bSE"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="123.54910714285714"/>
+        </tableViewCell>
+    </objects>
+</document>

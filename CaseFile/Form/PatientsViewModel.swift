@@ -9,7 +9,7 @@
 import UIKit
 
 class PatientsViewModel: NSObject {
-    var navigationTitle = "Lista pacienti"
+    var navigationTitle = "Title.Patients".localized
     
     
 

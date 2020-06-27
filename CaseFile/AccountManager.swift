@@ -11,11 +11,11 @@ import SwiftKeychainWrapper
 
 
 protocol AccountManagerType: NSObject {
-    /// Returns the device unique ID (generates one if not determined yet)
-    var udid: String { get }
-    
     /// The logged in user's access token. Nil means unauthenticated
     var accessToken: String? { get set }
+    
+    /// How long the access token is valid
+    var expiresIn: Int? { get set}
     
     /// The user's email
     var email: String? { get set }
@@ -25,22 +25,12 @@ protocol AccountManagerType: NSObject {
 class AccountManager: NSObject, AccountManagerType {
     
     enum SettingKey {
-        static let udid = "udid"
         static let token = "token"
         static let email = "email"
+        static let expiresIn = "expires_in"
     }
     
     static let shared: AccountManagerType = AccountManager()
-    
-    var udid: String {
-        if let savedUdid = KeychainWrapper.standard.string(forKey: SettingKey.udid) {
-            return savedUdid
-        } else {
-            let udid = NSUUID().uuidString
-            KeychainWrapper.standard.set(udid, forKey: SettingKey.udid)
-            return udid
-        }
-    }
     
     var accessToken: String? {
         set {
@@ -63,6 +53,18 @@ class AccountManager: NSObject, AccountManagerType {
             }
         } get {
             return KeychainWrapper.standard.string(forKey: SettingKey.email)
+        }
+    }
+    
+    var expiresIn: Int? {
+        set {
+            if let value = newValue {
+                KeychainWrapper.standard.set(value, forKey: SettingKey.expiresIn)
+            } else {
+                KeychainWrapper.standard.removeObject(forKey: SettingKey.expiresIn)
+            }
+        } get {
+            return KeychainWrapper.standard.integer(forKey: SettingKey.expiresIn)
         }
     }
 }

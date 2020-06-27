@@ -25,6 +25,13 @@ class DropdownButton: UIButton {
         }
     }
     
+    @IBInspectable
+    var isLoading: Bool = false {
+        didSet {
+            update()
+        }
+    }
+    
     fileprivate lazy var label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -34,6 +41,10 @@ class DropdownButton: UIButton {
     
     fileprivate lazy var accessoryImageView: UIImageView = {
         return UIImageView(image: UIImage(named: "icon-dropdown-arrow"))
+    }()
+    
+    fileprivate lazy var activityIndicator: UIActivityIndicatorView = {
+        return UIActivityIndicatorView()
     }()
 
     override func willMove(toWindow newWindow: UIWindow?) {
@@ -55,6 +66,17 @@ class DropdownButton: UIButton {
             label.textColor = UIColor.defaultText.withAlphaComponent(0.5)
             label.text = placeholder
         }
+        if isLoading {
+            activityIndicator.startAnimating()
+            isEnabled = false
+            activityIndicator.isHidden = false
+            accessoryImageView.isHidden = true
+        } else {
+            activityIndicator.stopAnimating()
+            isEnabled = true
+            activityIndicator.isHidden = true
+            accessoryImageView.isHidden = false
+        }
     }
     
     fileprivate func setup() {
@@ -63,6 +85,9 @@ class DropdownButton: UIButton {
         
         accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(accessoryImageView)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(activityIndicator)
         
         label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
         label.trailingAnchor.constraint(equalTo: accessoryImageView.leadingAnchor, constant: 16).isActive = true
@@ -73,6 +98,11 @@ class DropdownButton: UIButton {
         accessoryImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         accessoryImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         accessoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: accessoryImageView.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: accessoryImageView.centerXAnchor).isActive = true
+        
+        activityIndicator.isHidden = true
 
         tintColor = .clear
         

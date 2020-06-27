@@ -28,7 +28,7 @@ class APITests: XCTestCase {
         let knownPhone = correctPhone
         let knownPin = correctPin
         var waiter = expectation(description: "Successful Login")
-        sut?.login(withPhone: knownPhone, pin: knownPin, then: { error in
+        sut?.login(email: knownPhone, password: knownPin, completion: { error in
             XCTAssertNil(error)
             waiter.fulfill()
         })
@@ -38,7 +38,7 @@ class APITests: XCTestCase {
         let wrongPhone = "0722777889"
         let wrongPin = "12849"
         waiter = expectation(description: "Unsuccessful Login")
-        sut?.login(withPhone: wrongPhone, pin: wrongPin, then: { error in
+        sut?.login(email: wrongPhone, password: wrongPin, completion: { (error) in
             XCTAssertNotNil(error)
             waiter.fulfill()
         })
@@ -50,27 +50,11 @@ class APITests: XCTestCase {
         let knownPhone = correctPhone
         let knownPin = correctPin
         let waiter = expectation(description: "Polling Stations")
-        sut?.login(withPhone: knownPhone, pin: knownPin, then: { error in
-            self.sut?.fetchPollingStations(then: { (stations, error) in
+        sut?.login(email: knownPhone, password: knownPin, completion: { (error) in
+            self.sut?.fetchCounties(then: { (stations, error) in
                 XCTAssertNil(error)
                 XCTAssertNotNil(stations)
                 XCTAssert(stations!.count > 0)
-                waiter.fulfill()
-            })
-        })
-        
-        wait(for: [waiter], timeout: 10)
-    }
-
-    func testGetFormsSets() {
-        let knownPhone = correctPhone
-        let knownPin = correctPin
-        let waiter = expectation(description: "Form Sets")
-        sut?.login(withPhone: knownPhone, pin: knownPin, then: { error in
-            self.sut?.fetchFormSets(then: { (sets, error) in
-                XCTAssertNil(error)
-                XCTAssertNotNil(sets)
-                XCTAssert(sets!.count > 0)
                 waiter.fulfill()
             })
         })
@@ -82,8 +66,8 @@ class APITests: XCTestCase {
         let knownPhone = correctPhone
         let knownPin = correctPin
         let waiter = expectation(description: "Forms")
-        sut?.login(withPhone: knownPhone, pin: knownPin, then: { error in
-            self.sut?.fetchForms(inSet: 1, then: { (forms, error) in
+        sut?.login(email: knownPhone, password: knownPin, completion: { (error) in
+            self.sut?.fetchForms(diaspora: true, then: { (forms, error) in
                 XCTAssertNil(error)
                 XCTAssertNotNil(forms)
                 XCTAssert(forms!.count > 0)

@@ -1,0 +1,9 @@
+{
+    "200": {
+        "access_token": "some-guid",
+        "expires_in": 86400
+    },
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

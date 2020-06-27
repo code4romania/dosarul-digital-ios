@@ -98,15 +98,15 @@ class NotificationsManager: NSObject {
         //print("token str = \(token)")
     }
     
-    func uploadTokenToServer(token: String) {
-        APIManager.shared.sendPushToken(withToken: token) { error in
-            if let error = error {
-                DebugLog("Could not send token to server. Error: \(error.localizedDescription)")
-            } else {
-                DebugLog("Sent token to server")
-            }
-        }
-    }
+//    func uploadTokenToServer(token: String) {
+//        APIManager.shared.sendPushToken(token: token) { (error) in
+//            if let error = error {
+//                DebugLog("Could not send token to server. Error: \(error.localizedDescription)")
+//            } else {
+//                DebugLog("Sent token to server")
+//            }
+//        }
+//    }
 }
 
 
@@ -157,7 +157,7 @@ extension NotificationsManager: MessagingDelegate {
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         
-        uploadTokenToServer(token: fcmToken)
+//        uploadTokenToServer(token: fcmToken)
 
         // Note: This callback is fired at each app startup and whenever a new token is generated.
   }

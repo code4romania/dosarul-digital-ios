@@ -11,9 +11,9 @@ import UIKit
 
 /// Use this controller to show the currently selected section, as well as a button that takes you to change it
 /// in most view controllers at the top of the screen, right below the nav bar
-class SectionHUDViewController: UIViewController {
+class PatientHUDViewController: UIViewController {
     
-    var model = SectionHUDViewModel()
+    var model = PatientHUDViewModel()
 
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -34,16 +34,26 @@ class SectionHUDViewController: UIViewController {
     
     fileprivate func configureSubViews() {
         view.backgroundColor = .headerBackground
-        
         let lighterTextColor = UIColor.defaultText.withAlphaComponent(0.5)
         icon.tintColor = lighterTextColor
         titleLabel.textColor = lighterTextColor
-        changeButton.setTitleColor(.navigationBarBackground, for: .normal)
+        
+        if model.patient != nil {
+            changeButton.setTitleColor(.drawerButtonForegroundHighlighted, for: .normal)
+            icon.image = UIImage(named: "icon-patient-add")
+        } else {
+            icon.image = UIImage(named: "icon-patient")
+        }
     }
     
     fileprivate func configureTexts() {
-        changeButton?.setTitle("Button_ChangeDepartemnt".localized, for: .normal)
-        titleLabel.text = model.sectionName
+        changeButton.isHidden = model.patient == nil
+        if let patient = model.patient {
+            changeButton?.setTitle("Button_ChangePatient".localized, for: .normal)
+            titleLabel.text = patient.firstName + " " + patient.lastName
+        } else {
+            titleLabel.text = "Label_PatientGeneralInfo".localized
+        }
     }
     
     // MARK: - Actions

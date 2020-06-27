@@ -29,6 +29,11 @@ class ActionButton: UIButton {
         setTitleColor(.actionButtonForeground, for: .normal)
         setTitleColor(.actionButtonForeground, for: .highlighted)
         setTitleColor(.actionButtonForegroundDisabled, for: .disabled)
+        
+        if (imageView?.image != nil) {
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6)
+        }
 
         tintColor = .clear
         

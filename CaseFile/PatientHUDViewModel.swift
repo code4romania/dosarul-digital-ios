@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SectionHUDViewModel: NSObject {
-    var sectionName: String = PreferencesManager.shared.sectionName ?? ""
+class PatientHUDViewModel: NSObject {
+    var patient: Patient?
 }

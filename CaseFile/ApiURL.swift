@@ -12,6 +12,7 @@ enum ApiURL {
     case login
     case pollingStationList
     case pollingStation
+    case city(id: Int)
     case forms
     case form(id: Int)
     case uploadNote
@@ -24,6 +25,7 @@ enum ApiURL {
         case .login: uri = "/v1/access/authorize"
         case .pollingStationList: uri = "/v1/county"
         case .pollingStation: uri = "/v1/polling-station"
+        case .city(let id): uri = "/v1/county/\(id)/cities"
         case .forms: uri = "/v1/form"
         case .form(let id): uri = "/v1/form/\(id)"
         case .uploadNote: uri = "/v2/note/upload"

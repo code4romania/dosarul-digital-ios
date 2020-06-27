@@ -192,7 +192,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         menu.leftSide = true
         menu.menuWidth = drawerWidth
         menu.statusBarEndAlpha = 0
-        menu.pushStyle = .preserveAndHideBackButton
+        menu.pushStyle = .replace
         menu.navigationBar.isHidden = true
         navigationController?.present(menu, animated: true, completion: nil)
     }

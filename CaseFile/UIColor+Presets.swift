@@ -13,9 +13,10 @@ extension UIColor {
     
     // Important: We need to make these checks until we have the minimum deployment set to iOS 11
 
-    static var appBackground = UIColor(hexCode: 0xFAFAFA)
+    static var appBackground = UIColor(hexCode: 0xE5E5E5)
     static var headerBackground = UIColor(hexCode: 0xFFFFFF)
     static var defaultText = UIColor(hexCode: 0x333E48)
+    static var viewBackgroundPrimary = UIColor(hexCode: 0xFEFEFE)
 
     static var formNameText = UIColor.black
 
@@ -48,10 +49,11 @@ extension UIColor {
     static var textViewContainerBorder = UIColor(hexCode: 0xDDDDDD)
     static var textViewContainerBg = UIColor(hexCode: 0xFCFCFC)
     
-    static var viewBackgroundPrimary = UIColor(hexCode: 0xFEFEFE)
-    
     static var cn_lightGray = UIColor(hexCode: 0x989898)
     static var cn_lightBlue = UIColor(hexCode: 0x3468EF)
+    
+    static var cn_gray1 = UIColor(hexCode: 0x777777)
+    static var cn_gray2 = UIColor(hexCode: 0xF6F5F5)
 
     convenience init(hexCode: UInt32) {
         var alpha = hexCode >> 24 & 0xFF

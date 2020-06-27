@@ -16,6 +16,7 @@ target 'CaseFile' do
   pod 'ReachabilitySwift'
   pod 'Keyboard+LayoutGuide'
   pod 'SideMenu'
+  pod 'EmptyDataSet-Swift', '~> 5.0.0'
 
   # Pods for CaseFile
 

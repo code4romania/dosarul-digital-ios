@@ -37,9 +37,9 @@ class SectionPickerViewModel: NSObject {
         return countyCode != nil && sectionId != nil
     }
     
-    var isSectionNumberCorrect: Bool {
-        return sectionId != nil && maximumStationNumber != nil && sectionId! <= maximumStationNumber!
-    }
+//    var isSectionNumberCorrect: Bool {
+//        return sectionId != nil && maximumStationNumber != nil && sectionId! <= maximumStationNumber!
+//    }
     
     var selectedCountyName: String? {
         guard let code = countyCode else { return nil }
@@ -57,10 +57,10 @@ class SectionPickerViewModel: NSObject {
     
     fileprivate(set) var availableCounties: [CountyResponse] = []
     
-    var maximumStationNumber: Int? {
-        guard let selectedCounty = countyCode else { return nil }
-        return getCounty(byCountyCode: selectedCounty)?.numberOfPollingStations
-    }
+//    var maximumStationNumber: Int? {
+//        guard let selectedCounty = countyCode else { return nil }
+//        return getCounty(byCountyCode: selectedCounty)?.numberOfPollingStations
+//    }
     
     fileprivate(set) var isDownloading: Bool = false {
         didSet {
@@ -87,7 +87,7 @@ class SectionPickerViewModel: NSObject {
         APIManager.shared.fetchCounties { (counties, error) in
             if let counties = counties {
                 self.availableCounties = self.sorted(counties: counties)
-                LocalStorage.shared.counties = counties
+                LocalStorage.shared.setCounties(counties)
             }
             callback(error)
             self.isDownloading = false
@@ -96,10 +96,7 @@ class SectionPickerViewModel: NSObject {
     
     private func sorted(counties: [CountyResponse]) -> [CountyResponse] {
         counties.sorted {
-            if $0.diaspora != $1.diaspora {
-                // diaspora comes first
-                return $0.diaspora == true && $1.diaspora != true
-            } else if $0.order != $1.order {
+            if $0.order != $1.order {
                 // account for the order field
                 return $0.order < $1.order
             } else {
@@ -109,12 +106,12 @@ class SectionPickerViewModel: NSObject {
         }
     }
     
-    func availableSectionIds(inCounty county: String) -> [Int] {
-        if let countyData = getCounty(byCountyCode: county) {
-            return Array(1...countyData.numberOfPollingStations)
-        }
-        return []
-    }
+//    func availableSectionIds(inCounty county: String) -> [Int] {
+//        if let countyData = getCounty(byCountyCode: county) {
+//            return Array(1...countyData.numberOfPollingStations)
+//        }
+//        return []
+//    }
     
     fileprivate func getCounty(byCountyCode code: String) -> CountyResponse? {
         return availableCounties.filter { $0.code == code }.first

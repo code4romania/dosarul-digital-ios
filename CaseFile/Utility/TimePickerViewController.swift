@@ -62,6 +62,7 @@ class TimePickerViewController: UIViewController {
     }
     
     fileprivate func updateInterface() {
+        picker.datePickerMode = .date
         picker.date = model.date
         picker.minimumDate = model.minDate
         picker.maximumDate = model.maxDate

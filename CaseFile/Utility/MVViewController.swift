@@ -16,7 +16,7 @@ class MVViewController: UIViewController {
 
     /// Connect the view that will contain the section info controller
     @IBOutlet weak var headerContainer: UIView!
-    weak var headerViewController: SectionHUDViewController?
+    weak var headerViewController: PatientHUDViewController?
     
     let TableSectionHeaderHeight: CGFloat = 52
     let TableSectionFooterHeight: CGFloat = 22
@@ -29,6 +29,7 @@ class MVViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
+        configureRightButton()
         configureView()
         configureHeader()
     }
@@ -42,6 +43,18 @@ class MVViewController: UIViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
+    fileprivate func configureRightButton() {
+        let rightButton = UIBarButtonItem(image: UIImage(named: "button-menu"),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(navigationMenuButtonTouched(sender:)))
+        navigationController?.topViewController?.navigationItem.rightBarButtonItem = rightButton
+    }
+    
+    @objc private func navigationMenuButtonTouched(sender: UIButton) {
+        AppRouter.shared.showNavigationDrawer()
+    }
+    
     fileprivate func configureView() {
         view.backgroundColor = .appBackground
     }
@@ -49,7 +62,7 @@ class MVViewController: UIViewController {
     fileprivate func configureHeader() {
         guard shouldDisplayHeaderContainer else { return }
         guard let headerContainer = headerContainer else { return }
-        let controller = SectionHUDViewController()
+        let controller = PatientHUDViewController()
         controller.view.translatesAutoresizingMaskIntoConstraints = true
         controller.willMove(toParent: self)
         addChild(controller)

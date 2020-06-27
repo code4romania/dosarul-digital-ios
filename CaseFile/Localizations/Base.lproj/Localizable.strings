@@ -2,7 +2,7 @@
 
 "Button_Login" = "Login";
 "Button_Continue" = "Continuă";
-"Button_ChangeDepartemnt" = "Schimbă";
+"Button_ChangePatient" = "Schimbă";
 "Button_Urban" = "Urban";
 "Button_Rural" = "Rural";
 "Button_Male" = "Bărbat";
@@ -21,6 +21,7 @@
 "Button_OnboardingNext" = "ÎNAINTE";
 "Button_OnboardingPrevious" = "ÎNAPOI";
 "Button_OnboardingStart" = "START";
+"Button_AddPatient" = "Adaugă beneficiar nou";
 
 "Label_MyPatients" = "Pacienții mei";
 "Label_Info" = "Info";
@@ -46,6 +47,8 @@
 "Label_Login_Description" = "Introdu datele tale pentru\na accesa aplicația";
 "Label_EmailTextInput_Placeholder" = "Email";
 "Label_PasswordTextInput_Placeholder" = "Parola";
+
+"Label_PatientGeneralInfo" = "Date generale";
 
 "Label_AddNote" = "Adaugă o notă";
 "Label_TypeNote" = "Scrie aici nota";
@@ -87,6 +90,9 @@
 "Title.Section" = "Configurarea Secției";
 "Title.Language" = "Alege limba";
 "Title.NewVersion" = "Actualizare disponibilă";
+"Title.Patients" = "Lista beneficiari";
+"Title.Patients.Add" = "Adăugare beneficiar nou";
+"Title.Forms" = "Chestionare";
 
 "Next" = "Următoarea";
 "Previous" = "Precedenta";
@@ -107,3 +113,33 @@
 "Onboarding.Text.Notes" = "Dacă ai de adăugat informații în plus la răspunsurile unei întrebări apasă butonul “Adaugă o notă”";
 "Onboarding.Title.Send" = "Trimite fișa pacientului pe email";
 "Onboarding.Text.Send" = "Fișa pacientului conține datele despre pacient și răspunsurile la chestionare. Apasă “Trimite fișa” și alege adresa de email a medicului curant.";
+
+"Patients.Empty.Title" = "Lista ta e goală";
+"Patients.Empty.Description" = "Încă nu ai adăugat pacienți în listă. Începe prin a apăsa butonul “Adaugă pacient nou“";
+
+"Patients.Add.Field.Name.Title" = "Nume și prenume";
+"Patients.Add.Field.Name.Description" = "Ex. Dana Manole";
+"Patients.Add.Field.Date.Title" = "Data nașterii";
+"Patients.Add.Field.Date.Description" = "selectează data";
+"Patients.Add.Field.Date.Title" = "Data nașterii";
+"Patients.Add.Field.Date.Description" = "selectează data";
+"Patients.Add.Field.CivilStatus.Title" = "Stare civilă";
+"Patients.Add.Field.CivilStatus.Description" = "ex: căsătorită";
+"Patients.Add.Field.County.Title" = "Județ";
+"Patients.Add.Field.County.Description" = "ex: Arad";
+"Patients.Add.Field.City.Title" = "Localitate";
+"Patients.Add.Field.City.Description" = "ex: Aluniș";
+"Patients.Add.Field.Gender.Title" = "Gen";
+"Patients.Add.Field.Gender.Description" = "ex: feminin";
+"Patients.Add.Field.Relationship.Title" = "Relația familială";
+"Patients.Add.Field.Relationship.Description" = "ex: copil";
+
+"Enums.CivilStatus.NotMarried" = "Necăsătorit(ă)";
+"Enums.CivilStatus.Married" = "Căsătorit(ă)";
+"Enums.CivilStatus.Divorced" = "Divorțat(ă)";
+"Enums.CivilStatus.Widowed" = "Văduv(ă)";
+
+"Enums.Gender.Female" = "Feminin";
+"Enums.Gender.Male" = "Masculin";
+
+"Validation.CountyNotSelected" = "Selectează județul";

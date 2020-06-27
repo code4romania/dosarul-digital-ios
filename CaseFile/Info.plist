@@ -41,10 +41,10 @@
 	<string>$(PRODUCT_NAME) Monitorizare Vot are nevoie de acces la galeria foto a telefonului</string>
 	<key>SUPPORT_PHONE</key>
 	<string>$(SUPPORT_PHONE)</string>
-	<key>TEST_PHONE</key>
-	<string>$(TEST_PHONE)</string>
-	<key>TEST_PIN</key>
-	<string>$(TEST_PIN)</string>
+	<key>TEST_EMAIL</key>
+	<string>$(TEST_EMAIL)</string>
+	<key>TEST_PASSWORD</key>
+	<string>$(TEST_PASSWORD)</string>
 	<key>UILaunchStoryboardName~iphone</key>
 	<string>LaunchScreen-iPhone.xib</string>
 	<key>UILaunchStoryboardName~ipad</key>

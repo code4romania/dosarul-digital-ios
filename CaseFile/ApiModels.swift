@@ -13,9 +13,27 @@ import Foundation
 // MARK: - Requests
 
 struct LoginRequest: Codable {
-    var user: String
+    var email: String
     var password: String
-    var uniqueId: String
+}
+
+struct Patient: Codable {
+    var firstName: String
+    var lastName: String
+    var birthDate: Date
+    var maritalStatus: Bool
+    var city: String
+    var county: String
+    
+    // uncomment if needed (at least one key is different than its coding)
+//    enum CodingKeys: String, CodingKey {
+//        case firstName
+//        case lastName
+//        case birthDate
+//        case maritalStatus
+//        case city
+//        case county
+//    }
 }
 
 struct UpdatePollingStationRequest: Codable {
@@ -90,13 +108,36 @@ struct LoginResponse: Codable {
     }
 }
 
-struct CountyResponse: Codable {
+struct CountyResponse: Codable, CustomStringConvertible {
     var id: Int
     var name: String
     var code: String
-    var numberOfPollingStations: Int
-    var diaspora: Bool?
     var order: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "countyId"
+        case code
+        case order
+        case name
+    }
+    
+    var description: String {
+        return name
+    }
+}
+
+struct CityResponse: Codable, CustomStringConvertible {
+    var id: Int
+    var name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "cityId"
+        case name
+    }
+    
+    var description: String {
+        return name
+    }
 }
 
 struct FormListResponse: Codable {

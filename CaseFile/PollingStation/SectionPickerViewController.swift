@@ -158,11 +158,11 @@ class SectionPickerViewController: MVViewController {
     }
     
     func saveAndContinue() {
-        guard model.isSectionNumberCorrect else {
-            let alert = UIAlertController.error(withMessage: "Error.IncorrectStationNumber".localized)
-            present(alert, animated: true, completion: nil)
-            return
-        }
+//        guard model.isSectionNumberCorrect else {
+//            let alert = UIAlertController.error(withMessage: "Error.IncorrectStationNumber".localized)
+//            present(alert, animated: true, completion: nil)
+//            return
+//        }
         
         model.persist { [weak self] error in
             if let error = error {
