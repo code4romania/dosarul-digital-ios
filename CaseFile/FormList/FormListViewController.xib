@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FormListViewController" customModule="MonitorizareVot" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FormListViewController" customModule="CaseFile" customModuleProvider="target">
             <connections>
                 <outlet property="downloadingSpinner" destination="cM5-3h-3Lv" id="T24-wD-PJQ"/>
                 <outlet property="headerContainer" destination="gVA-9J-3GR" id="9Sa-ux-mvY"/>
+                <outlet property="proceedButton" destination="tKq-LG-MhM" id="n5a-Az-k4h"/>
                 <outlet property="retryButton" destination="08L-24-Ci0" id="X7g-vm-O9m"/>
                 <outlet property="syncButton" destination="aFr-vX-iM6" id="qga-xP-Ot2"/>
                 <outlet property="syncContainer" destination="76d-9E-Vdl" id="JSy-Uu-rNJ"/>
                 <outlet property="syncContainerHeightZero" destination="2Yr-oc-CvQ" id="XRH-uY-wE7"/>
                 <outlet property="syncDetailsLabel" destination="Ndr-ju-WH7" id="voy-hQ-h3H"/>
                 <outlet property="tableView" destination="su5-eT-6Rp" id="hp4-3C-60z"/>
+                <outlet property="tableViewBottomToProceedButtonConstraint" destination="Ksd-gY-C7z" id="hCj-aR-iIb"/>
+                <outlet property="tableViewBottomToSyncViewConstraint" destination="ecz-P1-H5Z" id="3Jl-XM-43Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,7 +37,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="88" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="su5-eT-6Rp">
-                    <rect key="frame" x="0.0" y="94" width="414" height="599"/>
+                    <rect key="frame" x="0.0" y="94" width="414" height="724"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="S1j-Tu-kud"/>
@@ -42,11 +45,11 @@
                     </connections>
                 </tableView>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="cM5-3h-3Lv">
-                    <rect key="frame" x="197" y="383.5" width="20" height="20"/>
+                    <rect key="frame" x="197" y="446" width="20" height="20"/>
                     <color key="color" red="0.94509803920000002" green="0.58823529409999997" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08L-24-Ci0" customClass="ActionButton" customModule="MonitorizareVot" customModuleProvider="target">
-                    <rect key="frame" x="16" y="371.5" width="382" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08L-24-Ci0" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
+                    <rect key="frame" x="16" y="434" width="382" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="AhR-0G-5GA"/>
                     </constraints>
@@ -56,19 +59,19 @@
                     </connections>
                 </button>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76d-9E-Vdl">
-                    <rect key="frame" x="0.0" y="693" width="414" height="169"/>
+                    <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HRl-DR-AUi">
-                            <rect key="frame" x="16" y="16" width="382" height="153"/>
+                            <rect key="frame" x="16" y="16" width="382" height="76"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sync" translatesAutoresizingMaskIntoConstraints="NO" id="mx5-8D-PtT">
-                                    <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IdI-lR-aje">
-                                    <rect key="frame" x="0.0" y="46" width="382" height="47"/>
+                                    <rect key="frame" x="0.0" y="16" width="382" height="0.0"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="It appears that some of the questions have not been syncronised. Tap the button below to send the answers again" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndr-ju-WH7">
-                                            <rect key="frame" x="30" y="0.0" width="322" height="47"/>
+                                            <rect key="frame" x="30" y="0.0" width="322" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.24313725490196078" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -82,8 +85,8 @@
                                         <constraint firstAttribute="trailing" secondItem="Ndr-ju-WH7" secondAttribute="trailing" constant="30" id="kgu-1o-Myy"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFr-vX-iM6" customClass="ActionButton" customModule="MonitorizareVot" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="109" width="382" height="44"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFr-vX-iM6" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="32" width="382" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="iEU-mx-6gU"/>
                                     </constraints>
@@ -109,14 +112,24 @@
                         </mask>
                     </variation>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKq-LG-MhM" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
+                    <rect key="frame" x="16" y="818" width="382" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="BfU-fq-qXd"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tKq-LG-MhM" secondAttribute="trailing" constant="16" id="3vQ-hd-p1O"/>
                 <constraint firstItem="76d-9E-Vdl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6Y7-bF-65j"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="su5-eT-6Rp" secondAttribute="trailing" id="6pp-pg-rSL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tKq-LG-MhM" secondAttribute="bottom" id="7Sk-LG-CcB"/>
                 <constraint firstItem="cM5-3h-3Lv" firstAttribute="centerY" secondItem="su5-eT-6Rp" secondAttribute="centerY" id="CgP-DG-Xbi"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="76d-9E-Vdl" secondAttribute="trailing" id="Ea4-ig-wV2"/>
                 <constraint firstItem="08L-24-Ci0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="KdR-ZF-jPT"/>
+                <constraint firstItem="tKq-LG-MhM" firstAttribute="top" secondItem="su5-eT-6Rp" secondAttribute="bottom" id="Ksd-gY-C7z"/>
                 <constraint firstItem="su5-eT-6Rp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LEn-Cz-LZ3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="76d-9E-Vdl" secondAttribute="bottom" priority="999" id="NN6-la-U4a"/>
                 <constraint firstItem="cM5-3h-3Lv" firstAttribute="centerX" secondItem="su5-eT-6Rp" secondAttribute="centerX" id="SXk-4M-Uhj"/>
@@ -127,6 +140,7 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="76d-9E-Vdl" secondAttribute="bottom" constant="16" id="gH0-0B-Pil"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gVA-9J-3GR" secondAttribute="trailing" id="ggS-pl-cYq"/>
                 <constraint firstItem="gVA-9J-3GR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="plH-lY-3T7"/>
+                <constraint firstItem="tKq-LG-MhM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="sMU-Mt-BiZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="08L-24-Ci0" secondAttribute="trailing" constant="16" id="zp6-FK-G9i"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

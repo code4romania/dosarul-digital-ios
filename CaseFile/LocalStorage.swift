@@ -127,7 +127,7 @@ class LocalStorage: NSObject, LocalStorageType {
             let object = try JSONDecoder().decode(type, from: data)
             return object
         } catch {
-            DebugLog("Error loading file at \(fileUrl): \(error.localizedDescription)")
+//            DebugLog("Error loading file at \(fileUrl): \(error.localizedDescription)")
             return nil
         }
     }

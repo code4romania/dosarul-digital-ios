@@ -24,6 +24,11 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DebugLog("Application data view model:\n\(ApplicationData.shared.objectRepository)")
+    }
+    
     func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self

@@ -123,7 +123,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
 
     func goToForms(from vc: UIViewController) {
-        let formsModel = FormListViewModel()
+        let formsModel = FormListViewModel(selectionAction: .selectForm)
         let formsVC = FormListViewController(withModel: formsModel)
         navigationController?.setViewControllers([formsVC], animated: true)
         resetDetailsPane()

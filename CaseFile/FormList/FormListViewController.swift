@@ -17,10 +17,13 @@ class FormListViewController: MVViewController {
     @IBOutlet weak var syncButton: ActionButton!
     @IBOutlet weak var syncContainerHeightZero: NSLayoutConstraint!
     @IBOutlet weak var syncContainer: UIView!
-    
+    @IBOutlet weak var proceedButton: ActionButton!
     @IBOutlet weak var retryButton: ActionButton!
     @IBOutlet weak var downloadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var tableViewBottomToSyncViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBottomToProceedButtonConstraint: NSLayoutConstraint!
     
     // MARK: - Object
     
@@ -37,20 +40,30 @@ class FormListViewController: MVViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Title.FormSets".localized
+        switch model.selectionAction {
+        case .fillForm:
+            title = "Title.FormSetsFill".localized
+            tableView.allowsMultipleSelection = false
+        case .selectForm:
+            title = "Title.FormSetsSelect".localized
+            tableView.allowsMultipleSelection = true
+        }
         configureSubviews()
         updateLabelsTexts()
-        addContactDetailsToNavBar()
         bindToUpdates()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
         model.reload()
         updateInterface()
         DispatchQueue.main.async {
-            self.configureSyncContainer()
+            switch self.model.selectionAction {
+            case .fillForm:
+                self.configureSyncContainer()
+            case .selectForm:
+                self.configureProceedButton()
+            }
             if self.model.forms.isEmpty {
                 // only show the spinner and hide the table view if there are no forms
                 self.tableView.isHidden = true
@@ -99,10 +112,34 @@ class FormListViewController: MVViewController {
             self.model.isSynchronising ? self.syncingSpinner.startAnimating() : self.syncingSpinner.stopAnimating()
             self.tableView.alpha = self.model.isSynchronising ? 0.3 : 1
         }
+        model.onSelectionStateChanged = { [weak self] in
+            guard let self = self else { return }
+            self.proceedButton.isEnabled = self.model.selectedForms.count > 0
+        }
+        model.onLoadingChanged = { [weak self] (loading, error) in
+            if loading {
+                self?.showFullScreenLoading(text: "Loading.Title.AddPatient".localized)
+            } else {
+                self?.hideFullScreenLoading(text: error != nil ? "Loading.Success.AddPatient".localized : "Loading.Error.AddPatient".localized,
+                                            error: error != nil)
+            }
+        }
     }
 
     fileprivate func configureSubviews() {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        
+        tableView.tableHeaderView = {
+            let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.self.width, height: 104))
+            header.backgroundColor = .clear
+            header.textColor = UIColor.cn_gray1
+            header.font = UIFont.systemFont(ofSize: 14)
+            header.textAlignment = .center
+            header.numberOfLines = 0
+            header.text = "Instructions.Form.Select".localized
+            return header
+        }()
+        
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(UINib(nibName: "FormSetTableCell", bundle: nil),
                            forCellReuseIdentifier: FormSetTableCell.reuseIdentifier)
@@ -113,13 +150,25 @@ class FormListViewController: MVViewController {
     
     fileprivate func configureSyncContainer() {
         let needsSync = DB.shared.needsSync
+        tableViewBottomToSyncViewConstraint.isActive = true
         setSyncContainer(hidden: !needsSync)
+    }
+    
+    fileprivate func configureProceedButton() {
+        tableViewBottomToProceedButtonConstraint.isActive = true
+        proceedButton.setTitle("Button_Continue".localized, for: .normal)
+        proceedButton.addTarget(self, action: #selector(proceedButtonTouched(sender:)), for: .touchUpInside)
+    }
+    
+    @objc func proceedButtonTouched(sender: Any) {
+        model.setLoading(true, error: nil)
     }
 
     // MARK: - UI
     
     fileprivate func updateInterface() {
         tableView.reloadData()
+        proceedButton.isEnabled = model.selectedForms.count > 0
     }
     
     fileprivate func updateLabelsTexts() {
@@ -179,13 +228,22 @@ class FormListViewController: MVViewController {
     fileprivate func continueToNote() {
         AppRouter.shared.openAddNote()
     }
+    
+    deinit {
+        DebugLog("DEALLOC FORMS LIST VIEW CONTROLLER")
+    }
 }
 
 // MARK: - Table View Data Source + Delegate
 
 extension FormListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        switch model.selectionAction {
+        case .fillForm:
+            return 2
+        case .selectForm:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,7 +270,12 @@ extension FormListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 16
+        switch model.selectionAction {
+        case .fillForm:
+            return 16
+        case .selectForm:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -224,16 +287,36 @@ extension FormListViewController: UITableViewDataSource {
 
 extension FormListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            // form was tapped
+        switch model.selectionAction {
+        case .fillForm:
+            switch indexPath.section {
+            case 0:
+                // form was tapped
+                let formSet = model.forms[indexPath.row]
+                continueToForm(withCode: formSet.code)
+            default:
+                // add note was tapped
+                continueToNote()
+            }
+        case .selectForm:
             let formSet = model.forms[indexPath.row]
-            continueToForm(withCode: formSet.code)
-            break
-        default:
-            // add note was tapped
-            continueToNote()
-            break
+            if model.selectedForms.contains(formSet) {
+                model.selectedForms = model.selectedForms.filter { $0 != formSet }
+            } else {
+                model.selectedForms.append(formSet)
+            }
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }   
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard model.selectionAction == .selectForm else {
+            return
+        }
+        let formSet = model.forms[indexPath.row]
+        if model.selectedForms.contains(formSet) {
+            cell.setSelected(true, animated: false)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
     }
 }

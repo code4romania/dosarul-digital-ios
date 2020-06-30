@@ -39,6 +39,8 @@ protocol APIManagerType: NSObject {
     
     func upload(answers: UploadAnswersRequest,
                 completion: ((APIError?) -> Void)?)
+    
+//    func createPatient()
 }
 
 // remove extension after all methods are implemented in all conforming classes

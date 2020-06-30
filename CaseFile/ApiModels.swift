@@ -18,22 +18,25 @@ struct LoginRequest: Codable {
 }
 
 struct Patient: Codable {
-    var firstName: String
-    var lastName: String
+    var id: Int?
+    var userId: Int?
+    var name: String
     var birthDate: Date
-    var maritalStatus: Bool
-    var city: String
-    var county: String
+    var civilStatus: CivilStatus
+    var cityId: Int
+    var countyId: Int
+    var gender: Int
     
-    // uncomment if needed (at least one key is different than its coding)
-//    enum CodingKeys: String, CodingKey {
-//        case firstName
-//        case lastName
-//        case birthDate
-//        case maritalStatus
-//        case city
-//        case county
-//    }
+    enum CodingKeys: String, CodingKey {
+        case id = "beneficiaryId"
+        case userId
+        case name
+        case birthDate
+        case civilStatus
+        case cityId
+        case countyId
+        case gender
+    }
 }
 
 struct UpdatePollingStationRequest: Codable {
@@ -112,12 +115,10 @@ struct CountyResponse: Codable, CustomStringConvertible {
     var id: Int
     var name: String
     var code: String
-    var order: Int
     
     enum CodingKeys: String, CodingKey {
         case id = "countyId"
         case code
-        case order
         case name
     }
     
@@ -153,14 +154,14 @@ struct FormResponse: Codable {
     var code: String
     var version: Int
     var description: String
-    var order: Int?
+//    var order: Int? - forms do not have order yet
     
     enum CodingKeys: String, CodingKey {
         case id
         case code
-        case version = "ver"
+        case version = "currentVersion"
         case description
-        case order
+        // case order - forms do not have order yet
     }
 }
 

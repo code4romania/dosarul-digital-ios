@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CivilStatus: Int, CustomStringConvertible {
+enum CivilStatus: Int, CustomStringConvertible, Codable {
     case notMarried
     case married
     case divorced

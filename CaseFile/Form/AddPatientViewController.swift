@@ -37,6 +37,8 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         bindToModelUpdates()
         configureTableView()
         configureButton()
+        #warning("remove update interfate on load")
+        updateInterface()
     }
     
     fileprivate func bindToModelUpdates() {
@@ -61,6 +63,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     func configureButton() {
         proceedButton.setTitle("Button_Continue".localized, for: .normal)
         proceedButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -8).isActive = true
+        proceedButton.addTarget(self, action: #selector(proceedButtonTouched(sender:)), for: .touchUpInside)
     }
     
     func updateInterface() {
@@ -68,6 +71,14 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         proceedButton.isEnabled = model.canContinue
     }
     
+    @objc func proceedButtonTouched(sender: Any) {
+        model.buildForm()
+        let formsModel = FormListViewModel(selectionAction: .selectForm)
+        let formsVC = FormListViewController(withModel: formsModel)
+        navigationController?.pushViewController(formsVC, animated: true)
+    }
+    
+    // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.generalDataSource.count
     }
@@ -110,14 +121,13 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
                 cell.isLoading = source.isLoading
                 cell.dropdown.isEnabled = !(source.fieldType == .city && model.countyForm.value == nil)
             }
-            
         }
         cell?.backgroundColor = .clear
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
     
-    // MARK: TextField events
+    // MARK: - TextField events
     @objc func textChanged(sender: Any) {
         guard let textField = sender as? UITextField else {
             return
@@ -125,7 +135,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         model.nameForm.value = textField.text
     }
     
-    // MARK: FormDropdownCellDelegate
+    // MARK: - FormDropdownCellDelegate
     func didSelectDropdown(in cell: FormDropdownCell) {
         view.endEditing(true)
         guard let indexPath = tableView.indexPath(for: cell) else {
@@ -146,7 +156,6 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         default:
             break
         }
-        
     }
     
     // Present birthday picker
@@ -183,7 +192,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
                     return
                 }
                 if let value = value {
-                    form.value = value
+                    form.value = CivilStatus(rawValue: value.id as! Int)
                     self.updateInterface()
                 }
                 self.dismiss(animated: true, completion: nil)
@@ -227,6 +236,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    // Present city picker
     func handleCityPickerTapped(form: AddPatientForm) {
         // check county to be selected
         guard model.countyForm.value != nil else {
@@ -266,6 +276,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    // Present gender picker
     func handleGenderPickerTapped(form: AddPatientForm) {
         form.getSource?() { [weak self] genders in
             guard let self = self, let source = genders as? [Gender] else {
@@ -293,5 +304,9 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
             }
             self.present(picker, animated: true, completion: nil)
         }
+    }
+    
+    deinit {
+        DebugLog("DEALLOC ADD PATIENT VIEW CONTROLLER")
     }
 }

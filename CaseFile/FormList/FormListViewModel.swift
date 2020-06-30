@@ -20,8 +20,22 @@ enum FormListViewModelError: Error {
     }
 }
 
+enum FormSelectionType {
+    case fillForm
+    case selectForm
+}
+
 class FormListViewModel: NSObject {
     var forms: [FormSetCellModel] = []
+    
+    var selectedForms: [FormSetCellModel] = [] {
+        didSet {
+            onSelectionStateChanged?()
+        }
+    }
+    
+    /// Check this flag, it tells you what forms have been selected in selection mode
+    var selectionAction: FormSelectionType
     
     /// Check this flag, it tells you the download state
     var isDownloadingData: Bool = false
@@ -37,12 +51,19 @@ class FormListViewModel: NSObject {
 
     /// Get notified when syncing state has changed
     var onSyncingStateChanged: (() -> Void)?
-
-    override init() {
+    
+    /// Get notified when selected forms change
+    var onSelectionStateChanged: (() -> Void)?
+    
+    /// Get notified when loading state changes
+    var onLoadingChanged: ((Bool, Error?) -> Void)?
+    
+    init(selectionAction: FormSelectionType) {
+        self.selectionAction = selectionAction
         super.init()
         loadCachedData()
     }
-    
+
     func reload() {
         loadCachedData()
     }
@@ -55,8 +76,9 @@ class FormListViewModel: NSObject {
     
     fileprivate func convertToViewModels(responses: [FormResponse]?) {
         if let objects = responses {
-            let sorted = objects.sorted { $0.order ?? 0 < $1.order ?? 0 }
-            forms = sorted.map { set in
+            // forms do not have sorting field
+//            let sorted = objects.sorted { $0.order ?? 0 < $1.order ?? 0 }
+            forms = objects.map { set in
                 let formCodePrefix = set.code.first != nil ? String(set.code.first!).lowercased() : ""
                 let image = UIImage(named: "icon-formset-\(formCodePrefix)") ?? UIImage(named: "icon-formset-default")
                 let answeredQuestions = DB.shared.getAnsweredQuestions(inFormWithCode: set.code).count
@@ -64,11 +86,13 @@ class FormListViewModel: NSObject {
                 let totalQuestions = formSections?.reduce([QuestionResponse](), { $0 + $1.questions }).count ?? 0
                 let progress = totalQuestions > 0 ? CGFloat(answeredQuestions) / CGFloat(totalQuestions) : 0
                 return FormSetCellModel(
+                    id: set.id,
                     icon: image ?? UIImage(), // just in case
                     title: set.description,
                     code: set.code.uppercased(),
                     progress: progress,
-                    answeredOutOfTotalQuestions: "\(answeredQuestions)/\(totalQuestions)")
+                    answeredOutOfTotalQuestions: "\(answeredQuestions)/\(totalQuestions)",
+                    selectionType: selectionAction)
             }
         }
     }
@@ -84,5 +108,13 @@ class FormListViewModel: NSObject {
                 self.onDownloadComplete?(nil)
             }
         }
+    }
+    
+    func createPatient() {
+        setLoading(true, error: nil)
+    }
+    
+    fileprivate func setLoading(_ loading: Bool, error: Error?) {
+        onLoadingChanged?(loading, error)
     }
 }

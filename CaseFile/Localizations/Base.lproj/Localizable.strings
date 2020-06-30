@@ -83,7 +83,8 @@
 "Station" = "Secția";
 
 "Title.StationDetails" = "Detalii despre Secție";
-"Title.FormSets" = "Toate Formularele";
+"Title.FormSetsFill" = "Toate Formularele";
+"Title.FormSetsSelect" = "Alocă chestionare";
 "Title.Question" = "Întrebarea";
 "Title.Note" = "Notă";
 "Title.NoteHistory" = "Istoricul Notelor";
@@ -114,6 +115,8 @@
 "Onboarding.Title.Send" = "Trimite fișa pacientului pe email";
 "Onboarding.Text.Send" = "Fișa pacientului conține datele despre pacient și răspunsurile la chestionare. Apasă “Trimite fișa” și alege adresa de email a medicului curant.";
 
+"Instructions.Form.Select" = "Selectează din listă chestionarele potrivite pentru acest beneficiar";
+
 "Patients.Empty.Title" = "Lista ta e goală";
 "Patients.Empty.Description" = "Încă nu ai adăugat pacienți în listă. Începe prin a apăsa butonul “Adaugă pacient nou“";
 
@@ -143,3 +146,7 @@
 "Enums.Gender.Male" = "Masculin";
 
 "Validation.CountyNotSelected" = "Selectează județul";
+
+"Loading.Title.AddPatient" = "Creare beneficiar...";
+"Loading.Error.AddPatient" = "Eroare";
+"Loading.Success.AddPatient" = "Success";

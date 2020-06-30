@@ -74,25 +74,27 @@ class AddPatientForm: CustomStringConvertible {
 class AddPatientViewModel: NSObject {
     var navigationTitle = "Title.Patients.Add".localized
     
-    var patient: Patient?
     var fromRelationship: Bool
     
+    #warning("remove test data")
     lazy var nameForm = AddPatientForm("Patients.Add.Field.Name.Title".localized,
                                                "Patients.Add.Field.Name.Description".localized,
                                                .name,
-                                               nil,
+                                               "Andrei Bouariu", //nil,
                                                nil)
     
+    #warning("remove test data")
     lazy var birthForm = AddPatientForm("Patients.Add.Field.Date.Title".localized,
                                                 "Patients.Add.Field.Date.Description".localized,
                                                 .birthDate,
-                                                nil,
+                                                Date(), //nil,
                                                 nil)
     
+    #warning("remove")
     lazy var civilStatusForm = AddPatientForm("Patients.Add.Field.CivilStatus.Title".localized,
                                               "Patients.Add.Field.CivilStatus.Description".localized,
                                               .civilStatus,
-                                              nil,
+                                              CivilStatus.notMarried, //nil,
                                               { populateCivilStatuses in
                                                 populateCivilStatuses?([CivilStatus.notMarried,
                                                                         CivilStatus.married,
@@ -112,10 +114,11 @@ class AddPatientViewModel: NSObject {
                 populateCounties?(self.availableCounties)
         }
     }
+    #warning("remove test data")
     lazy var countyForm = AddPatientForm("Patients.Add.Field.County.Title".localized,
                                          "Patients.Add.Field.County.Description".localized,
                                          .county,
-                                         nil,
+                                         CountyResponse(id: 0, name: "Test", code: "TEST"), // nil,
                                          populateCountiesClosure)
     
     lazy var populateCitiesClosure: (ClosureTypeAnyArray?) -> () =
@@ -130,16 +133,18 @@ class AddPatientViewModel: NSObject {
                 populateCities?(self.availableCities)
         }
     }
+    #warning("remove test data")
     lazy var cityForm = AddPatientForm("Patients.Add.Field.City.Title".localized,
                                                "Patients.Add.Field.City.Description".localized,
                                                .city,
-                                               nil,
+                                               CityResponse(id: 0, name: "Test"), //nil,
                                                populateCitiesClosure)
     
+    #warning("remove test data")
     lazy var genderForm = AddPatientForm("Patients.Add.Field.Gender.Title".localized,
                                                  "Patients.Add.Field.Gender.Description".localized,
                                                  .gender,
-                                                 nil,
+                                                 Gender.male, // nil,
                                                  { populateGenders in
                                                     populateGenders?([Gender.male, Gender.female])
     })
@@ -169,6 +174,9 @@ class AddPatientViewModel: NSObject {
             onStateChanged?()
         }
     }
+    
+    /// Reference to current patient
+    var patient: Patient?
     
     init(fromRelationship: Bool) {
         self.fromRelationship = fromRelationship
@@ -244,6 +252,23 @@ class AddPatientViewModel: NSObject {
             }
             completion?(error)
         })
+    }
+    
+    func buildForm() {
+        patient = Patient(id: nil,
+                          userId: nil,
+                          name: nameForm.value as! String,
+                          birthDate: birthForm.value as! Date,
+                          civilStatus: civilStatusForm.value as! CivilStatus,
+                          cityId: (cityForm.value as! CityResponse).id,
+                          countyId: (countyForm.value as! CountyResponse).id,
+                          gender: (genderForm.value as! Gender).rawValue)
+        let object: NSArray = [patient!]
+        ApplicationData.shared.setObject(object, for: .patient)
+    }
+    
+    deinit {
+        ApplicationData.shared.removeObject(for: .patient)
     }
     
 }

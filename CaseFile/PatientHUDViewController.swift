@@ -13,7 +13,7 @@ import UIKit
 /// in most view controllers at the top of the screen, right below the nav bar
 class PatientHUDViewController: UIViewController {
     
-    var model = PatientHUDViewModel()
+    var model: PatientHUDViewModel
 
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,13 +24,28 @@ class PatientHUDViewController: UIViewController {
     
     // MARK: - VC
     
+    init(model: PatientHUDViewModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindToModelUpdates()
         configureSubViews()
         configureTexts()
     }
     
     // MARK: - UI
+    fileprivate func bindToModelUpdates() {
+        model.onPatientChange = { [weak self] in
+            self?.configureTexts()
+        }
+    }
     
     fileprivate func configureSubViews() {
         view.backgroundColor = .headerBackground
@@ -50,7 +65,7 @@ class PatientHUDViewController: UIViewController {
         changeButton.isHidden = model.patient == nil
         if let patient = model.patient {
             changeButton?.setTitle("Button_ChangePatient".localized, for: .normal)
-            titleLabel.text = patient.firstName + " " + patient.lastName
+            titleLabel.text = patient.name
         } else {
             titleLabel.text = "Label_PatientGeneralInfo".localized
         }
