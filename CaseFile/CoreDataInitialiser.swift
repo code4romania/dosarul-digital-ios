@@ -10,6 +10,7 @@ final class CoreData: NSObject {
     @available(iOS 10.0, *)
     static var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: containerName!)
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -22,6 +23,7 @@ final class CoreData: NSObject {
     static var managedObjectContext: NSManagedObjectContext = {
         let coordinator = persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()

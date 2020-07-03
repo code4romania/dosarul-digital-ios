@@ -163,11 +163,8 @@ class LoginViewController: MVViewController {
     }
     
     func proceedToNextScreen() {
-        if OnboardingViewModel.shouldShowOnboarding {
-            AppRouter.shared.goToOnboarding()
-        } else {
-            AppRouter.shared.goToWelcomeScreen()
-        }
+        OnboardingViewModel.shouldShowWelcome = true
+        AppRouter.shared.showAppEntry(animated: true)
     }
 }
 

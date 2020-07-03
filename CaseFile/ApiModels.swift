@@ -17,7 +17,7 @@ struct LoginRequest: Codable {
     var password: String
 }
 
-struct Patient: Codable {
+struct BeneficiaryRequest: Codable {
     var id: Int?
     var userId: Int?
     var name: String
@@ -26,6 +26,7 @@ struct Patient: Codable {
     var cityId: Int
     var countyId: Int
     var gender: Int
+    var formIds: [Int]?
     
     enum CodingKeys: String, CodingKey {
         case id = "beneficiaryId"
@@ -36,6 +37,7 @@ struct Patient: Codable {
         case cityId
         case countyId
         case gender
+        case formIds
     }
 }
 
@@ -100,14 +102,65 @@ struct ErrorResponse: Codable {
 }
 
 struct LoginResponse: Codable {
+    var email: String?
     var accessToken: String?
     var expiresIn: Int?
     var error: String?
 
     enum CodingKeys: String, CodingKey {
+        case email
         case accessToken = "access_token"
         case expiresIn = "expires_in"
         case error
+    }
+}
+
+struct BeneficiaryListResponse: Codable {
+    var beneficiaries: [BeneficiaryResponse]
+    var totalItems: Int
+    var totalPages: Int
+    var page: Int
+    var pageSize: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case beneficiaries = "data"
+        case totalItems
+        case totalPages
+        case page
+        case pageSize
+    }
+}
+
+// Beneficiary response (sometimes it has county & city identifiers and forms, other times it has county & city names)
+struct BeneficiaryResponse: Codable {
+    var userId: Int16?                      // received on /api/v1/beneficiary/{id}
+    var id: Int16                           // always received
+    var name: String                        // always received
+    var civilStatus: Int16                  // always received
+    var birthDate: Date?                    // received on /api/v1/beneficiary/{id}
+    var age: Int16?                         // received on /api/v1/beneficiary
+    var county: String?                     // received on /api/v1/beneficiary
+    var city: String?                       // received on /api/v1/beneficiary
+    var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
+    var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
+    var gender: Int16?                      // received on /api/v1/beneficiary/{id}
+    var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
+    var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
+    
+    enum CodingKeys: String, CodingKey {
+        case userId
+        case id = "beneficiaryId"
+        case name
+        case civilStatus
+        case birthDate
+        case age
+        case county
+        case city
+        case countyId
+        case cityId
+        case gender
+        case familyMembers
+        case forms
     }
 }
 
@@ -163,6 +216,26 @@ struct FormResponse: Codable {
         case description
         // case order - forms do not have order yet
     }
+}
+
+// Forms on GET /beneficiary/{id}
+struct FormBeneficiaryResponse: Codable {
+    var id: Int
+    var completionDate: Date
+    var description: String
+    var code: String
+    var totalQuestionsNo: Int
+    var questionsAnsweredNo: Int
+    
+    enum CondingKeys: String, CodingKey {
+        case id = "formId"
+        case completionDate
+        case description
+        case code
+        case totalQuestionsNo
+        case questionAnsweredNo
+    }
+    
 }
 
 struct FormSectionResponse: Codable {

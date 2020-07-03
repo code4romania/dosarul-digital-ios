@@ -1,5 +1,5 @@
 //
-//  User+CoreDataProperties.swift
+//  Revision+CoreDataProperties.swift
 //  CaseFile
 //
 //  Created by Andrei Bouariu on 02/07/2020.
@@ -11,21 +11,20 @@ import Foundation
 import CoreData
 
 
-extension User {
+extension Revision {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
-        return NSFetchRequest<User>(entityName: "User")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Revision> {
+        return NSFetchRequest<Revision>(entityName: "Revision")
     }
 
-    @NSManaged public var email: String?
-    @NSManaged public var accessToken: String?
-    @NSManaged public var expiresIn: Int64
+    @NSManaged public var propertyName: String?
+    @NSManaged public var modified: Bool
     @NSManaged public var beneficiaries: NSSet?
 
 }
 
 // MARK: Generated accessors for beneficiaries
-extension User {
+extension Revision {
 
     @objc(addBeneficiariesObject:)
     @NSManaged public func addToBeneficiaries(_ value: Beneficiary)

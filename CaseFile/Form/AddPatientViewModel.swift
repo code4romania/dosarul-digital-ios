@@ -176,7 +176,7 @@ class AddPatientViewModel: NSObject {
     }
     
     /// Reference to current patient
-    var patient: Patient?
+    var patient: BeneficiaryRequest?
     
     init(fromRelationship: Bool) {
         self.fromRelationship = fromRelationship
@@ -255,7 +255,7 @@ class AddPatientViewModel: NSObject {
     }
     
     func buildForm() {
-        patient = Patient(id: nil,
+        patient = BeneficiaryRequest(id: nil,
                           userId: nil,
                           name: nameForm.value as! String,
                           birthDate: birthForm.value as! Date,

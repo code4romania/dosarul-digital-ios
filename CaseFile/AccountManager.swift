@@ -19,6 +19,8 @@ protocol AccountManagerType: NSObject {
     
     /// The user's email
     var email: String? { get set }
+    
+    func logout()
 }
 
 
@@ -66,5 +68,11 @@ class AccountManager: NSObject, AccountManagerType {
         } get {
             return KeychainWrapper.standard.integer(forKey: SettingKey.expiresIn)
         }
+    }
+    
+    func logout() {
+        accessToken = nil
+        email = nil
+        expiresIn = nil
     }
 }

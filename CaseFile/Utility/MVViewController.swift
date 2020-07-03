@@ -65,7 +65,7 @@ class MVViewController: UIViewController {
         guard let headerContainer = headerContainer else { return }
         let viewModel = PatientHUDViewModel()
         if let currentPatientArray = ApplicationData.shared.object(for: .patient) as? NSArray,
-            let currentPatient = currentPatientArray[0] as? Patient {
+            let currentPatient = currentPatientArray[0] as? BeneficiaryRequest {
             viewModel.patient = currentPatient
         }
         let controller = PatientHUDViewController(model: viewModel)

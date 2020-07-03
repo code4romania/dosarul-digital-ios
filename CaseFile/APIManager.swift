@@ -13,21 +13,33 @@ import SwiftKeychainWrapper
 protocol APIManagerType: NSObject {
     var apiDateFormatter: DateFormatter { get }
     
+    /// General requests
+    /// POST /api/v1/access/authorize
     func login(email: String,
                password: String,
-               completion: ((APIError?) -> Void)?)
+               completion: ((LoginResponse?, APIError?) -> Void)?)
     
-    func fetchPatients(completion:(([Patient]?, APIError?) -> Void)?)
-    
-//    func sendPushToken(token: String,
-//                       completion: ((APIError?) -> Void)?)
-    
+    /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?)
     
+    /// GET /api/v1/county/{id}/cities
     func fetchCities(countyId: Int, completion: (([CityResponse]?, APIError?) -> Void)?)
     
+    /// Beneficiaries requests
+    /// GET /api/v1/beneficiary
+    func fetchBeneficiaries(completion:(([BeneficiaryResponse]?, APIError?) -> Void)?)
+    
+    /// GET /api/v1/beneficiary/{id}
+    func fetchBeneficiary(beneficiaryId: Int, completion:((BeneficiaryResponse?, APIError?) -> Void)?)
+    
+    /// POST /api/v1/beneficiary
+    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?)
+    
+    /// Form requests
+    /// GET /api/v1/form
     func fetchForms(completion: (([FormResponse]?, APIError?) -> Void)?)
     
+    /// GET /api/v1/form/{id}
     func fetchForm(formId: Int,
                    completion: (([FormSectionResponse]?, APIError?) -> Void)?)
     
@@ -40,26 +52,28 @@ protocol APIManagerType: NSObject {
     func upload(answers: UploadAnswersRequest,
                 completion: ((APIError?) -> Void)?)
     
-//    func createPatient()
 }
 
 // remove extension after all methods are implemented in all conforming classes
 extension APIManagerType {
-    func login(email: String,
-               password: String,
-               completion: ((APIError?) -> Void)?) { }
     
-    func fetchPatients(completion:(([Patient]?, APIError?) -> Void)?) { }
-    
-//    func sendPushToken(token: String,
-//                       completion: ((APIError?) -> Void)?) { }
-    
+    /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) { }
     
+    /// GET /api/v1/county/{id}/cities
     func fetchCities(countyId: Int, completion: (([CityResponse]?, APIError?) -> Void)?) { }
     
+    /// GET /api/v1/beneficiary/{id}
+    func fetchBeneficiary(beneficiaryId: Int, completion:((BeneficiaryResponse?, APIError?) -> Void)?) { }
+    
+    /// POST /api/v1/beneficiary
+    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?) { }
+    
+    /// Form requests
+    /// GET /api/v1/form
     func fetchForms(completion: (([FormResponse]?, APIError?) -> Void)?) { }
     
+    /// GET /api/v1/form/{id}
     func fetchForm(formId: Int,
                    completion: (([FormSectionResponse]?, APIError?) -> Void)?) { }
     
@@ -105,9 +119,9 @@ class APIManager: NSObject, APIManagerType {
         return formatter
     }()
     
-    func login(email: String, password: String, completion: ((APIError?) -> Void)?) {
+    func login(email: String, password: String, completion: ((LoginResponse?, APIError?) -> Void)?) {
         if let errorMessage = checkConnectionError() {
-            completion?(.generic(reason: errorMessage))
+            completion?(nil, .generic(reason: errorMessage))
             return
         }
         
@@ -120,71 +134,44 @@ class APIManager: NSObject, APIManagerType {
             .response { response in
             if let data = response.data {
                 do {
-                    let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-                    if let token = loginResponse.accessToken {
-                        AccountManager.shared.accessToken = token
-                        completion?(nil)
+                    var loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+                    if loginResponse.accessToken != nil {
+                        // login response doesn't contain an email so we'll add it here
+                        loginResponse.email = email
+                        completion?(loginResponse, nil)
                     } else {
-                        completion?(.loginFailed(reason: loginResponse.error))
+                        completion?(nil, .loginFailed(reason: loginResponse.error))
                     }
                 } catch {
-                    completion?(.incorrectFormat(reason: error.localizedDescription))
+                    completion?(nil, .incorrectFormat(reason: error.localizedDescription))
                 }
             } else {
-                completion?(.loginFailed(reason: "No data received"))
+                completion?(nil, .loginFailed(reason: "No data received"))
             }
         }
-    }
-    
-    func sendPushToken(token: String, completion: ((APIError?) -> Void)?) {
-
-        let url = ApiURL.registerToken.url()
-        let auth = authorizationHeaders()
-        let headers = requestHeaders(withAuthHeaders: auth)
-
-        let parameters: Parameters = [
-            "ChannelName": "Firebase",
-            "Token": token
-        ]
-
-        let urlEncoding = URLEncoding(destination: .queryString, arrayEncoding: .brackets, boolEncoding: .literal)
-        Alamofire
-            .request(url, method: .post, parameters: parameters, encoding: urlEncoding, headers: headers)
-            .response { response in
-                if response.response?.statusCode == 200 {
-                    completion?(nil)
-                } else if response.response?.statusCode == 401 {
-                    completion?(.unauthorized)
-                } else {
-                    completion?(.incorrectFormat(reason: "Unknown reason"))
-                }
-            }
     }
     
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) {
         let url = ApiURL.pollingStationList.url()
         let headers = authorizationHeaders()
         
-        #warning("remove async after")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            Alamofire
-                .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
-                .response { response in
-                    let statusCode = response.response?.statusCode
-                    if statusCode == 200,
-                        let data = response.data {
-                        do {
-                            let stations = try JSONDecoder().decode([CountyResponse].self, from: data)
-                            completion?(stations, nil)
-                        } catch {
-                            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
-                        }
-                    } else if statusCode == 401 {
-                        completion?(nil, .unauthorized)
-                    } else {
-                        completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+        Alamofire
+            .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    do {
+                        let stations = try JSONDecoder().decode([CountyResponse].self, from: data)
+                        completion?(stations, nil)
+                    } catch {
+                        completion?(nil, .incorrectFormat(reason: error.localizedDescription))
                     }
-            }
+                } else if statusCode == 401 {
+                    completion?(nil, .unauthorized)
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
         }
     }
     
@@ -192,26 +179,95 @@ class APIManager: NSObject, APIManagerType {
         let url = ApiURL.city(id: countyId).url()
         let headers = authorizationHeaders()
         
-        #warning("remove async after")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            Alamofire
-                .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
-                .response { response in
-                    let statusCode = response.response?.statusCode
-                    if statusCode == 200,
-                        let data = response.data {
-                        do {
-                            let cities = try JSONDecoder().decode([CityResponse].self, from: data)
-                            completion?(cities, nil)
-                        } catch {
-                            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
-                        }
-                    } else if statusCode == 401 {
-                        completion?(nil, .unauthorized)
-                    } else {
-                        completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+        Alamofire
+            .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    do {
+                        let cities = try JSONDecoder().decode([CityResponse].self, from: data)
+                        completion?(cities, nil)
+                    } catch {
+                        completion?(nil, .incorrectFormat(reason: error.localizedDescription))
                     }
-            }
+                } else if statusCode == 401 {
+                    completion?(nil, .unauthorized)
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
+        }
+    }
+    
+    func fetchBeneficiaries(completion: (([BeneficiaryResponse]?, APIError?) -> Void)?) {
+        let url = ApiURL.beneficiaries.url()
+        let headers = authorizationHeaders()
+        
+        Alamofire
+            .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    do {
+                        let beneficiaries = try JSONDecoder().decode(BeneficiaryListResponse.self, from: data)
+                        completion?(beneficiaries.beneficiaries, nil)
+                    } catch {
+                        completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+                    }
+                } else if statusCode == 401 {
+                    completion?(nil, .unauthorized)
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
+        }
+    }
+    
+    func fetchBeneficiary(beneficiaryId: Int, completion: ((BeneficiaryResponse?, APIError?) -> Void)?) {
+        let url = ApiURL.beneficiary(id: beneficiaryId).url()
+        let headers = authorizationHeaders()
+        
+        Alamofire
+            .request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    do {
+                        let beneficiary = try JSONDecoder().decode(BeneficiaryResponse.self, from: data)
+                        completion?(beneficiary, nil)
+                    } catch {
+                        completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+                    }
+                } else if statusCode == 401 {
+                    completion?(nil, .unauthorized)
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
+        }
+    }
+    
+    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?) {
+        let url = ApiURL.beneficiaries.url()
+        let headers = authorizationHeaders()
+        
+        Alamofire
+            .request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    if let beneficiaryStringId = String(data: data, encoding: .utf8),
+                        let beneficiaryId = Int(beneficiaryStringId) {
+                        completion?(beneficiaryId, nil)
+                    } else {
+                        completion?(nil, .generic(reason: "Unknown reason"))
+                    }
+                } else if statusCode == 401 {
+                    completion?(nil, .unauthorized)
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
         }
     }
     
@@ -403,28 +459,28 @@ class APIMock: NSObject, APIManagerType {
         return formatter
     }()
     
-    func login(email: String, password: String, completion: ((APIError?) -> Void)?) {
-        completion?(nil)
+    func login(email: String, password: String, completion: ((LoginResponse?, APIError?) -> Void)?) {
+//        completion?(nil)
     }
     
-    func fetchPatients(completion: (([Patient]?, APIError?) -> Void)?) {
-        guard let response = fromFile(filename: "PatientsResponse", ext: "json", statusCode: 200) else {
-            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
-            return
-        }
-        if response.response?.statusCode == 200,
-            let data = response.data {
-            do {
-                let response = try JSONDecoder().decode([Patient].self, from: data)
-                completion?(response, nil)
-            } catch {
-                completion?(nil, .incorrectFormat(reason: error.localizedDescription))
-            }
-        } else if response.response?.statusCode == 401 {
-            completion?(nil, .unauthorized)
-        } else {
-            completion?(nil, .incorrectFormat(reason: "Unknown reason (code: \(response.response?.statusCode ?? -1))"))
-        }
+    func fetchBeneficiaries(completion:(([BeneficiaryResponse]?, APIError?) -> Void)?) {
+//        guard let response = fromFile(filename: "PatientsResponse", ext: "json", statusCode: 200) else {
+//            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+//            return
+//        }
+//        if response.response?.statusCode == 200,
+//            let data = response.data {
+//            do {
+//                let response = try JSONDecoder().decode([BeneficiaryResponse].self, from: data)
+//                completion?(response, nil)
+//            } catch {
+//                completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+//            }
+//        } else if response.response?.statusCode == 401 {
+//            completion?(nil, .unauthorized)
+//        } else {
+//            completion?(nil, .incorrectFormat(reason: "Unknown reason (code: \(response.response?.statusCode ?? -1))"))
+//        }
     }
     
 }

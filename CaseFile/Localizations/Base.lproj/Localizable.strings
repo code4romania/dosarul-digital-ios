@@ -22,6 +22,10 @@
 "Button_OnboardingPrevious" = "ÎNAPOI";
 "Button_OnboardingStart" = "START";
 "Button_AddPatient" = "Adaugă beneficiar nou";
+"Button_FillForm" = "Completează chestionar";
+"Button_Form" = "Chestionar";
+"Button_SendFile" = "Trimite fișă";
+"Button_Edit" = "Editează";
 
 "Label_MyPatients" = "Pacienții mei";
 "Label_Info" = "Info";
@@ -136,6 +140,11 @@
 "Patients.Add.Field.Gender.Description" = "ex: feminin";
 "Patients.Add.Field.Relationship.Title" = "Relația familială";
 "Patients.Add.Field.Relationship.Description" = "ex: copil";
+
+"Patients.Summary.Age.Title" = "Vârstă";
+"Patients.Summary.CivilStatus.Title" = "Stare civilă";
+"Patients.Summary.County.Title" = "Județ";
+"Patients.Summary.City.Title" = "Localitate";
 
 "Enums.CivilStatus.NotMarried" = "Necăsătorit(ă)";
 "Enums.CivilStatus.Married" = "Căsătorit(ă)";

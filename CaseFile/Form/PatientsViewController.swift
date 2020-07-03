@@ -9,7 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSetDelegate, UITableViewDataSource, UITableViewDelegate {
+class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSetDelegate, UITableViewDataSource, UITableViewDelegate, BeneficiaryCellDelegate {
 
     let model = PatientsViewModel()
     let tableView = UITableView()
@@ -43,6 +43,11 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        tableView.register(UINib(nibName: "BeneficiaryCell", bundle: nil), forCellReuseIdentifier: "BeneficiaryCell")
+        
+        tableView.estimatedRowHeight = 256
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     func configureButton() {
@@ -91,11 +96,32 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return model.dataSource?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let beneficiary = model.dataSource?[indexPath.row],
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficiaryCell", for: indexPath) as? BeneficiaryCell else {
+            return UITableViewCell()
+        }
+        cell.delegate = self
+        cell.state = .summarized
+        cell.updateWithModel(beneficiary)
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
+    func didTapBottomButton(in cell: BeneficiaryCell) {
+        print("bottom")
+    }
+    
+    func didTapLeftBottomButton(in cell: BeneficiaryCell) {
+        print("left")
+    }
+    
+    func didTapRightBottomButton(in cell: BeneficiaryCell) {
+        print("right")
     }
     
 }

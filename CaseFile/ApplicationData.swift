@@ -47,6 +47,24 @@ class ApplicationData: NSObject {
         super.init()
     }
     
+//    func downloadBeneficiaries(then callback: ((Error?, [BeneficiarySummaryResponse]))?) {
+//
+//    }
+    
+    func downloadUpdatedBeneficiaries(then callback: ((Error?) -> Void)?) {
+        APIManager.shared.fetchBeneficiaries { (beneficiaries, error) in
+            guard error == nil else {
+                callback?(error)
+                return
+            }
+            guard let beneficiaries = beneficiaries else {
+                callback?(APIError.incorrectFormat(reason: "Error.IncorrectFormat"))
+                return
+            }
+            DB.shared.saveBeneficiaries(beneficiaries)
+        }
+    }
+    
     func downloadUpdatedForms(then callback: @escaping (Error?) -> Void) {
         DebugLog("Downloading new form summaries")
         

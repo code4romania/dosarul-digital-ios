@@ -16,7 +16,7 @@ protocol PreferencesManagerType: NSObject {
     var sectionName: String? { get set }
     var languageLocale: String? { get set }
     var languageName: String? { get set }
-    var wasAppStartedBefore: Bool { get }
+    var isNewApp: Bool { get }
 }
 
 class PreferencesManager: NSObject, PreferencesManagerType {
@@ -80,7 +80,7 @@ class PreferencesManager: NSObject, PreferencesManagerType {
         }
     }
     
-    var wasAppStartedBefore: Bool {
+    var isNewApp: Bool {
         get {
             var newApp = false
             if getValue(forKey: .newAppToken) == nil {

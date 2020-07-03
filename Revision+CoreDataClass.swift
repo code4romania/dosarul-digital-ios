@@ -1,5 +1,5 @@
 //
-//  User+CoreDataClass.swift
+//  Revision+CoreDataClass.swift
 //  CaseFile
 //
 //  Created by Andrei Bouariu on 02/07/2020.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(User)
-public class User: NSManagedObject {
+@objc(Revision)
+public class Revision: NSManagedObject {
 
 }

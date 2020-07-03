@@ -16,6 +16,7 @@ struct OnboardingChildModel {
 
 class OnboardingViewModel: NSObject {
     static var shouldShowOnboarding: Bool { return !PreferencesManager.shared.wasOnboardingShown }
+    static var shouldShowWelcome: Bool = false
     
     var currentPage: Int = 0
     

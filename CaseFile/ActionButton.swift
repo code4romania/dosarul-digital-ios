@@ -8,8 +8,19 @@
 
 import UIKit
 
+enum ActionButtonType {
+    case light
+    case heavy
+}
+
 @IBDesignable
 class ActionButton: UIButton {
+    
+    var type: ActionButtonType = .heavy {
+        didSet {
+            setup()
+        }
+    }
     
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
@@ -22,13 +33,24 @@ class ActionButton: UIButton {
     }
     
     fileprivate func setup() {
-        setBackgroundImage(UIImage.from(color: .actionButtonBackground), for: .normal)
-        setBackgroundImage(UIImage.from(color: .actionButtonBackgroundHighlighted), for: .highlighted)
-        setBackgroundImage(UIImage.from(color: .actionButtonBackgroundDisabled), for: .disabled)
+        switch type {
+        case .heavy:
+            setBackgroundImage(UIImage.from(color: .actionButtonBackground), for: .normal)
+            setBackgroundImage(UIImage.from(color: .actionButtonBackgroundHighlighted), for: .highlighted)
+            setBackgroundImage(UIImage.from(color: .actionButtonBackgroundDisabled), for: .disabled)
 
-        setTitleColor(.actionButtonForeground, for: .normal)
-        setTitleColor(.actionButtonForeground, for: .highlighted)
-        setTitleColor(.actionButtonForegroundDisabled, for: .disabled)
+            setTitleColor(.actionButtonForeground, for: .normal)
+            setTitleColor(.actionButtonForeground, for: .highlighted)
+            setTitleColor(.actionButtonForegroundDisabled, for: .disabled)
+        case .light:
+            setBackgroundImage(UIImage.from(color: .actionButtonLightBackground), for: .normal)
+            setBackgroundImage(UIImage.from(color: .actionButtonLightBackgroundHighlighted), for: .highlighted)
+            setBackgroundImage(UIImage.from(color: .actionButtonLightBackgroundDisabled), for: .disabled)
+
+            setTitleColor(.actionButtonLightForeground, for: .normal)
+            setTitleColor(.actionButtonLightForeground, for: .highlighted)
+            setTitleColor(.actionButtonLightForegroundDisabled, for: .disabled)
+        }
         
         if (imageView?.image != nil) {
             titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)

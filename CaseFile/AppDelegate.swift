@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         CoreData.containerName = "s"
         
-        if !PreferencesManager.shared.wasAppStartedBefore {
+        if PreferencesManager.shared.isNewApp {
             handleFirstAppStart()
         }
         
@@ -104,7 +104,7 @@ extension AppDelegate {
             window?.overrideUserInterfaceStyle = .light
         }
         
-        AppRouter.shared.showAppEntry()
+        AppRouter.shared.showAppEntry(animated: false)
     }
     
     

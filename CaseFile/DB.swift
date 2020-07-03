@@ -11,9 +11,82 @@ import CoreData
 
 class DB: NSObject {
     static let shared = DB()
+
+    private var _currentUser: User?
+    var currentUser: User? {
+        get {
+            if _currentUser == nil {
+                _currentUser = getCurrentUser()
+            }
+            return _currentUser
+        }
+    }
+    
+    func getCurrentUser() -> User? {
+        guard let email = AccountManager.shared.email else {
+            return nil
+        }
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        request.predicate = NSPredicate(format: "email == %@", email)
+        request.relationshipKeyPathsForPrefetching = ["beneficiaries", "beneficiaries.revisions"]
+        request.fetchLimit = 1
+        let matches = CoreData.fetch(request) as? [User]
+        return matches?.first
+    }
     
     var needsSync: Bool {
         return getUnsyncedNotes().count + getUnsyncedQuestions().count > 0
+    }
+    
+    func saveUser(_ account: AccountManagerType) {
+        let userEntityDescription = NSEntityDescription.entity(forEntityName: "User", in: CoreData.context)
+        let user = User(entity: userEntityDescription!, insertInto: CoreData.context)
+        user.email = account.email
+        user.expiresIn = Int64(account.expiresIn ?? -1)
+        user.accessToken = account.accessToken
+        do {
+            try CoreData.save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func saveBeneficiaries(_ beneficiaries: [BeneficiaryResponse]) {
+        #warning("local beneficiaries are fully overwritten with the server values, even if some of their properties have been modified")
+        let beneficiariesIds = beneficiaries.map { $0.id }
+        
+        // delete local beneficiaries who no longer exist on server for the currentUser
+        currentUser?.beneficiaries?
+            .compactMap({ $0 as? Beneficiary })
+            .filter({ !beneficiariesIds.contains($0.id) })
+            .forEach({
+                #warning("check that data is actually deleted")
+                CoreData.context.delete($0)
+            })
+        
+        // add new beneficiaries
+        beneficiaries.forEach { (beneficiary) in
+            let beneficiaryEntityDescription = NSEntityDescription.entity(forEntityName: "Beneficiary",
+                                                                          in: CoreData.context)
+            let localBeneficiary = Beneficiary(entity: beneficiaryEntityDescription!,
+                                               insertInto: CoreData.context)
+            localBeneficiary.user = currentUser
+            localBeneficiary.id = beneficiary.id
+            localBeneficiary.name = beneficiary.name
+            localBeneficiary.civilStatus = beneficiary.civilStatus
+            localBeneficiary.county = beneficiary.county
+            localBeneficiary.countyId = beneficiary.countyId ?? localBeneficiary.countyId
+            localBeneficiary.city = beneficiary.city
+            localBeneficiary.cityId = beneficiary.cityId ?? localBeneficiary.cityId
+            localBeneficiary.age = beneficiary.age ?? localBeneficiary.age
+        }
+        
+        do {
+            try CoreData.save()
+        } catch {
+            print(error)
+        }
+        
     }
     
     func currentSectionInfo() -> SectionInfo? {

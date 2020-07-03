@@ -161,7 +161,8 @@ class FormListViewController: MVViewController {
     }
     
     @objc func proceedButtonTouched(sender: Any) {
-        model.setLoading(true, error: nil)
+        #warning("continue here")
+        model.createPatient()
     }
 
     // MARK: - UI
