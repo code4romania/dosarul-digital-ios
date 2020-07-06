@@ -251,8 +251,10 @@ class APIManager: NSObject, APIManagerType {
         let url = ApiURL.beneficiaries.url()
         let headers = authorizationHeaders()
         
+        let parameters = encodableToParamaters(beneficiary)
+        
         Alamofire
-            .request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .response { response in
                 let statusCode = response.response?.statusCode
                 if statusCode == 200,
@@ -423,7 +425,9 @@ class APIManager: NSObject, APIManagerType {
 
 extension APIManager {
     fileprivate func encodableToParamaters<T: Encodable>(_ encodable: T) -> [String: Any] {
-        let body = try! JSONEncoder().encode(encodable)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let body = try! encoder.encode(encodable)
         return try! JSONSerialization.jsonObject(with: body, options: []) as! [String: Any]
     }
     

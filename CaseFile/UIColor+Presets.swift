@@ -48,7 +48,7 @@ extension UIColor {
 
     static var cardBackground = UIColor.white
     static var cardBackgroundSelected = chooserButtonSelectedBackground
-    static var cardShadow = UIColor.black.withAlphaComponent(0.03)
+    static var cardShadow = UIColor(hexCode: 0x043252).withAlphaComponent(0.18)
     static var cardDarkerShadow = UIColor.black.withAlphaComponent(0.12)
     static var tableSectionHeaderBg = UIColor(hexCode: 0xEEEDED)
 

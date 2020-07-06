@@ -20,13 +20,15 @@ struct LoginRequest: Codable {
 struct BeneficiaryRequest: Codable {
     var id: Int?
     var userId: Int?
-    var name: String
-    var birthDate: Date
+    var name: String?
+    var birthDate: Date?
     var civilStatus: CivilStatus
     var cityId: Int
     var countyId: Int
-    var gender: Int
+    var gender: Gender
     var formIds: [Int]?
+    var newAllocatedFormsIds: [Int]?
+    var dealocatedFormsIds: [Int]?
     
     enum CodingKeys: String, CodingKey {
         case id = "beneficiaryId"
@@ -38,6 +40,8 @@ struct BeneficiaryRequest: Codable {
         case countyId
         case gender
         case formIds
+        case newAllocatedFormsIds
+        case dealocatedFormsIds
     }
 }
 
@@ -143,7 +147,7 @@ struct BeneficiaryResponse: Codable {
     var city: String?                       // received on /api/v1/beneficiary
     var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
     var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
-    var gender: Int16?                      // received on /api/v1/beneficiary/{id}
+    var gender: Int16?                      // always received
     var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
     var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
     

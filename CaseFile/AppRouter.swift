@@ -38,7 +38,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     
     func showAppEntry(animated: Bool) {
         if AccountManager.shared.accessToken != nil {
-            DB.shared.saveUser(AccountManager.shared)
+            DB.shared.saveUser(AccountManager.shared, persistent: true)
             showLoadingScreen()
             downloadRequiredData { [weak self] (error) in
                 if error != nil {
@@ -140,9 +140,14 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func goToDashboard() {
-        let dashboardViewController = PatientsViewController()
-        let navigation = UINavigationController(rootViewController: dashboardViewController)
-        self.window?.rootViewController = navigation
+        let model = PatientViewModel(operation: .view)
+        let dashboardViewController = PatientsViewController(model: model)
+        if let navigationController = navigationController {
+            navigationController.setViewControllers([dashboardViewController], animated: true)
+        } else {
+            let navigation = UINavigationController(rootViewController: dashboardViewController)
+            self.window?.rootViewController = navigation
+        }
     }
     
     func showLoadingScreen() {
@@ -262,13 +267,16 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func navigationDrawer(_ navigationDrawer: NavigationDrawer, viewControllerAt index: Int) -> UIViewController {
-        return PatientsViewController()
+        let model = PatientViewModel(operation: .view)
+        return PatientsViewController(model: model)
     }
     
     func navigationDrawer(_ navigationDrawer: NavigationDrawer, didTapButtonAt index: Int) {
         switch index {
         case 0:
-            navigationDrawer.navigationController?.pushViewController(PatientsViewController(), animated: true)
+            let model = PatientViewModel(operation: .view)
+            let viewController = PatientsViewController(model: model)
+            navigationDrawer.navigationController?.pushViewController(viewController, animated: true)
         case 1:
             break
         case 2:

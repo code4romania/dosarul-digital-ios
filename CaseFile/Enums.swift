@@ -26,9 +26,36 @@ enum CivilStatus: Int, CustomStringConvertible, Codable {
             return "Enums.CivilStatus.Widowed".localized
         }
     }
+    
+    func description(gender: Gender) -> String {
+        switch gender {
+        case .female:
+            switch self {
+            case .notMarried:
+                return "Enums.CivilStatus.NotMarried.Female".localized
+            case .married:
+                return "Enums.CivilStatus.Married.Female".localized
+            case .divorced:
+                return "Enums.CivilStatus.Divorced.Female".localized
+            case .widowed:
+                return "Enums.CivilStatus.Widowed.Female".localized
+            }
+        case .male:
+            switch self {
+            case .notMarried:
+                return "Enums.CivilStatus.NotMarried.Male".localized
+            case .married:
+                return "Enums.CivilStatus.Married.Male".localized
+            case .divorced:
+                return "Enums.CivilStatus.Divorced.Male".localized
+            case .widowed:
+                return "Enums.CivilStatus.Widowed.Male".localized
+            }
+        }
+    }
 }
 
-enum Gender: Int, CustomStringConvertible {
+enum Gender: Int, CustomStringConvertible, Codable {
     case male
     case female
     

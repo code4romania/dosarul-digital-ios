@@ -9,7 +9,7 @@
 import UIKit
 
 class PatientHUDViewModel: NSObject {
-    var patient: BeneficiaryRequest? {
+    var patient: Beneficiary? {
         didSet {
             onPatientChange?()
         }

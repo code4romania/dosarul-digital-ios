@@ -110,11 +110,7 @@ class FormListViewModel: NSObject {
         }
     }
     
-    func createPatient() {
-        setLoading(true, error: nil)
-    }
-    
-    fileprivate func setLoading(_ loading: Bool, error: Error?) {
+    func setLoading(_ loading: Bool, error: Error?) {
         onLoadingChanged?(loading, error)
     }
 }

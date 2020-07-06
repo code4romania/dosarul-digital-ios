@@ -11,14 +11,22 @@ import EmptyDataSet_Swift
 
 class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSetDelegate, UITableViewDataSource, UITableViewDelegate, BeneficiaryCellDelegate {
 
-    let model = PatientsViewModel()
+    let model: PatientViewModel
     let tableView = UITableView()
     let addNewPatientButton = ActionButton()
     
+    required init(model: PatientViewModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = model.navigationTitle
-        
+        navigationItem.title = "Title.Patients".localized
         configureTableView()
         configureButton()
         
@@ -26,6 +34,7 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        model.operation = .view
         DebugLog("Application data view model:\n\(ApplicationData.shared.objectRepository)")
     }
     
@@ -35,6 +44,7 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
         
+        tableView.backgroundColor = .appBackground
         tableView.separatorStyle = .none
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +58,9 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         
         tableView.estimatedRowHeight = 256
         tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 52, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -8)
     }
     
     func configureButton() {
@@ -67,7 +80,10 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     }
     
     @objc func onTapNewPatient(sender: Any) {
-        let addNewPatientVC = AddPatientViewController(withModel: AddPatientViewModel(fromRelationship: false))
+        model.beneficiary = nil
+        model.resetForm()
+        model.operation = .add
+        let addNewPatientVC = AddPatientViewController(withModel: model)
         navigationController?.pushViewController(addNewPatientVC, animated: true)
     }
     
@@ -96,11 +112,11 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.dataSource?.count ?? 0
+        return model.beneficiaryList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let beneficiary = model.dataSource?[indexPath.row],
+        guard let beneficiary = model.beneficiaryList?[indexPath.row],
             let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficiaryCell", for: indexPath) as? BeneficiaryCell else {
             return UITableViewCell()
         }
@@ -110,6 +126,12 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        model.beneficiary = model.beneficiaryList?[indexPath.row]
+        let beneficiaryDetailsVC = PatientDetailsViewController(viewModel: model)
+        self.navigationController?.pushViewController(beneficiaryDetailsVC, animated: true)
     }
     
     func didTapBottomButton(in cell: BeneficiaryCell) {

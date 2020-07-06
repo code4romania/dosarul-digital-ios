@@ -18,14 +18,17 @@ extension Beneficiary {
     }
 
     @NSManaged public var age: Int16
+    @NSManaged public var birthDate: Date?
     @NSManaged public var city: String?
     @NSManaged public var cityId: Int16
     @NSManaged public var civilStatus: Int16
     @NSManaged public var county: String?
     @NSManaged public var countyId: Int16
+    @NSManaged public var gender: Int16
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
     @NSManaged public var user: User?
+    @NSManaged public var userId: Int16
     @NSManaged public var revisions: NSSet?
 
 }

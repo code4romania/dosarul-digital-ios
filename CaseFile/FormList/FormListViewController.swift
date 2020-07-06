@@ -50,6 +50,7 @@ class FormListViewController: MVViewController {
         }
         configureSubviews()
         updateLabelsTexts()
+        updateInterface()
         bindToUpdates()
     }
 
@@ -120,7 +121,7 @@ class FormListViewController: MVViewController {
             if loading {
                 self?.showFullScreenLoading(text: "Loading.Title.AddPatient".localized)
             } else {
-                self?.hideFullScreenLoading(text: error != nil ? "Loading.Success.AddPatient".localized : "Loading.Error.AddPatient".localized,
+                self?.hideFullScreenLoading(text: error == nil ? "Loading.Success.AddPatient".localized : "Loading.Error.AddPatient".localized,
                                             error: error != nil)
             }
         }
@@ -161,8 +162,18 @@ class FormListViewController: MVViewController {
     }
     
     @objc func proceedButtonTouched(sender: Any) {
-        #warning("continue here")
-        model.createPatient()
+        model.setLoading(true, error: nil)
+        ApplicationData.shared.setObject(model.selectedForms as NSObject, for: .patientForms)
+        PatientViewModel.createBeneficiary { [weak self] (beneficiaryId, error) in
+            self?.model.setLoading(false, error: error)
+            guard error == nil else {
+                return
+            }
+            try! CoreData.save()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                AppRouter.shared.goToDashboard()
+            }
+        }
     }
 
     // MARK: - UI

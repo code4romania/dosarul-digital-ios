@@ -10,7 +10,7 @@ import UIKit
 
 class AddPatientViewController: MVViewController, UITableViewDelegate, UITableViewDataSource, FormDropdownCellDelegate {
     
-    let model: AddPatientViewModel
+    let model: PatientViewModel
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var proceedButton: ActionButton!
@@ -20,7 +20,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Object
     
-    init(withModel model: AddPatientViewModel) {
+    init(withModel model: PatientViewModel) {
         self.model = model
         super.init(nibName: "AddPatientViewController", bundle: nil)
     }
@@ -32,12 +32,18 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     // MARK: - VC
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = model.navigationTitle
+        switch model.operation {
+        case .add:
+            navigationItem.title = "Title.Patients.Add".localized
+        case .edit:
+            navigationItem.title = "Title.Patients.Edit".localized
+        case .view:
+            break
+        }
         view.backgroundColor = .cn_gray2
         bindToModelUpdates()
         configureTableView()
         configureButton()
-        #warning("remove update interfate on load")
         updateInterface()
     }
     
@@ -72,7 +78,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     @objc func proceedButtonTouched(sender: Any) {
-        model.buildForm()
+        model.processForm()
         let formsModel = FormListViewModel(selectionAction: .selectForm)
         let formsVC = FormListViewController(withModel: formsModel)
         navigationController?.pushViewController(formsVC, animated: true)
@@ -159,7 +165,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     // Present birthday picker
-    func handleBirthdayPickerTapped(form: AddPatientForm) {
+    func handleBirthdayPickerTapped(form: PatientForm) {
         let pickerModel = TimePickerViewModel(withTime: form.value as? Date, dateFormatter: form.timeFormatter)
         pickerModel.maxDate = Date();
         let picker = TimePickerViewController(withModel: pickerModel)
@@ -174,7 +180,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     // Present civil status picker
-    func handleCivilStatusPickerTapped(form: AddPatientForm) {
+    func handleCivilStatusPickerTapped(form: PatientForm) {
         form.getSource?() { [weak self] civilStatuses in
             guard let self = self, let source = civilStatuses as? [CivilStatus] else {
                 return
@@ -202,7 +208,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     // Present county picker
-    func handleCountyPickerTapped(form: AddPatientForm) {
+    func handleCountyPickerTapped(form: PatientForm) {
         // if counties source is not populated, update it
         form.getSource?() { [weak self] counties in
             guard let self = self, let source = counties as? [CountyResponse] else {
@@ -237,7 +243,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     // Present city picker
-    func handleCityPickerTapped(form: AddPatientForm) {
+    func handleCityPickerTapped(form: PatientForm) {
         // check county to be selected
         guard model.countyForm.value != nil else {
             let alert = UIAlertController.error(withMessage: "Validation.CountyNotSelected".localized)
@@ -277,7 +283,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     // Present gender picker
-    func handleGenderPickerTapped(form: AddPatientForm) {
+    func handleGenderPickerTapped(form: PatientForm) {
         form.getSource?() { [weak self] genders in
             guard let self = self, let source = genders as? [Gender] else {
                 return
@@ -307,6 +313,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     }
     
     deinit {
+        model.rollback()
         DebugLog("DEALLOC ADD PATIENT VIEW CONTROLLER")
     }
 }

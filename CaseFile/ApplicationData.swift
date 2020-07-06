@@ -13,12 +13,15 @@ class ApplicationData: NSObject {
         
     enum Keys {
         case patient
+        case patientForms
         case hud(view: UIView)
         
         var value: String {
             switch self {
             case .patient:
                 return "ObjectPatient"
+            case .patientForms:
+                return "ObjectPatientForms"
             case .hud(let view):
                 return String(format: "%p", unsafeBitCast(view, to: Int.self))
             }

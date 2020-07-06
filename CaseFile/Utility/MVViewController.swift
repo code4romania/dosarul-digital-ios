@@ -65,7 +65,7 @@ class MVViewController: UIViewController {
         guard let headerContainer = headerContainer else { return }
         let viewModel = PatientHUDViewModel()
         if let currentPatientArray = ApplicationData.shared.object(for: .patient) as? NSArray,
-            let currentPatient = currentPatientArray[0] as? BeneficiaryRequest {
+            let currentPatient = currentPatientArray[0] as? Beneficiary {
             viewModel.patient = currentPatient
         }
         let controller = PatientHUDViewController(model: viewModel)
@@ -145,7 +145,7 @@ extension UIViewController {
         }
         hud.textLabel.text = text
         ApplicationData.shared.setObject([hud] as NSObject, for: ApplicationData.Keys.hud(view: self.view))
-        hud.show(in: self.view)
+        hud.show(in: self.navigationController?.view ?? self.view)
     }
     
     func hideFullScreenLoading(text: String, error: Bool) {

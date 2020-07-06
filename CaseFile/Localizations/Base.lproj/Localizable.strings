@@ -96,7 +96,9 @@
 "Title.Language" = "Alege limba";
 "Title.NewVersion" = "Actualizare disponibilă";
 "Title.Patients" = "Lista beneficiari";
+"Title.Patients.Details" = "Detalii beneficiar";
 "Title.Patients.Add" = "Adăugare beneficiar nou";
+"Title.Patients.Edit" = "Editare beneficiar";
 "Title.Forms" = "Chestionare";
 
 "Next" = "Următoarea";
@@ -147,9 +149,17 @@
 "Patients.Summary.City.Title" = "Localitate";
 
 "Enums.CivilStatus.NotMarried" = "Necăsătorit(ă)";
+"Enums.CivilStatus.NotMarried.Female" = "Necăsătorită";
+"Enums.CivilStatus.NotMarried.Male" = "Necăsătorit";
 "Enums.CivilStatus.Married" = "Căsătorit(ă)";
+"Enums.CivilStatus.Married.Female" = "Căsătorită";
+"Enums.CivilStatus.Married.Male" = "Căsătorit";
 "Enums.CivilStatus.Divorced" = "Divorțat(ă)";
+"Enums.CivilStatus.Divorced.Female" = "Divorțată";
+"Enums.CivilStatus.Divorced.Male" = "Divorțat";
 "Enums.CivilStatus.Widowed" = "Văduv(ă)";
+"Enums.CivilStatus.Widowed.Female" = "Văduvă";
+"Enums.CivilStatus.Widowed.Male" = "Văduv";
 
 "Enums.Gender.Female" = "Feminin";
 "Enums.Gender.Male" = "Masculin";

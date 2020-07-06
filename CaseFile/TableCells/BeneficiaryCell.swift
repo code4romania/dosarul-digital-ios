@@ -12,6 +12,14 @@ protocol BeneficiaryCellDelegate: NSObject {
     func didTapBottomButton(in cell: BeneficiaryCell)
     func didTapLeftBottomButton(in cell: BeneficiaryCell)
     func didTapRightBottomButton(in cell: BeneficiaryCell)
+    func didTapTopRightButton(in cell: BeneficiaryCell)
+}
+
+extension BeneficiaryCellDelegate {
+    func didTapBottomButton(in cell: BeneficiaryCell) { }
+    func didTapLeftBottomButton(in cell: BeneficiaryCell) { }
+    func didTapRightBottomButton(in cell: BeneficiaryCell) { }
+    func didTapTopRightButton(in cell: BeneficiaryCell) { }
 }
 
 enum BeneficiaryCellState {
@@ -29,6 +37,7 @@ class BeneficiaryCell: UITableViewCell {
     
     weak var delegate: BeneficiaryCellDelegate?
     
+    @IBOutlet weak var container: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var ageTitleLabel: UILabel!
@@ -56,6 +65,12 @@ class BeneficiaryCell: UITableViewCell {
     }
     
     func setupCell() {
+        // add shadow
+        container.layer.shadowColor = UIColor.cardShadow.cgColor
+        container.layer.shadowRadius = Configuration.shadowRadius
+        container.layer.shadowOpacity = 1
+        container.layer.shadowOffset = .zero
+        
         // hide/show views
         bottomButton.isHidden = state == .detailed
         arrowImageView.isHidden = state == .detailed
@@ -80,15 +95,14 @@ class BeneficiaryCell: UITableViewCell {
     }
     
     func updateWithModel(_ beneficiary: Beneficiary) {
-        switch state {
-        case .summarized:
-            nameLabel.text = beneficiary.name
-            ageLabel.text = String(beneficiary.age)
+        nameLabel.text = beneficiary.name
+        ageLabel.text = String(beneficiary.age)
+        cityLabel.text = beneficiary.city
+        countyLabel.text = beneficiary.county
+        if let gender = Gender(rawValue: Int(beneficiary.gender)) {
+            civilStatusLabel.text = CivilStatus(rawValue: Int(beneficiary.civilStatus))?.description(gender: gender).lowercased()
+        } else {
             civilStatusLabel.text = CivilStatus(rawValue: Int(beneficiary.civilStatus))?.description.lowercased()
-            cityLabel.text = beneficiary.city
-            countyLabel.text = beneficiary.county
-        case .detailed:
-            #warning("TODO")
         }
     }
     
@@ -100,6 +114,8 @@ class BeneficiaryCell: UITableViewCell {
             delegate?.didTapLeftBottomButton(in: self)
         case bottomRightButton:
             delegate?.didTapRightBottomButton(in: self)
+        case editButton:
+            delegate?.didTapTopRightButton(in: self)
         default:
             break
         }
