@@ -34,7 +34,7 @@ class BeneficiaryCell: UITableViewCell {
             setupCell()
         }
     }
-    
+    var beneficiary: Beneficiary?
     weak var delegate: BeneficiaryCellDelegate?
     
     @IBOutlet weak var container: UIView!
@@ -94,7 +94,10 @@ class BeneficiaryCell: UITableViewCell {
         countyTitleLabel.text = "Patients.Summary.County.Title".localized.uppercased()
     }
     
-    func updateWithModel(_ beneficiary: Beneficiary) {
+    func updateInterface() {
+        guard let beneficiary = beneficiary else {
+            return
+        }
         nameLabel.text = beneficiary.name
         ageLabel.text = String(beneficiary.age)
         cityLabel.text = beneficiary.city

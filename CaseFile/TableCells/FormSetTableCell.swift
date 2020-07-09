@@ -18,6 +18,10 @@ struct FormSetCellModel: Equatable {
     var answeredOutOfTotalQuestions: String
     var selected: Bool?
     var selectionType: FormSelectionType
+    
+    static func == (lhs: FormSetCellModel, rhs: FormSetCellModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 class FormSetTableCell: UITableViewCell {
@@ -57,6 +61,7 @@ class FormSetTableCell: UITableViewCell {
         case .fillForm:
             cardContainer.backgroundColor = selected ?
                 UIColor.cardBackgroundSelected : UIColor.cardBackground
+            selectionView.isHidden = true
         case .selectForm:
             selectionView.isHidden = !selected
         case .none:

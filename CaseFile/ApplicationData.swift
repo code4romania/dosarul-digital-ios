@@ -14,6 +14,8 @@ class ApplicationData: NSObject {
     enum Keys {
         case patient
         case patientForms
+        case patientAddedForms
+        case patientRemovedForms
         case hud(view: UIView)
         
         var value: String {
@@ -22,6 +24,10 @@ class ApplicationData: NSObject {
                 return "ObjectPatient"
             case .patientForms:
                 return "ObjectPatientForms"
+            case .patientAddedForms:
+                return "ObjectPatientFormsAdded"
+            case .patientRemovedForms:
+                return "ObjectPatientFormsRemoved"
             case .hud(let view):
                 return String(format: "%p", unsafeBitCast(view, to: Int.self))
             }

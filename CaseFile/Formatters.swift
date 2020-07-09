@@ -23,3 +23,9 @@ extension DateFormatter {
         return fmt
     }()
 }
+
+extension Date {
+    var currentAge: Int {
+        return (Calendar.current.dateComponents([.year], from: self, to: Date())).year!
+    }
+}

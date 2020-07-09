@@ -96,11 +96,11 @@ class AttachNoteViewModel: NSObject {
         }
         
         let pollingStation = DB.shared.currentSectionInfo()!
+        #warning("change beneficiary id")
         let request = UploadNoteRequest(
+            beneficiaryId: 0,
             imageData: attachment?.data,
             questionId: questionId,
-            countyCode: pollingStation.countyCode ?? "",
-            pollingStationId: Int(pollingStation.sectionId),
             text: text)
         
         if let questionId = questionId {

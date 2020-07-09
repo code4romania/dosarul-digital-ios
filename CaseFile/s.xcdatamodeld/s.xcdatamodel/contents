@@ -17,12 +17,10 @@
         <attribute name="county" optional="YES" attributeType="String"/>
         <attribute name="countyId" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="deallocatedForms" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaryOld" inverseEntity="Form"/>
-        <relationship name="forms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiary" inverseEntity="Form"/>
-        <relationship name="newAllocatedForms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaryNew" inverseEntity="Form"/>
+        <relationship name="forms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaries" inverseEntity="Form"/>
         <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="beneficiaries" inverseEntity="Revision"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="beneficiaries" inverseEntity="User"/>
         <uniquenessConstraints>
@@ -32,9 +30,13 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Form" representedClassName="Form" syncable="YES" codeGenerationType="class">
-        <relationship name="beneficiary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="forms" inverseEntity="Beneficiary"/>
-        <relationship name="beneficiaryNew" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="newAllocatedForms" inverseEntity="Beneficiary"/>
-        <relationship name="beneficiaryOld" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="deallocatedForms" inverseEntity="Beneficiary"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="forms" inverseEntity="Beneficiary"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Note" representedClassName="Note" versionHashModifier="1" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String"/>
@@ -85,8 +87,8 @@
     </entity>
     <elements>
         <element name="Answer" positionX="376" positionY="459" width="128" height="133"/>
-        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="283"/>
-        <element name="Form" positionX="189" positionY="414" width="128" height="88"/>
+        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="253"/>
+        <element name="Form" positionX="189" positionY="414" width="128" height="73"/>
         <element name="Note" positionX="198" positionY="288" width="128" height="133"/>
         <element name="Question" positionX="178" positionY="447" width="128" height="193"/>
         <element name="Revision" positionX="198" positionY="423" width="128" height="88"/>

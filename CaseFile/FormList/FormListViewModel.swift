@@ -27,12 +27,15 @@ enum FormSelectionType {
 
 class FormListViewModel: NSObject {
     var forms: [FormSetCellModel] = []
-    
     var selectedForms: [FormSetCellModel] = [] {
         didSet {
             onSelectionStateChanged?()
         }
     }
+    var originalForms: [FormSetCellModel] = []
+    var addedForms: [FormSetCellModel] = []
+    var removedForms: [FormSetCellModel] = []
+    var beneficiary: Beneficiary?
     
     /// Check this flag, it tells you what forms have been selected in selection mode
     var selectionAction: FormSelectionType
@@ -58,27 +61,59 @@ class FormListViewModel: NSObject {
     /// Get notified when loading state changes
     var onLoadingChanged: ((Bool, Error?) -> Void)?
     
-    init(selectionAction: FormSelectionType) {
+    init(beneficiary: Beneficiary?, selectionAction: FormSelectionType) {
+        self.beneficiary = beneficiary
         self.selectionAction = selectionAction
         super.init()
-        loadCachedData()
+        loadData()
     }
 
     func reload() {
-        loadCachedData()
+        loadData()
+    }
+    
+    fileprivate func loadData() {
+        switch selectionAction {
+        case .fillForm:
+            loadBeneficiaryData()
+        case .selectForm:
+            originalForms = convertToViewModels(responses: loadBeneficiaryForms())
+            selectedForms = convertToViewModels(responses: loadBeneficiaryForms())
+            loadCachedData()
+        }
+    }
+    
+    fileprivate func loadBeneficiaryForms() -> [FormResponse]? {
+        return LocalStorage
+            .shared
+            .forms?
+            .filter({ (formResponse) -> Bool in
+                return beneficiary?
+                    .forms?
+                    .compactMap({$0 as? Form})
+                    .map({ Int($0.id) })
+                    .contains(formResponse.id) ?? false
+            })
+    }
+    
+    fileprivate func loadBeneficiaryData() {
+        if let beneficiaryForms = loadBeneficiaryForms() {
+            forms = convertToViewModels(responses: beneficiaryForms)
+        }
     }
     
     fileprivate func loadCachedData() {
         if let cached = LocalStorage.shared.forms {
-            convertToViewModels(responses: cached)
+            forms = convertToViewModels(responses: cached)
         }
     }
     
-    fileprivate func convertToViewModels(responses: [FormResponse]?) {
+    fileprivate func convertToViewModels(responses: [FormResponse]?) -> [FormSetCellModel]{
+        var result: [FormSetCellModel] = []
         if let objects = responses {
             // forms do not have sorting field
-//            let sorted = objects.sorted { $0.order ?? 0 < $1.order ?? 0 }
-            forms = objects.map { set in
+            //            let sorted = objects.sorted { $0.order ?? 0 < $1.order ?? 0 }
+            result = objects.map { set in
                 let formCodePrefix = set.code.first != nil ? String(set.code.first!).lowercased() : ""
                 let image = UIImage(named: "icon-formset-\(formCodePrefix)") ?? UIImage(named: "icon-formset-default")
                 let answeredQuestions = DB.shared.getAnsweredQuestions(inFormWithCode: set.code).count
@@ -95,13 +130,14 @@ class FormListViewModel: NSObject {
                     selectionType: selectionAction)
             }
         }
+        return result
     }
     
     func downloadFreshData() {
         isDownloadingData = true
         ApplicationData.shared.downloadUpdatedForms { error in
             self.isDownloadingData = false
-            self.convertToViewModels(responses: LocalStorage.shared.forms)
+            self.loadData()
             if let error = error {
                 self.onDownloadComplete?(.forms(reason: error.localizedDescription))
             } else {

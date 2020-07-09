@@ -167,5 +167,6 @@
 "Validation.CountyNotSelected" = "Selectează județul";
 
 "Loading.Title.AddPatient" = "Creare beneficiar...";
+"Loading.Title.EditPatient" = "Actualizare beneficiar...";
 "Loading.Error.AddPatient" = "Eroare";
 "Loading.Success.AddPatient" = "Success";

@@ -18,15 +18,15 @@ struct LoginRequest: Codable {
 }
 
 struct BeneficiaryRequest: Codable {
-    var id: Int?
-    var userId: Int?
+    var id: Int16?
+    var userId: Int16?
     var name: String?
     var birthDate: Date?
     var civilStatus: CivilStatus
-    var cityId: Int
-    var countyId: Int
+    var cityId: Int16
+    var countyId: Int16
     var gender: Gender
-    var formIds: [Int]?
+    var formsIds: [Int]?
     var newAllocatedFormsIds: [Int]?
     var dealocatedFormsIds: [Int]?
     
@@ -39,7 +39,7 @@ struct BeneficiaryRequest: Codable {
         case cityId
         case countyId
         case gender
-        case formIds
+        case formsIds
         case newAllocatedFormsIds
         case dealocatedFormsIds
     }
@@ -64,10 +64,9 @@ struct UpdatePollingStationRequest: Codable {
 }
 
 struct UploadNoteRequest: Codable {
+    var beneficiaryId: Int
     var imageData: Data?
     var questionId: Int?
-    var countyCode: String
-    var pollingStationId: Int?
     var text: String
 }
 
@@ -135,7 +134,23 @@ struct BeneficiaryListResponse: Codable {
     }
 }
 
-// Beneficiary response (sometimes it has county & city identifiers and forms, other times it has county & city names)
+struct BeneficiaryDetailedListResponse: Codable {
+    var beneficiaries: [BeneficiaryDetailedResponse]
+    var totalItems: Int
+    var totalPages: Int
+    var page: Int
+    var pageSize: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case beneficiaries = "data"
+        case totalItems
+        case totalPages
+        case page
+        case pageSize
+    }
+}
+
+// Beneficiary response (sometimes it has county & city identifiers and forms, other times it has county & city names).
 struct BeneficiaryResponse: Codable {
     var userId: Int16?                      // received on /api/v1/beneficiary/{id}
     var id: Int16                           // always received
@@ -165,6 +180,38 @@ struct BeneficiaryResponse: Codable {
         case gender
         case familyMembers
         case forms
+    }
+}
+
+struct BeneficiaryDetailedResponse: Codable {
+    var age: Int16                              // always received on /api/v1/beneficiary/details
+    var birthDate: Date                         // always received on /api/v1/beneficiary/details
+    var city: String                            // always received on /api/v1/beneficiary/details
+    var cityId: Int16                           // always received on /api/v1/beneficiary/details
+    var civilStatus: Int16                      // always received on /api/v1/beneficiary/details
+    var county: String                          // always received on /api/v1/beneficiary/details
+    var countyId: Int16                         // always received on /api/v1/beneficiary/details
+    var familyMembers: [FamilyMemberResponse]?  // always received on /api/v1/beneficiary/details
+    var forms: [FormBeneficiaryResponse]?       // always received on /api/v1/beneficiary/details
+    var gender: Int16                           // always received on /api/v1/beneficiary/details
+    var id: Int16                               // always received on /api/v1/beneficiary/details
+    var name: String                            // always received on /api/v1/beneficiary/details
+    var userId: Int16                           // always received on /api/v1/beneficiary/details
+    
+    enum CodingKeys: String, CodingKey {
+        case age
+        case birthDate
+        case city
+        case cityId
+        case civilStatus
+        case county
+        case countyId
+        case familyMembers
+        case forms
+        case gender
+        case id = "beneficiaryId"
+        case name
+        case userId
     }
 }
 
@@ -222,32 +269,41 @@ struct FormResponse: Codable {
     }
 }
 
+struct FamilyMemberResponse: Codable {
+    
+}
+
 // Forms on GET /beneficiary/{id}
 struct FormBeneficiaryResponse: Codable {
-    var id: Int
+    var id: Int16
     var completionDate: Date
     var description: String
     var code: String
     var totalQuestionsNo: Int
     var questionsAnsweredNo: Int
     
-    enum CondingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id = "formId"
         case completionDate
         case description
         case code
         case totalQuestionsNo
-        case questionAnsweredNo
+        case questionsAnsweredNo
     }
-    
 }
 
 struct FormSectionResponse: Codable {
-    var id: Int
-    var uniqueId: String
+    var sectionId: Int
     var code: String
     var description: String
     var questions: [QuestionResponse]
+    
+    enum CodingKeys: String, CodingKey {
+        case sectionId
+        case code = "title"
+        case description
+        case questions
+    }
 }
 
 struct QuestionResponse: Codable {
@@ -263,13 +319,17 @@ struct QuestionResponse: Codable {
     var code: String
     var questionType: QuestionType
     var text: String
+    var hint: String?
+    var isMandatory: Bool
     var options: [QuestionOptionResponse]
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id = "questionId"
         case code
         case questionType
         case text
+        case hint
+        case isMandatory
         case options = "optionsToQuestions"
     }
 }

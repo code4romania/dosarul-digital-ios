@@ -79,9 +79,10 @@ class PatientDetailsViewController: UIViewController, EmptyDataSetSource, EmptyD
                 let beneficiary = model.beneficiary else {
                 return UITableViewCell()
             }
+            cell.beneficiary = beneficiary
             cell.delegate = self
             cell.state = .detailed
-            cell.updateWithModel(beneficiary)
+            cell.updateInterface()
             cell.setNeedsLayout()
             cell.layoutIfNeeded()
             return cell
@@ -92,7 +93,7 @@ class PatientDetailsViewController: UIViewController, EmptyDataSetSource, EmptyD
     }
     
     func didTapLeftBottomButton(in cell: BeneficiaryCell) {
-        
+        AppRouter.shared.goToFormsFill(beneficiary: model.beneficiary, from: self)
     }
     
     func didTapRightBottomButton(in cell: BeneficiaryCell) {

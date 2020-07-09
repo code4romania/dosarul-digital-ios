@@ -27,13 +27,13 @@ protocol APIManagerType: NSObject {
     
     /// Beneficiaries requests
     /// GET /api/v1/beneficiary
-    func fetchBeneficiaries(completion:(([BeneficiaryResponse]?, APIError?) -> Void)?)
+    func fetchBeneficiaries(completion:(([BeneficiaryDetailedResponse]?, APIError?) -> Void)?)
     
     /// GET /api/v1/beneficiary/{id}
     func fetchBeneficiary(beneficiaryId: Int, completion:((BeneficiaryResponse?, APIError?) -> Void)?)
     
-    /// POST /api/v1/beneficiary
-    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?)
+    /// POST or PUT /api/v1/beneficiary
+    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?)
     
     /// Form requests
     /// GET /api/v1/form
@@ -66,8 +66,8 @@ extension APIManagerType {
     /// GET /api/v1/beneficiary/{id}
     func fetchBeneficiary(beneficiaryId: Int, completion:((BeneficiaryResponse?, APIError?) -> Void)?) { }
     
-    /// POST /api/v1/beneficiary
-    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?) { }
+    /// POST or PUT /api/v1/beneficiary
+    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?) { }
     
     /// Form requests
     /// GET /api/v1/form
@@ -113,7 +113,7 @@ class APIManager: NSObject, APIManagerType {
     /// Use this to format dates to and from the API
     lazy var apiDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
@@ -199,8 +199,8 @@ class APIManager: NSObject, APIManagerType {
         }
     }
     
-    func fetchBeneficiaries(completion: (([BeneficiaryResponse]?, APIError?) -> Void)?) {
-        let url = ApiURL.beneficiaries.url()
+    func fetchBeneficiaries(completion: (([BeneficiaryDetailedResponse]?, APIError?) -> Void)?) {
+        let url = ApiURL.beneficiariesDetailed.url()
         let headers = authorizationHeaders()
         
         Alamofire
@@ -210,7 +210,10 @@ class APIManager: NSObject, APIManagerType {
                 if statusCode == 200,
                     let data = response.data {
                     do {
-                        let beneficiaries = try JSONDecoder().decode(BeneficiaryListResponse.self, from: data)
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .formatted(self.apiDateFormatter)
+                        let beneficiaries = try decoder.decode(BeneficiaryDetailedListResponse.self,
+                                                               from: data)
                         completion?(beneficiaries.beneficiaries, nil)
                     } catch {
                         completion?(nil, .incorrectFormat(reason: error.localizedDescription))
@@ -247,23 +250,35 @@ class APIManager: NSObject, APIManagerType {
         }
     }
     
-    func createBeneficiary(_ beneficiary: BeneficiaryRequest, completion: ((Int?, APIError?) -> Void)?) {
+    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest,
+                                   isNew: Bool,
+                                   completion: ((Int?, APIError?) -> Void)?) {
         let url = ApiURL.beneficiaries.url()
         let headers = authorizationHeaders()
         
         let parameters = encodableToParamaters(beneficiary)
         
         Alamofire
-            .request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            .request(url, method: isNew ? .post : .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .response { response in
                 let statusCode = response.response?.statusCode
                 if statusCode == 200,
                     let data = response.data {
-                    if let beneficiaryStringId = String(data: data, encoding: .utf8),
-                        let beneficiaryId = Int(beneficiaryStringId) {
-                        completion?(beneficiaryId, nil)
+                    if isNew {
+                        if let beneficiaryStringId = String(data: data, encoding: .utf8),
+                            let beneficiaryId = Int(beneficiaryStringId) {
+                            completion?(beneficiaryId, nil)
+                        } else {
+                            completion?(nil, .generic(reason: "Unknown reason"))
+                        }
                     } else {
-                        completion?(nil, .generic(reason: "Unknown reason"))
+                        if let beneficiaryId = beneficiary.id,
+                            let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)?.boolValue,
+                            result == true {
+                            completion?(Int(beneficiaryId), nil)
+                        } else {
+                            completion?(nil, .generic(reason: "Unknown reason"))
+                        }
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
@@ -360,8 +375,8 @@ class APIManager: NSObject, APIManagerType {
         let headers = requestHeaders(withAuthHeaders: auth)
 
         var parameters: [String: String] = [
-            "CountyCode": note.countyCode,
-            "PollingStationNumber": String(note.pollingStationId ?? -1),
+//            "CountyCode": note.countyCode,
+//            "PollingStationNumber": String(note.pollingStationId ?? -1),
             "Text": note.text
         ]
         if let questionId = note.questionId {
@@ -426,7 +441,7 @@ class APIManager: NSObject, APIManagerType {
 extension APIManager {
     fileprivate func encodableToParamaters<T: Encodable>(_ encodable: T) -> [String: Any] {
         let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
+        encoder.dateEncodingStrategy = .formatted(self.apiDateFormatter)
         let body = try! encoder.encode(encodable)
         return try! JSONSerialization.jsonObject(with: body, options: []) as! [String: Any]
     }
@@ -467,7 +482,7 @@ class APIMock: NSObject, APIManagerType {
 //        completion?(nil)
     }
     
-    func fetchBeneficiaries(completion:(([BeneficiaryResponse]?, APIError?) -> Void)?) {
+    func fetchBeneficiaries(completion:(([BeneficiaryDetailedResponse]?, APIError?) -> Void)?) {
 //        guard let response = fromFile(filename: "PatientsResponse", ext: "json", statusCode: 200) else {
 //            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
 //            return

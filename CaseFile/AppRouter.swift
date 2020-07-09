@@ -179,11 +179,26 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         goToChooseStation()
     }
 
-    func goToForms(from vc: UIViewController) {
-        let formsModel = FormListViewModel(selectionAction: .selectForm)
+    func goToFormsSelection(beneficiary: Beneficiary?, from vc: UIViewController) {
+        let formsModel = FormListViewModel(beneficiary: beneficiary, selectionAction: .selectForm)
         let formsVC = FormListViewController(withModel: formsModel)
-        navigationController?.setViewControllers([formsVC], animated: true)
-        resetDetailsPane()
+        if let navigationController = vc.navigationController ?? navigationController {
+            navigationController.pushViewController(formsVC, animated: true)
+//        resetDetailsPane()
+        } else {
+            vc.present(formsVC, animated: true, completion: nil)
+        }
+    }
+    
+    func goToFormsFill(beneficiary: Beneficiary?, from vc: UIViewController) {
+        let formsModel = FormListViewModel(beneficiary: beneficiary, selectionAction: .fillForm)
+        let formsVC = FormListViewController(withModel: formsModel)
+        if let navigationController = vc.navigationController ?? navigationController {
+            navigationController.pushViewController(formsVC, animated: true)
+            //        resetDetailsPane()
+        } else {
+            vc.present(formsVC, animated: true, completion: nil)
+        }
     }
     
     func open(questionModel: QuestionAnswerViewModel) {

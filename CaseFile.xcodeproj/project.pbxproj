@@ -98,12 +98,6 @@
 		7501A93924ADFCDB00E4F85B /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A93524ADFCDB00E4F85B /* User+CoreDataProperties.swift */; };
 		7501A93A24ADFCDB00E4F85B /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A93524ADFCDB00E4F85B /* User+CoreDataProperties.swift */; };
 		7501A93B24ADFCDB00E4F85B /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A93524ADFCDB00E4F85B /* User+CoreDataProperties.swift */; };
-		7501A94824AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94424AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift */; };
-		7501A94924AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94424AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift */; };
-		7501A94A24AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94424AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift */; };
-		7501A94B24AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94524AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift */; };
-		7501A94C24AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94524AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift */; };
-		7501A94D24AE0F0400E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94524AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift */; };
 		7501A94E24AE0F0400E4F85B /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94624AE0F0300E4F85B /* Revision+CoreDataClass.swift */; };
 		7501A94F24AE0F0400E4F85B /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94624AE0F0300E4F85B /* Revision+CoreDataClass.swift */; };
 		7501A95024AE0F0400E4F85B /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501A94624AE0F0300E4F85B /* Revision+CoreDataClass.swift */; };
@@ -129,6 +123,12 @@
 		755519EE24AF71590065BB86 /* PatientDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755519ED24AF71590065BB86 /* PatientDetailsViewController.swift */; };
 		755519EF24AF71590065BB86 /* PatientDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755519ED24AF71590065BB86 /* PatientDetailsViewController.swift */; };
 		755519F024AF71590065BB86 /* PatientDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755519ED24AF71590065BB86 /* PatientDetailsViewController.swift */; };
+		75551A4924B686960065BB86 /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4724B686950065BB86 /* Beneficiary+CoreDataClass.swift */; };
+		75551A4A24B686960065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4824B686950065BB86 /* Beneficiary+CoreDataProperties.swift */; };
+		75551A4B24B686B60065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4824B686950065BB86 /* Beneficiary+CoreDataProperties.swift */; };
+		75551A4C24B686B60065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4824B686950065BB86 /* Beneficiary+CoreDataProperties.swift */; };
+		75551A4D24B686B90065BB86 /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4724B686950065BB86 /* Beneficiary+CoreDataClass.swift */; };
+		75551A4E24B686B90065BB86 /* Beneficiary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75551A4724B686950065BB86 /* Beneficiary+CoreDataClass.swift */; };
 		759891FA2497E02B00106BDF /* CountyResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 759891F92497E02B00106BDF /* CountyResponse.json */; };
 		759891FC2497E09800106BDF /* CitiesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 759891FB2497E09800106BDF /* CitiesResponse.json */; };
 		759891FF2497E99E00106BDF /* AddPatientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759891FD2497E99E00106BDF /* AddPatientViewController.swift */; };
@@ -495,8 +495,6 @@
 		7501A91924ABED2200E4F85B /* LaunchScreenViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LaunchScreenViewController-iPad.xib"; sourceTree = "<group>"; };
 		7501A93424ADFCDA00E4F85B /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7501A93524ADFCDB00E4F85B /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7501A94424AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beneficiary+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7501A94524AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beneficiary+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7501A94624AE0F0300E4F85B /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7501A94724AE0F0300E4F85B /* Revision+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7501A95424AE53B800E4F85B /* BeneficiaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeneficiaryCell.swift; sourceTree = "<group>"; };
@@ -506,6 +504,8 @@
 		754121BD248ED9CD002EE5C7 /* LoginResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LoginResponse.json; sourceTree = "<group>"; };
 		754121BF248EDA31002EE5C7 /* PatientsResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PatientsResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		755519ED24AF71590065BB86 /* PatientDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailsViewController.swift; sourceTree = "<group>"; };
+		75551A4724B686950065BB86 /* Beneficiary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beneficiary+CoreDataClass.swift"; sourceTree = "<group>"; };
+		75551A4824B686950065BB86 /* Beneficiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beneficiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		759891F92497E02B00106BDF /* CountyResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountyResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		759891FB2497E09800106BDF /* CitiesResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CitiesResponse.json; sourceTree = "<group>"; };
 		759891FD2497E99E00106BDF /* AddPatientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPatientViewController.swift; sourceTree = "<group>"; };
@@ -1030,8 +1030,8 @@
 		F553E3751DF9A54D000D0902 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				7501A94424AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift */,
-				7501A94524AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift */,
+				75551A4724B686950065BB86 /* Beneficiary+CoreDataClass.swift */,
+				75551A4824B686950065BB86 /* Beneficiary+CoreDataProperties.swift */,
 				7501A94624AE0F0300E4F85B /* Revision+CoreDataClass.swift */,
 				7501A94724AE0F0300E4F85B /* Revision+CoreDataProperties.swift */,
 				7501A93424ADFCDA00E4F85B /* User+CoreDataClass.swift */,
@@ -1455,9 +1455,11 @@
 				28E72458233F58100096454D /* SectionDetailsViewModel.swift in Sources */,
 				28104139236B5DEF00B7422C /* NoteViewModel.swift in Sources */,
 				28A4B776237364FE00E6D2A8 /* RemoteConfigManager.swift in Sources */,
+				75551A4924B686960065BB86 /* Beneficiary+CoreDataClass.swift in Sources */,
 				28FB66B0236855E400336DBA /* DB.swift in Sources */,
 				28FB66A22366EAAC00336DBA /* QuestionAnswerViewController.swift in Sources */,
 				E7E8EB4B1DDB7344009EBE01 /* UIColor+Presets.swift in Sources */,
+				75551A4A24B686960065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */,
 				289E1E84235F2674000C92A0 /* FormListViewController.swift in Sources */,
 				759891FF2497E99E00106BDF /* AddPatientViewController.swift in Sources */,
 				75B22E1E2498196900AD6BA8 /* FormDropdownCell.swift in Sources */,
@@ -1506,11 +1508,9 @@
 				2879CA372381BA5E00CE4DC7 /* AppRouter.swift in Sources */,
 				28C4343C2370C5C9001E6268 /* UITableView+HeaderAutoLayout.swift in Sources */,
 				67EE98CB22A296F7006E4762 /* Logger.swift in Sources */,
-				7501A94824AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */,
 				F553E3BE1DF9D67A000D0902 /* Answer+CoreDataProperties.swift in Sources */,
 				281A4B8B236D7B85001AD277 /* LoginViewController.swift in Sources */,
 				75E837BE2461987B00DB9146 /* BackgroundView.swift in Sources */,
-				7501A94B24AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */,
 				28844A5C233F9AB700DEEA44 /* TimePickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1524,7 +1524,6 @@
 				75E837F42461994A00DB9146 /* UIColor+Presets.swift in Sources */,
 				755519EF24AF71590065BB86 /* PatientDetailsViewController.swift in Sources */,
 				7501A95724AE53B800E4F85B /* BeneficiaryCell.swift in Sources */,
-				7501A94C24AE0F0300E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */,
 				75E837DA2461993C00DB9146 /* PreferencesManager.swift in Sources */,
 				75E8381A2461999100DB9146 /* ActionButton.swift in Sources */,
 				754121B6248ECC93002EE5C7 /* AppDelegate.swift in Sources */,
@@ -1537,7 +1536,7 @@
 				75E838322461999E00DB9146 /* LoginViewModel.swift in Sources */,
 				754121B2248ECBCB002EE5C7 /* String+Localization.swift in Sources */,
 				75E837C1246198BD00DB9146 /* APIManager.swift in Sources */,
-				7501A94924AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */,
+				75551A4D24B686B90065BB86 /* Beneficiary+CoreDataClass.swift in Sources */,
 				75E837DE2461994500DB9146 /* Question+CoreDataClass.swift in Sources */,
 				7501A93A24ADFCDB00E4F85B /* User+CoreDataProperties.swift in Sources */,
 				75E837D02461992800DB9146 /* Logger.swift in Sources */,
@@ -1552,6 +1551,7 @@
 				7501A95224AE0F0400E4F85B /* Revision+CoreDataProperties.swift in Sources */,
 				75E8380A2461998600DB9146 /* QuestionTableCell.swift in Sources */,
 				75E83839246199A600DB9146 /* GenericPickerViewController.swift in Sources */,
+				75551A4B24B686B60065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */,
 				75E8381B2461999100DB9146 /* ChooserButton.swift in Sources */,
 				75E837E42461994500DB9146 /* NoteContainer.swift in Sources */,
 				7501A94F24AE0F0400E4F85B /* Revision+CoreDataClass.swift in Sources */,
@@ -1622,11 +1622,11 @@
 				75E837DB2461993D00DB9146 /* PreferencesManager.swift in Sources */,
 				75E837C82461991200DB9146 /* Formatters.swift in Sources */,
 				754121B7248ECC94002EE5C7 /* AppDelegate.swift in Sources */,
-				7501A94A24AE0F0300E4F85B /* Beneficiary+CoreDataClass.swift in Sources */,
 				75E8385D246199B400DB9146 /* FormListViewModel.swift in Sources */,
 				75E837D92461993A00DB9146 /* AccountManager.swift in Sources */,
 				75E83876246199BB00DB9146 /* NoteViewController.swift in Sources */,
 				75E837EE2461994600DB9146 /* SectionInfo+CoreDataClass.swift in Sources */,
+				75551A4E24B686B90065BB86 /* Beneficiary+CoreDataClass.swift in Sources */,
 				75D0848D248560900034499D /* OnboardingViewModel.swift in Sources */,
 				75E838202461999200DB9146 /* AttachButton.swift in Sources */,
 				75E83875246199BB00DB9146 /* NoteViewModel.swift in Sources */,
@@ -1636,7 +1636,6 @@
 				75E83855246199AD00DB9146 /* SectionPickerViewController.swift in Sources */,
 				75E838352461999F00DB9146 /* LoginViewModel.swift in Sources */,
 				75E837D72461993700DB9146 /* ApiModels.swift in Sources */,
-				7501A94D24AE0F0400E4F85B /* Beneficiary+CoreDataProperties.swift in Sources */,
 				75E837FE2461994B00DB9146 /* Configuration.swift in Sources */,
 				75E838182461998C00DB9146 /* PatientHUDViewController.swift in Sources */,
 				75E8386D246199BB00DB9146 /* QuestionListViewController.swift in Sources */,
@@ -1654,6 +1653,7 @@
 				75E838052461997800DB9146 /* DefaultTableHeader.swift in Sources */,
 				75E83870246199BB00DB9146 /* QuestionAnswerViewController.swift in Sources */,
 				75E837C02461987B00DB9146 /* BackgroundView.swift in Sources */,
+				75551A4C24B686B60065BB86 /* Beneficiary+CoreDataProperties.swift in Sources */,
 				75E837FF2461994B00DB9146 /* ReachabilityManager.swift in Sources */,
 				754121B5248ECBF9002EE5C7 /* String+Validation.swift in Sources */,
 				75E837F12461994600DB9146 /* CoreDataInitialiser.swift in Sources */,

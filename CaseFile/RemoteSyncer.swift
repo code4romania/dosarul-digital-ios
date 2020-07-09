@@ -114,11 +114,11 @@ class RemoteSyncer: NSObject {
         DebugLog("Uploading \(totalRequests) notes...")
         
         for note in notes {
+            #warning("change beneficiary id")
             let uploadRequest = UploadNoteRequest(
+                beneficiaryId: 0,
                 imageData: note.file as Data?,
                 questionId: note.questionID != -1 ? Int(note.questionID) : nil,
-                countyCode: section.countyCode ?? "",
-                pollingStationId: Int(section.sectionId),
                 text: note.body ?? "")
             APIManager.shared.upload(note: uploadRequest) { error in
                 if let error = error {

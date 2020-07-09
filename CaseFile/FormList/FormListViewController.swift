@@ -119,7 +119,7 @@ class FormListViewController: MVViewController {
         }
         model.onLoadingChanged = { [weak self] (loading, error) in
             if loading {
-                self?.showFullScreenLoading(text: "Loading.Title.AddPatient".localized)
+                self?.showFullScreenLoading(text: (self?.model.beneficiary?.id ?? -1) == -1 ? "Loading.Title.AddPatient".localized : "Loading.Title.EditPatient".localized)
             } else {
                 self?.hideFullScreenLoading(text: error == nil ? "Loading.Success.AddPatient".localized : "Loading.Error.AddPatient".localized,
                                             error: error != nil)
@@ -130,16 +130,21 @@ class FormListViewController: MVViewController {
     fileprivate func configureSubviews() {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         
-        tableView.tableHeaderView = {
-            let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.self.width, height: 104))
-            header.backgroundColor = .clear
-            header.textColor = UIColor.cn_gray1
-            header.font = UIFont.systemFont(ofSize: 14)
-            header.textAlignment = .center
-            header.numberOfLines = 0
-            header.text = "Instructions.Form.Select".localized
-            return header
-        }()
+        switch model.selectionAction {
+        case .fillForm:
+            break
+        case .selectForm:
+            tableView.tableHeaderView = {
+                let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.self.width, height: 104))
+                header.backgroundColor = .clear
+                header.textColor = UIColor.cn_gray1
+                header.font = UIFont.systemFont(ofSize: 14)
+                header.textAlignment = .center
+                header.numberOfLines = 0
+                header.text = "Instructions.Form.Select".localized
+                return header
+            }()
+        }
         
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(UINib(nibName: "FormSetTableCell", bundle: nil),
@@ -150,6 +155,7 @@ class FormListViewController: MVViewController {
     }
     
     fileprivate func configureSyncContainer() {
+        proceedButton.isHidden = true
         let needsSync = DB.shared.needsSync
         tableViewBottomToSyncViewConstraint.isActive = true
         setSyncContainer(hidden: !needsSync)
@@ -164,8 +170,10 @@ class FormListViewController: MVViewController {
     @objc func proceedButtonTouched(sender: Any) {
         model.setLoading(true, error: nil)
         ApplicationData.shared.setObject(model.selectedForms as NSObject, for: .patientForms)
-        PatientViewModel.createBeneficiary { [weak self] (beneficiaryId, error) in
-            self?.model.setLoading(false, error: error)
+        ApplicationData.shared.setObject(model.addedForms as NSObject, for: .patientAddedForms)
+        ApplicationData.shared.setObject(model.removedForms as NSObject, for: .patientRemovedForms)
+        PatientViewModel.createBeneficiary { (beneficiaryId, error) in
+            self.model.setLoading(false, error: error)
             guard error == nil else {
                 return
             }
@@ -242,6 +250,9 @@ class FormListViewController: MVViewController {
     }
     
     deinit {
+        ApplicationData.shared.removeObject(for: .patientForms)
+        ApplicationData.shared.removeObject(for: .patientAddedForms)
+        ApplicationData.shared.removeObject(for: .patientRemovedForms)
         DebugLog("DEALLOC FORMS LIST VIEW CONTROLLER")
     }
 }
@@ -252,7 +263,7 @@ extension FormListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         switch model.selectionAction {
         case .fillForm:
-            return 2
+            return 1// return 2 - removed note
         case .selectForm:
             return 1
         }
@@ -312,11 +323,24 @@ extension FormListViewController: UITableViewDelegate {
             }
         case .selectForm:
             let formSet = model.forms[indexPath.row]
+            // form selected
             if model.selectedForms.contains(formSet) {
+                // remove from selected forms
                 model.selectedForms = model.selectedForms.filter { $0 != formSet }
+                if model.originalForms.contains(formSet) {
+                    model.removedForms.append(formSet)
+                }
+                model.addedForms.removeAll { $0 == formSet }
             } else {
+                // add to selected forms
                 model.selectedForms.append(formSet)
+                if !model.originalForms.contains(formSet) {
+                    model.addedForms.append(formSet)
+                }
+                model.removedForms.removeAll { $0 == formSet }
             }
+            print("ADDED FORMS: \(model.addedForms.map({$0.id}))")
+            print("REMOVED FORMS: \(model.removedForms.map({$0.id}))")
             tableView.reloadRows(at: [indexPath], with: .none)
         }   
     }

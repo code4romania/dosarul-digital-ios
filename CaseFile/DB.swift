@@ -61,18 +61,16 @@ class DB: NSObject {
         return beneficiary
     }
     
-    func saveBeneficiaries(_ beneficiaries: [BeneficiaryResponse]) {
+    func saveBeneficiaries(_ beneficiaries: [BeneficiaryDetailedResponse]) {
         #warning("local beneficiaries are fully overwritten with the server values, even if some of their properties have been modified")
         let beneficiariesIds = beneficiaries.map { $0.id }
         
         // delete local beneficiaries who no longer exist on server for the currentUser
         currentUser()?
             .beneficiaries?
-            .compactMap({ $0 as? Beneficiary })
-            .filter({ !beneficiariesIds.contains($0.id) })
-            .forEach({
-                CoreData.context.delete($0)
-            })
+            .compactMap { $0 as? Beneficiary }
+            .filter { !beneficiariesIds.contains($0.id) }
+            .forEach { CoreData.context.delete($0) }
         
         // add new beneficiaries
         beneficiaries.forEach { (beneficiary) in
@@ -82,19 +80,40 @@ class DB: NSObject {
             let localBeneficiary = currentUser()?
                 .beneficiaries?
                 .compactMap({ $0 as? Beneficiary })
-                .filter({ $0.id == beneficiary.id }).first ??  Beneficiary(entity: beneficiaryEntityDescription!,
+                .filter({ $0.id == beneficiary.id }).first ?? Beneficiary(entity: beneficiaryEntityDescription!,
                                                                            insertInto: CoreData.context)
             localBeneficiary.user = currentUser()
+            localBeneficiary.age = beneficiary.age
+            localBeneficiary.birthDate = beneficiary.birthDate
+            localBeneficiary.civilStatus = beneficiary.civilStatus
+            localBeneficiary.county = beneficiary.county
+            localBeneficiary.countyId = beneficiary.countyId
+            localBeneficiary.city = beneficiary.city
+            localBeneficiary.cityId = beneficiary.cityId
+            localBeneficiary.gender = beneficiary.gender
             localBeneficiary.id = beneficiary.id
             localBeneficiary.name = beneficiary.name
-            localBeneficiary.civilStatus = beneficiary.civilStatus
-            localBeneficiary.county = beneficiary.county ?? localBeneficiary.county
-            localBeneficiary.countyId = beneficiary.countyId ?? localBeneficiary.countyId
-            localBeneficiary.city = beneficiary.city ?? localBeneficiary.city
-            localBeneficiary.cityId = beneficiary.cityId ?? localBeneficiary.cityId
-            localBeneficiary.birthDate = beneficiary.birthDate ?? localBeneficiary.birthDate
-            localBeneficiary.age = beneficiary.age ?? localBeneficiary.age
-            localBeneficiary.gender = beneficiary.gender ?? localBeneficiary.gender
+            localBeneficiary.userId = beneficiary.userId
+            
+            // remove deallocated forms
+            let localForms = localBeneficiary.forms?.compactMap({ $0 as? Form })
+            localForms?
+                .filter { !(beneficiary.forms ?? [])
+                    .map {$0.id}
+                    .contains($0.id)
+            }
+            .forEach { CoreData.context.delete($0) }
+            
+            beneficiary.forms?.forEach({ (form) in
+                // add new forms / update existing
+                let formEntityDescription = NSEntityDescription.entity(forEntityName: "Form",
+                                                                       in: CoreData.context)
+                let localForm = localForms?.filter({ $0.id == form.id }).first ?? Form(entity: formEntityDescription!,
+                                                                                       insertInto: CoreData.context)
+                localForm.id = form.id
+                localForm.addToBeneficiaries(localBeneficiary)
+            })
+            
         }
         do {
             try CoreData.save()
@@ -102,6 +121,23 @@ class DB: NSObject {
             print(error)
         }
         
+    }
+    
+    func assignFormsToBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
+        formIds.forEach { (addedFormId) in
+            let formEntityDescription = NSEntityDescription.entity(forEntityName: "Form", in: CoreData.context)
+            let form = Form(entity: formEntityDescription!, insertInto: CoreData.context)
+            form.id = Int16(addedFormId)
+            beneficiary.addToForms(form)
+        }
+    }
+    
+    func unassignFormsFromBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
+        beneficiary
+            .forms?
+            .compactMap {$0 as? Form }
+            .filter { formIds.contains(Int($0.id)) }
+            .forEach { CoreData.context.delete($0) }
     }
     
     func currentSectionInfo() -> SectionInfo? {

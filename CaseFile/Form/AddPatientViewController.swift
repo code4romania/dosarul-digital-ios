@@ -79,9 +79,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
     
     @objc func proceedButtonTouched(sender: Any) {
         model.processForm()
-        let formsModel = FormListViewModel(selectionAction: .selectForm)
-        let formsVC = FormListViewController(withModel: formsModel)
-        navigationController?.pushViewController(formsVC, animated: true)
+        AppRouter.shared.goToFormsSelection(beneficiary: model.beneficiary, from: self)
     }
     
     // MARK: - UITableViewDataSource

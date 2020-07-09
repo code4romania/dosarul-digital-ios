@@ -120,9 +120,10 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
             let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficiaryCell", for: indexPath) as? BeneficiaryCell else {
             return UITableViewCell()
         }
+        cell.beneficiary = beneficiary
         cell.delegate = self
         cell.state = .summarized
-        cell.updateWithModel(beneficiary)
+        cell.updateInterface()
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         return cell
@@ -135,7 +136,7 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     }
     
     func didTapBottomButton(in cell: BeneficiaryCell) {
-        print("bottom")
+        AppRouter.shared.goToFormsFill(beneficiary: cell.beneficiary, from: self)
     }
     
     func didTapLeftBottomButton(in cell: BeneficiaryCell) {

@@ -381,29 +381,51 @@ extension PatientViewModel {
     static func createBeneficiary(completion:((Int?, APIError?) -> Void)?) {
         guard let beneficiaryArray = ApplicationData.shared.object(for: ApplicationData.Keys.patient) as? NSArray,
             let beneficiary = beneficiaryArray[0] as? Beneficiary,
-            let formsArray = ApplicationData.shared.object(for: ApplicationData.Keys.patientForms) as? NSArray else {
+            let formsArray = ApplicationData.shared.object(for: ApplicationData.Keys.patientForms) as? NSArray,
+            let formsRemoved = ApplicationData.shared.object(for: ApplicationData.Keys.patientRemovedForms) as? NSArray,
+            let formsAdded = ApplicationData.shared.object(for: ApplicationData.Keys.patientAddedForms) as? NSArray
+            else {
                 completion?(nil, .incorrectFormat(reason: "Error_Unknown".localized))
                 return
         }
-        let beneficiaryRequest = BeneficiaryRequest(id: Int(beneficiary.id),
-                                                    userId: Int(beneficiary.userId),
+        
+        let isNew = beneficiary.id == -1
+        let selectedForms = isNew ? formsArray
+            .compactMap({ $0 as? FormSetCellModel })
+            .map({ $0.id }) : nil
+        let addedForms = isNew ? [] : formsAdded
+            .compactMap({ $0 as? FormSetCellModel })
+            .map({ $0.id })
+        let removedForms = isNew ? [] : formsRemoved
+            .compactMap({ $0 as? FormSetCellModel })
+            .map({ $0.id })
+        let beneficiaryRequest = BeneficiaryRequest(id: beneficiary.id,
+                                                    userId: beneficiary.userId,
                                                     name: beneficiary.name,
                                                     birthDate: beneficiary.birthDate,
                                                     civilStatus: CivilStatus(rawValue: Int(beneficiary.civilStatus))!,
-                                                    cityId: Int(beneficiary.cityId),
-                                                    countyId: Int(beneficiary.countyId),
+                                                    cityId: beneficiary.cityId,
+                                                    countyId: beneficiary.countyId,
                                                     gender: Gender(rawValue: Int(beneficiary.gender))!,
-                                                    formIds: formsArray.compactMap({
-                                                        ($0 as? FormSetCellModel)?.id
-                                                    }),
-                                                    newAllocatedFormsIds: nil,
-                                                    dealocatedFormsIds: nil)
-        APIManager.shared.createBeneficiary(beneficiaryRequest) { (beneficiaryId, error) in
+                                                    formsIds: selectedForms,
+                                                    newAllocatedFormsIds: addedForms,
+                                                    dealocatedFormsIds: removedForms)
+        APIManager.shared.createOrUpdateBeneficiary(beneficiaryRequest, isNew: isNew) { (beneficiaryId, error) in
             guard error == nil, let beneficiaryId = beneficiaryId else {
                 completion?(nil, error)
                 return
             }
-            beneficiary.id = Int16(beneficiaryId)
+            if isNew {
+                beneficiary.id = Int16(beneficiaryId)
+                beneficiary.age = Int16(beneficiary.birthDate?.currentAge ?? -1)
+                DB.shared.assignFormsToBeneficiary(beneficiary, formIds: selectedForms!)
+            } else {
+                beneficiary.age = Int16(beneficiary.birthDate?.currentAge ?? -1)
+                DB.shared.assignFormsToBeneficiary(beneficiary, formIds: addedForms)
+                DB.shared.unassignFormsFromBeneficiary(beneficiary, formIds: removedForms)
+                
+            }
+            CoreData.saveContext()
             completion?(beneficiaryId, error)
         }
     }

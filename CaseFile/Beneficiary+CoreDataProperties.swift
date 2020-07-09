@@ -2,7 +2,7 @@
 //  Beneficiary+CoreDataProperties.swift
 //  CaseFile
 //
-//  Created by Andrei Bouariu on 02/07/2020.
+//  Created by Andrei Bouariu on 09/07/2020.
 //  Copyright © 2020 Code4Ro. All rights reserved.
 //
 //
@@ -27,9 +27,27 @@ extension Beneficiary {
     @NSManaged public var gender: Int16
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
-    @NSManaged public var user: User?
     @NSManaged public var userId: Int16
+    @NSManaged public var forms: NSSet?
     @NSManaged public var revisions: NSSet?
+    @NSManaged public var user: User?
+
+}
+
+// MARK: Generated accessors for forms
+extension Beneficiary {
+
+    @objc(addFormsObject:)
+    @NSManaged public func addToForms(_ value: Form)
+
+    @objc(removeFormsObject:)
+    @NSManaged public func removeFromForms(_ value: Form)
+
+    @objc(addForms:)
+    @NSManaged public func addToForms(_ values: NSSet)
+
+    @objc(removeForms:)
+    @NSManaged public func removeFromForms(_ values: NSSet)
 
 }
 
