@@ -8,6 +8,36 @@
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="question" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" inverseName="answers" inverseEntity="Question"/>
     </entity>
+    <entity name="Beneficiary" representedClassName="Beneficiary" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="birthDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="cityId" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="civilStatus" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="county" optional="YES" attributeType="String"/>
+        <attribute name="countyId" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="forms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaries" inverseEntity="Form"/>
+        <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="beneficiaries" inverseEntity="Revision"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="beneficiaries" inverseEntity="User"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Form" representedClassName="Form" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="forms" inverseEntity="Beneficiary"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Note" representedClassName="Note" versionHashModifier="1" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -28,6 +58,11 @@
         <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note"/>
         <relationship name="sectionInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SectionInfo" inverseName="questions" inverseEntity="SectionInfo"/>
     </entity>
+    <entity name="Revision" representedClassName="Revision" syncable="YES">
+        <attribute name="modified" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="propertyName" optional="YES" attributeType="String"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="revisions" inverseEntity="Beneficiary"/>
+    </entity>
     <entity name="SectionInfo" representedClassName="SectionInfo" syncable="YES">
         <attribute name="arriveTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="countyCode" optional="YES" attributeType="String"/>
@@ -40,15 +75,24 @@
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="sectionInfo" inverseEntity="Question"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="completedOnboarding" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="accessToken" optional="YES" attributeType="String"/>
         <attribute name="email" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="expiresIn" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Beneficiary" inverseName="user" inverseEntity="Beneficiary"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="email"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="Answer" positionX="376" positionY="459" width="128" height="133"/>
+        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="253"/>
+        <element name="Form" positionX="189" positionY="414" width="128" height="73"/>
         <element name="Note" positionX="198" positionY="288" width="128" height="133"/>
         <element name="Question" positionX="178" positionY="447" width="128" height="193"/>
+        <element name="Revision" positionX="198" positionY="423" width="128" height="88"/>
         <element name="SectionInfo" positionX="-11" positionY="252" width="128" height="178"/>
-        <element name="User" positionX="180" positionY="405" width="128" height="88"/>
+        <element name="User" positionX="180" positionY="405" width="128" height="103"/>
     </elements>
 </model>

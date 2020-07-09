@@ -9,12 +9,19 @@
 import UIKit
 
 /// Represents a Form Set to be displayed using the table cell
-struct FormSetCellModel {
+struct FormSetCellModel: Equatable {
+    var id: Int
     var icon: UIImage
     var title: String
     var code: String
     var progress: CGFloat
     var answeredOutOfTotalQuestions: String
+    var selected: Bool?
+    var selectionType: FormSelectionType
+    
+    static func == (lhs: FormSetCellModel, rhs: FormSetCellModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 class FormSetTableCell: UITableViewCell {
@@ -24,10 +31,13 @@ class FormSetTableCell: UITableViewCell {
     @IBOutlet weak var outerCardContainer: UIView!
     @IBOutlet weak var cardContainer: UIView!
     @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var selectionView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var answeredLabel: UILabel!
     
     @IBOutlet weak var progressContainer: UIView!
+    
+    var selectionType: FormSelectionType?
     
     // set this one's multiplier to the actual progress
     @IBOutlet weak var progressWidthConstraint: NSLayoutConstraint!
@@ -47,8 +57,16 @@ class FormSetTableCell: UITableViewCell {
     }
     
     fileprivate func updateSelectionState(selected: Bool) {
-        cardContainer.backgroundColor = selected ?
-            UIColor.cardBackgroundSelected : UIColor.cardBackground
+        switch selectionType {
+        case .fillForm:
+            cardContainer.backgroundColor = selected ?
+                UIColor.cardBackgroundSelected : UIColor.cardBackground
+            selectionView.isHidden = true
+        case .selectForm:
+            selectionView.isHidden = !selected
+        case .none:
+            break
+        }
     }
     
     func update(withModel model: FormSetCellModel) {
@@ -56,8 +74,10 @@ class FormSetTableCell: UITableViewCell {
         titleLabel.attributedText = titleText(ofModel: model)
         progressWidthConstraint.constant = model.progress * cardContainer.frame.size.width
         answeredLabel.text = model.answeredOutOfTotalQuestions
+        answeredLabel.isHidden = model.selectionType == .selectForm
         progressContainer.isHidden = model.progress == 0
         outerCardContainer.layoutIfNeeded()
+        selectionType = model.selectionType
     }
     
     func titleText(ofModel model: FormSetCellModel) -> NSAttributedString {

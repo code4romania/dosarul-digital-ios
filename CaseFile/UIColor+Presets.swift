@@ -30,6 +30,12 @@ extension UIColor {
     static var actionButtonForeground = UIColor.white
     static var actionButtonForegroundDisabled = UIColor(hexCode: 0x3468EF)
     
+    static var actionButtonLightBackground = UIColor(hexCode: 0xE6F0FC)
+    static var actionButtonLightBackgroundHighlighted = UIColor(hexCode: 0xD7E9FF)
+    static var actionButtonLightBackgroundDisabled = UIColor(hexCode: 0xE6F0FC).withAlphaComponent(0.2)
+    static var actionButtonLightForeground = UIColor(hexCode: 0x3468EF)
+    static var actionButtonLightForegroundDisabled = UIColor(hexCode: 0x3468EF)
+    
     static var drawerButtonBackground = UIColor(hexCode: 0x23278A)
     static var drawerButtonBackgroundHighlighted = UIColor(white: 1, alpha: 0.1)
     static var drawerButtonForeground = UIColor.white
@@ -42,7 +48,7 @@ extension UIColor {
 
     static var cardBackground = UIColor.white
     static var cardBackgroundSelected = chooserButtonSelectedBackground
-    static var cardShadow = UIColor.black.withAlphaComponent(0.03)
+    static var cardShadow = UIColor(hexCode: 0x043252).withAlphaComponent(0.18)
     static var cardDarkerShadow = UIColor.black.withAlphaComponent(0.12)
     static var tableSectionHeaderBg = UIColor(hexCode: 0xEEEDED)
 

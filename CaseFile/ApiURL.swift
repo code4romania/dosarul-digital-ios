@@ -10,6 +10,9 @@ import UIKit
 
 enum ApiURL {
     case login
+    case beneficiaries
+    case beneficiariesDetailed
+    case beneficiary(id: Int)
     case pollingStationList
     case pollingStation
     case city(id: Int)
@@ -23,6 +26,9 @@ enum ApiURL {
         var uri = ""
         switch self {
         case .login: uri = "/v1/access/authorize"
+        case .beneficiaries: uri = "/v1/beneficiary"
+        case .beneficiariesDetailed: uri = "/v1/beneficiary/details"
+        case .beneficiary(let id): uri = "/v1/beneficiary/\(id)"
         case .pollingStationList: uri = "/v1/county"
         case .pollingStation: uri = "/v1/polling-station"
         case .city(let id): uri = "/v1/county/\(id)/cities"

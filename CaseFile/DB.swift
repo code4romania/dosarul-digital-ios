@@ -11,9 +11,133 @@ import CoreData
 
 class DB: NSObject {
     static let shared = DB()
+
+    private var _currentUser: User?
+    
+    func currentUser() -> User? {
+        guard _currentUser == nil else {
+            return _currentUser
+        }
+        guard let email = AccountManager.shared.email else {
+            return nil
+        }
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        request.predicate = NSPredicate(format: "email == %@", email)
+        request.relationshipKeyPathsForPrefetching = ["beneficiaries", "beneficiaries.revisions"]
+        request.fetchLimit = 1
+        let matches = CoreData.fetch(request) as? [User]
+        return matches?.first
+    }
     
     var needsSync: Bool {
         return getUnsyncedNotes().count + getUnsyncedQuestions().count > 0
+    }
+    
+    func saveUser(_ account: AccountManagerType, persistent: Bool) {
+        let userEntityDescription = NSEntityDescription.entity(forEntityName: "User", in: CoreData.context)
+        let user = User(entity: userEntityDescription!, insertInto: CoreData.context)
+        user.email = account.email
+        user.expiresIn = Int64(account.expiresIn ?? -1)
+        user.accessToken = account.accessToken
+        if (persistent) {
+            do {
+                try CoreData.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func createBeneficiary(persistent: Bool) -> Beneficiary {
+        let beneficiaryEntityDescription = NSEntityDescription.entity(forEntityName: "Beneficiary", in: CoreData.context)
+        let beneficiary = Beneficiary(entity: beneficiaryEntityDescription!, insertInto: CoreData.context)
+        if (persistent) {
+            do {
+                try CoreData.save()
+            } catch {
+                print(error)
+            }
+        }
+        return beneficiary
+    }
+    
+    func saveBeneficiaries(_ beneficiaries: [BeneficiaryDetailedResponse]) {
+        #warning("local beneficiaries are fully overwritten with the server values, even if some of their properties have been modified")
+        let beneficiariesIds = beneficiaries.map { $0.id }
+        
+        // delete local beneficiaries who no longer exist on server for the currentUser
+        currentUser()?
+            .beneficiaries?
+            .compactMap { $0 as? Beneficiary }
+            .filter { !beneficiariesIds.contains($0.id) }
+            .forEach { CoreData.context.delete($0) }
+        
+        // add new beneficiaries
+        beneficiaries.forEach { (beneficiary) in
+            let beneficiaryEntityDescription = NSEntityDescription.entity(forEntityName: "Beneficiary",
+                                                                          in: CoreData.context)
+            
+            let localBeneficiary = currentUser()?
+                .beneficiaries?
+                .compactMap({ $0 as? Beneficiary })
+                .filter({ $0.id == beneficiary.id }).first ?? Beneficiary(entity: beneficiaryEntityDescription!,
+                                                                           insertInto: CoreData.context)
+            localBeneficiary.user = currentUser()
+            localBeneficiary.age = beneficiary.age
+            localBeneficiary.birthDate = beneficiary.birthDate
+            localBeneficiary.civilStatus = beneficiary.civilStatus
+            localBeneficiary.county = beneficiary.county
+            localBeneficiary.countyId = beneficiary.countyId
+            localBeneficiary.city = beneficiary.city
+            localBeneficiary.cityId = beneficiary.cityId
+            localBeneficiary.gender = beneficiary.gender
+            localBeneficiary.id = beneficiary.id
+            localBeneficiary.name = beneficiary.name
+            localBeneficiary.userId = beneficiary.userId
+            
+            // remove deallocated forms
+            let localForms = localBeneficiary.forms?.compactMap({ $0 as? Form })
+            localForms?
+                .filter { !(beneficiary.forms ?? [])
+                    .map {$0.id}
+                    .contains($0.id)
+            }
+            .forEach { CoreData.context.delete($0) }
+            
+            beneficiary.forms?.forEach({ (form) in
+                // add new forms / update existing
+                let formEntityDescription = NSEntityDescription.entity(forEntityName: "Form",
+                                                                       in: CoreData.context)
+                let localForm = localForms?.filter({ $0.id == form.id }).first ?? Form(entity: formEntityDescription!,
+                                                                                       insertInto: CoreData.context)
+                localForm.id = form.id
+                localForm.addToBeneficiaries(localBeneficiary)
+            })
+            
+        }
+        do {
+            try CoreData.save()
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    func assignFormsToBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
+        formIds.forEach { (addedFormId) in
+            let formEntityDescription = NSEntityDescription.entity(forEntityName: "Form", in: CoreData.context)
+            let form = Form(entity: formEntityDescription!, insertInto: CoreData.context)
+            form.id = Int16(addedFormId)
+            beneficiary.addToForms(form)
+        }
+    }
+    
+    func unassignFormsFromBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
+        beneficiary
+            .forms?
+            .compactMap {$0 as? Form }
+            .filter { formIds.contains(Int($0.id)) }
+            .forEach { CoreData.context.delete($0) }
     }
     
     func currentSectionInfo() -> SectionInfo? {
@@ -160,3 +284,64 @@ class DB: NSObject {
     }
     
 }
+
+/*
+extension DB {
+    func udpateBeneficiary(_ beneficiary: inout Beneficiary, with response: BeneficiaryResponse) {
+        beneficiary.userId = response.userId ?? beneficiary.userId
+        beneficiary.id = response.id
+        beneficiary.name = response.name
+        beneficiary.civilStatus = response.civilStatus
+        beneficiary.birthDate = response.birthDate
+        beneficiary.age = response.age ?? beneficiary.age
+        beneficiary.county = response.county ?? beneficiary.county
+        beneficiary.countyId = response.countyId ?? beneficiary.countyId
+        beneficiary.cityId = response.cityId ?? beneficiary.cityId
+        beneficiary.gender = response.gender ?? beneficiary.gender
+        #warning("process family members and forms")
+        /**
+ var userId: Int16?                      // received on /api/v1/beneficiary/{id}
+        var id: Int16                           // always received
+        var name: String                        // always received
+        var civilStatus: Int16                  // always received
+        var birthDate: Date?                    // received on /api/v1/beneficiary/{id}
+        var age: Int16?                         // received on /api/v1/beneficiary
+        var county: String?                     // received on /api/v1/beneficiary
+        var city: String?                       // received on /api/v1/beneficiary
+        var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
+        var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
+        var gender: Int16?                      // always received
+        var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
+        var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
+ */
+    }
+    
+    func beneficiaryRequest(from beneficiary: Beneficiary) -> BeneficiaryRequest {
+        let beneficiaryRequest = BeneficiaryRequest(id: Int(beneficiary.id),
+                                                    userId: Int(beneficiary.userId),
+                                                    name: beneficiary.name,
+                                                    birthDate: beneficiary.birthDate,
+                                                    civilStatus: CivilStatus(rawValue: Int(beneficiary.civilStatus))!,
+                                                    cityId: Int(beneficiary.cityId),
+                                                    countyId: Int(beneficiary.countyId),
+                                                    gender: Gender(Int(beneficiary.gender)),
+                                                    formIds: formsArray.compactMap({
+                                                        ($0 as? FormSetCellModel)?.id
+                                                    }),
+                                                    newAllocatedFormsIds: nil,
+                                                    dealocatedFormsIds: nil)
+        beneficiary.birthDate = model.birthDate
+        beneficiary.cityId = Int(model.cityId)
+        beneficiary.countyId = Int(model.countyId)
+        beneficiary.id = Int(model.id)
+        beneficiary.name = model.name
+        beneficiary.userId = Int(model.userId)
+        if let civilStatus = CivilStatus(rawValue: Int(model.civilStatus)) {
+            beneficiary.civilStatus = civilStatus
+        }
+        if let gender = Gender(rawValue: Int(model.gender)) {
+            beneficiary.gender = gender
+        }
+    }
+}
+*/

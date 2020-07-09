@@ -68,11 +68,14 @@ class LoginViewModel: NSObject {
         guard let phone = emailAddress, let pin = password else { return }
         isLoading = true
         onUpdate?()
-        APIManager.shared.login(email: phone, password: pin) { error in
-            AccountManager.shared.email = self.emailAddress
+        APIManager.shared.login(email: phone, password: pin) { (user, error) in
             if let error = error {
                 callback(.generic(reason: error.localizedDescription))
             } else {
+                // Save user to account manager singleton
+                AccountManager.shared.email = user?.email
+                AccountManager.shared.accessToken = user?.accessToken
+                AccountManager.shared.expiresIn = user?.expiresIn
                 callback(nil)
             }
             self.isLoading = false

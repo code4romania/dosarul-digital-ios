@@ -95,15 +95,7 @@ class SectionPickerViewModel: NSObject {
     }
     
     private func sorted(counties: [CountyResponse]) -> [CountyResponse] {
-        counties.sorted {
-            if $0.order != $1.order {
-                // account for the order field
-                return $0.order < $1.order
-            } else {
-                // fallback to alphabetically
-                return $0.name < $1.name
-            }
-        }
+        counties.sorted { $0.name < $1.name }
     }
     
 //    func availableSectionIds(inCounty county: String) -> [Int] {

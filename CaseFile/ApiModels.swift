@@ -17,23 +17,32 @@ struct LoginRequest: Codable {
     var password: String
 }
 
-struct Patient: Codable {
-    var firstName: String
-    var lastName: String
-    var birthDate: Date
-    var maritalStatus: Bool
-    var city: String
-    var county: String
+struct BeneficiaryRequest: Codable {
+    var id: Int16?
+    var userId: Int16?
+    var name: String?
+    var birthDate: Date?
+    var civilStatus: CivilStatus
+    var cityId: Int16
+    var countyId: Int16
+    var gender: Gender
+    var formsIds: [Int]?
+    var newAllocatedFormsIds: [Int]?
+    var dealocatedFormsIds: [Int]?
     
-    // uncomment if needed (at least one key is different than its coding)
-//    enum CodingKeys: String, CodingKey {
-//        case firstName
-//        case lastName
-//        case birthDate
-//        case maritalStatus
-//        case city
-//        case county
-//    }
+    enum CodingKeys: String, CodingKey {
+        case id = "beneficiaryId"
+        case userId
+        case name
+        case birthDate
+        case civilStatus
+        case cityId
+        case countyId
+        case gender
+        case formsIds
+        case newAllocatedFormsIds
+        case dealocatedFormsIds
+    }
 }
 
 struct UpdatePollingStationRequest: Codable {
@@ -55,10 +64,9 @@ struct UpdatePollingStationRequest: Codable {
 }
 
 struct UploadNoteRequest: Codable {
+    var beneficiaryId: Int
     var imageData: Data?
     var questionId: Int?
-    var countyCode: String
-    var pollingStationId: Int?
     var text: String
 }
 
@@ -97,14 +105,113 @@ struct ErrorResponse: Codable {
 }
 
 struct LoginResponse: Codable {
+    var email: String?
     var accessToken: String?
     var expiresIn: Int?
     var error: String?
 
     enum CodingKeys: String, CodingKey {
+        case email
         case accessToken = "access_token"
         case expiresIn = "expires_in"
         case error
+    }
+}
+
+struct BeneficiaryListResponse: Codable {
+    var beneficiaries: [BeneficiaryResponse]
+    var totalItems: Int
+    var totalPages: Int
+    var page: Int
+    var pageSize: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case beneficiaries = "data"
+        case totalItems
+        case totalPages
+        case page
+        case pageSize
+    }
+}
+
+struct BeneficiaryDetailedListResponse: Codable {
+    var beneficiaries: [BeneficiaryDetailedResponse]
+    var totalItems: Int
+    var totalPages: Int
+    var page: Int
+    var pageSize: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case beneficiaries = "data"
+        case totalItems
+        case totalPages
+        case page
+        case pageSize
+    }
+}
+
+// Beneficiary response (sometimes it has county & city identifiers and forms, other times it has county & city names).
+struct BeneficiaryResponse: Codable {
+    var userId: Int16?                      // received on /api/v1/beneficiary/{id}
+    var id: Int16                           // always received
+    var name: String                        // always received
+    var civilStatus: Int16                  // always received
+    var birthDate: Date?                    // received on /api/v1/beneficiary/{id}
+    var age: Int16?                         // received on /api/v1/beneficiary
+    var county: String?                     // received on /api/v1/beneficiary
+    var city: String?                       // received on /api/v1/beneficiary
+    var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
+    var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
+    var gender: Int16?                      // always received
+    var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
+    var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
+    
+    enum CodingKeys: String, CodingKey {
+        case userId
+        case id = "beneficiaryId"
+        case name
+        case civilStatus
+        case birthDate
+        case age
+        case county
+        case city
+        case countyId
+        case cityId
+        case gender
+        case familyMembers
+        case forms
+    }
+}
+
+struct BeneficiaryDetailedResponse: Codable {
+    var age: Int16                              // always received on /api/v1/beneficiary/details
+    var birthDate: Date                         // always received on /api/v1/beneficiary/details
+    var city: String                            // always received on /api/v1/beneficiary/details
+    var cityId: Int16                           // always received on /api/v1/beneficiary/details
+    var civilStatus: Int16                      // always received on /api/v1/beneficiary/details
+    var county: String                          // always received on /api/v1/beneficiary/details
+    var countyId: Int16                         // always received on /api/v1/beneficiary/details
+    var familyMembers: [FamilyMemberResponse]?  // always received on /api/v1/beneficiary/details
+    var forms: [FormBeneficiaryResponse]?       // always received on /api/v1/beneficiary/details
+    var gender: Int16                           // always received on /api/v1/beneficiary/details
+    var id: Int16                               // always received on /api/v1/beneficiary/details
+    var name: String                            // always received on /api/v1/beneficiary/details
+    var userId: Int16                           // always received on /api/v1/beneficiary/details
+    
+    enum CodingKeys: String, CodingKey {
+        case age
+        case birthDate
+        case city
+        case cityId
+        case civilStatus
+        case county
+        case countyId
+        case familyMembers
+        case forms
+        case gender
+        case id = "beneficiaryId"
+        case name
+        case userId
     }
 }
 
@@ -112,12 +219,10 @@ struct CountyResponse: Codable, CustomStringConvertible {
     var id: Int
     var name: String
     var code: String
-    var order: Int
     
     enum CodingKeys: String, CodingKey {
         case id = "countyId"
         case code
-        case order
         case name
     }
     
@@ -153,23 +258,52 @@ struct FormResponse: Codable {
     var code: String
     var version: Int
     var description: String
-    var order: Int?
+//    var order: Int? - forms do not have order yet
     
     enum CodingKeys: String, CodingKey {
         case id
         case code
-        case version = "ver"
+        case version = "currentVersion"
         case description
-        case order
+        // case order - forms do not have order yet
+    }
+}
+
+struct FamilyMemberResponse: Codable {
+    
+}
+
+// Forms on GET /beneficiary/{id}
+struct FormBeneficiaryResponse: Codable {
+    var id: Int16
+    var completionDate: Date
+    var description: String
+    var code: String
+    var totalQuestionsNo: Int
+    var questionsAnsweredNo: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "formId"
+        case completionDate
+        case description
+        case code
+        case totalQuestionsNo
+        case questionsAnsweredNo
     }
 }
 
 struct FormSectionResponse: Codable {
-    var id: Int
-    var uniqueId: String
+    var sectionId: Int
     var code: String
     var description: String
     var questions: [QuestionResponse]
+    
+    enum CodingKeys: String, CodingKey {
+        case sectionId
+        case code = "title"
+        case description
+        case questions
+    }
 }
 
 struct QuestionResponse: Codable {
@@ -185,13 +319,17 @@ struct QuestionResponse: Codable {
     var code: String
     var questionType: QuestionType
     var text: String
+    var hint: String?
+    var isMandatory: Bool
     var options: [QuestionOptionResponse]
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id = "questionId"
         case code
         case questionType
         case text
+        case hint
+        case isMandatory
         case options = "optionsToQuestions"
     }
 }

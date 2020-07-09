@@ -22,6 +22,10 @@
 "Button_OnboardingPrevious" = "ÎNAPOI";
 "Button_OnboardingStart" = "START";
 "Button_AddPatient" = "Adaugă beneficiar nou";
+"Button_FillForm" = "Completează chestionar";
+"Button_Form" = "Chestionar";
+"Button_SendFile" = "Trimite fișă";
+"Button_Edit" = "Editează";
 
 "Label_MyPatients" = "Pacienții mei";
 "Label_Info" = "Info";
@@ -83,7 +87,8 @@
 "Station" = "Secția";
 
 "Title.StationDetails" = "Detalii despre Secție";
-"Title.FormSets" = "Toate Formularele";
+"Title.FormSetsFill" = "Toate Formularele";
+"Title.FormSetsSelect" = "Alocă chestionare";
 "Title.Question" = "Întrebarea";
 "Title.Note" = "Notă";
 "Title.NoteHistory" = "Istoricul Notelor";
@@ -91,7 +96,9 @@
 "Title.Language" = "Alege limba";
 "Title.NewVersion" = "Actualizare disponibilă";
 "Title.Patients" = "Lista beneficiari";
+"Title.Patients.Details" = "Detalii beneficiar";
 "Title.Patients.Add" = "Adăugare beneficiar nou";
+"Title.Patients.Edit" = "Editare beneficiar";
 "Title.Forms" = "Chestionare";
 
 "Next" = "Următoarea";
@@ -114,6 +121,8 @@
 "Onboarding.Title.Send" = "Trimite fișa pacientului pe email";
 "Onboarding.Text.Send" = "Fișa pacientului conține datele despre pacient și răspunsurile la chestionare. Apasă “Trimite fișa” și alege adresa de email a medicului curant.";
 
+"Instructions.Form.Select" = "Selectează din listă chestionarele potrivite pentru acest beneficiar";
+
 "Patients.Empty.Title" = "Lista ta e goală";
 "Patients.Empty.Description" = "Încă nu ai adăugat pacienți în listă. Începe prin a apăsa butonul “Adaugă pacient nou“";
 
@@ -134,12 +143,30 @@
 "Patients.Add.Field.Relationship.Title" = "Relația familială";
 "Patients.Add.Field.Relationship.Description" = "ex: copil";
 
+"Patients.Summary.Age.Title" = "Vârstă";
+"Patients.Summary.CivilStatus.Title" = "Stare civilă";
+"Patients.Summary.County.Title" = "Județ";
+"Patients.Summary.City.Title" = "Localitate";
+
 "Enums.CivilStatus.NotMarried" = "Necăsătorit(ă)";
+"Enums.CivilStatus.NotMarried.Female" = "Necăsătorită";
+"Enums.CivilStatus.NotMarried.Male" = "Necăsătorit";
 "Enums.CivilStatus.Married" = "Căsătorit(ă)";
+"Enums.CivilStatus.Married.Female" = "Căsătorită";
+"Enums.CivilStatus.Married.Male" = "Căsătorit";
 "Enums.CivilStatus.Divorced" = "Divorțat(ă)";
+"Enums.CivilStatus.Divorced.Female" = "Divorțată";
+"Enums.CivilStatus.Divorced.Male" = "Divorțat";
 "Enums.CivilStatus.Widowed" = "Văduv(ă)";
+"Enums.CivilStatus.Widowed.Female" = "Văduvă";
+"Enums.CivilStatus.Widowed.Male" = "Văduv";
 
 "Enums.Gender.Female" = "Feminin";
 "Enums.Gender.Male" = "Masculin";
 
 "Validation.CountyNotSelected" = "Selectează județul";
+
+"Loading.Title.AddPatient" = "Creare beneficiar...";
+"Loading.Title.EditPatient" = "Actualizare beneficiar...";
+"Loading.Error.AddPatient" = "Eroare";
+"Loading.Success.AddPatient" = "Success";

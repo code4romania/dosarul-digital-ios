@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import JGProgressHUD
 
 
 /// Use this class as the base class for view controllers that need to have things like the contact info on the nav bar,
@@ -62,7 +63,12 @@ class MVViewController: UIViewController {
     fileprivate func configureHeader() {
         guard shouldDisplayHeaderContainer else { return }
         guard let headerContainer = headerContainer else { return }
-        let controller = PatientHUDViewController()
+        let viewModel = PatientHUDViewModel()
+        if let currentPatientArray = ApplicationData.shared.object(for: .patient) as? NSArray,
+            let currentPatient = currentPatientArray[0] as? Beneficiary {
+            viewModel.patient = currentPatient
+        }
+        let controller = PatientHUDViewController(model: viewModel)
         controller.view.translatesAutoresizingMaskIntoConstraints = true
         controller.willMove(toParent: self)
         addChild(controller)
@@ -127,4 +133,32 @@ class MVViewController: UIViewController {
         AppRouter.shared.goToChooseStation()
     }
     
+}
+
+extension UIViewController {
+    
+    func showFullScreenLoading(text: String?) {
+        var hud = JGProgressHUD(style: .dark)
+        if let applicationDataHudArray = ApplicationData.shared.object(for: ApplicationData.Keys.hud(view: self.view)) as? NSArray,
+            let applicationDataHud = applicationDataHudArray[0] as? JGProgressHUD {
+            hud = applicationDataHud
+        }
+        hud.textLabel.text = text
+        ApplicationData.shared.setObject([hud] as NSObject, for: ApplicationData.Keys.hud(view: self.view))
+        hud.show(in: self.navigationController?.view ?? self.view)
+    }
+    
+    func hideFullScreenLoading(text: String, error: Bool) {
+        if let hudArray = ApplicationData.shared.object(for: ApplicationData.Keys.hud(view: self.view)) as? NSArray,
+            let hud = hudArray[0] as? JGProgressHUD {
+            hud.textLabel.text = text
+            if (error) {
+                hud.indicatorView = JGProgressHUDErrorIndicatorView()
+            } else {
+                hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+            }
+            hud.dismiss(afterDelay: 1, animated: true)
+            ApplicationData.shared.removeObject(for: ApplicationData.Keys.hud(view: self.view))
+        }
+    }
 }

@@ -10,18 +10,72 @@ import UIKit
 
 class ApplicationData: NSObject {
     static let shared = ApplicationData()
+        
+    enum Keys {
+        case patient
+        case patientForms
+        case patientAddedForms
+        case patientRemovedForms
+        case hud(view: UIView)
+        
+        var value: String {
+            switch self {
+            case .patient:
+                return "ObjectPatient"
+            case .patientForms:
+                return "ObjectPatientForms"
+            case .patientAddedForms:
+                return "ObjectPatientFormsAdded"
+            case .patientRemovedForms:
+                return "ObjectPatientFormsRemoved"
+            case .hud(let view):
+                return String(format: "%p", unsafeBitCast(view, to: Int.self))
+            }
+        }
+    }
+    
+    /// Check this property for existing frequently used data in memory. The NSObject is always an array to infer Any, AnyObject and NSObject.
+    /// Whoever stores the object is responsible for removing it.
+    private(set) var objectRepository = NSMapTable<NSString, NSObject>.strongToStrongObjects()
+    
+    func object(for type: Keys) -> NSObject? {
+        return objectRepository.object(forKey: NSString(string: type.value))
+    }
+    
+    func setObject(_ object: NSObject, for type: Keys) {
+        objectRepository.setObject(object, forKey: NSString(string: type.value))
+        DebugLog("Setting object of type \(type) resulted in \(objectRepository)")
+    }
+    
+    func removeObject(for type: Keys) {
+        objectRepository.removeObject(forKey: NSString(string: type.value))
+        DebugLog("Removing object of type \(type) resulted in \(objectRepository)")
+    }
     
     private override init() {
         super.init()
     }
     
+//    func downloadBeneficiaries(then callback: ((Error?, [BeneficiarySummaryResponse]))?) {
+//
+//    }
+    
+    func downloadUpdatedBeneficiaries(then callback: ((Error?) -> Void)?) {
+        APIManager.shared.fetchBeneficiaries { (beneficiaries, error) in
+            guard error == nil else {
+                callback?(error)
+                return
+            }
+            guard let beneficiaries = beneficiaries else {
+                callback?(APIError.incorrectFormat(reason: "Error.IncorrectFormat"))
+                return
+            }
+            DB.shared.saveBeneficiaries(beneficiaries)
+        }
+    }
+    
     func downloadUpdatedForms(then callback: @escaping (Error?) -> Void) {
         DebugLog("Downloading new form summaries")
-        
-        if let countyCode = PreferencesManager.shared.county,
-            let stationCounty = LocalStorage.shared.getCounty(withCode: countyCode) {
-//            isCountyDiaspora = stationCounty.diaspora ?? false
-        }
         
         let api = APIManager.shared
         api.fetchForms() { (forms, error) in

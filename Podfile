@@ -11,6 +11,7 @@ target 'CaseFile' do
   pod 'Firebase/Messaging'
   pod 'Firebase/RemoteConfig'
   pod 'Fabric', '~> 1.10.2'
+  pod 'JGProgressHUD'
   pod 'Crashlytics', '~> 3.14.0'
   pod 'SnapKit', '~> 5.0.0'
   pod 'ReachabilitySwift'

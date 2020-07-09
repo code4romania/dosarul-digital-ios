@@ -36,15 +36,62 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         navigationDrawer.delegate = self
     }
     
-    func showAppEntry() {
+    func showAppEntry(animated: Bool) {
         if AccountManager.shared.accessToken != nil {
-            goToDashboard()
+            DB.shared.saveUser(AccountManager.shared, persistent: true)
+            showLoadingScreen()
+            downloadRequiredData { [weak self] (error) in
+                if error != nil {
+                    self?.showErrorUpdatingData()
+                    return
+                }
+                if OnboardingViewModel.shouldShowOnboarding {
+                    AppRouter.shared.goToOnboarding()
+                } else if OnboardingViewModel.shouldShowWelcome {
+                    AppRouter.shared.goToWelcomeScreen()
+                } else {
+                    self?.goToDashboard()
+                }
+            }
         } else {
-            goToLogin(animated:false)
+            goToLogin(animated: animated)
         }
         
-        RemoteConfigManager.shared.afterLoad {
-            self.checkForNewVersion()
+//        RemoteConfigManager.shared.afterLoad {
+//            self.checkForNewVersion()
+//        }
+    }
+    
+    func downloadRequiredData(completion:((APIError?) -> ())?) {
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "com.casefile.network.all", qos: .userInitiated, attributes: .concurrent)
+        var downloadError: APIError?
+        queue.async {
+            // get beneficiaries
+            group.enter()
+            APIManager.shared.fetchBeneficiaries { (beneficiaries, error) in
+                downloadError = error
+                defer {
+                    group.leave()
+                }
+                guard error == nil else {
+                    return
+                }
+                if let beneficiaries = beneficiaries {
+                    DB.shared.saveBeneficiaries(beneficiaries)
+                }
+            }
+            // get forms
+            group.enter()
+            APIManager.shared.fetchForms { (forms, error) in
+                downloadError = error
+                group.leave()
+            }
+            
+            
+            group.notify(queue: DispatchQueue.main) {
+                completion?(downloadError)
+            }
         }
     }
     
@@ -86,16 +133,26 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func goToWelcomeScreen() {
+        OnboardingViewModel.shouldShowWelcome = false
         let onboardingViewController = WelcomeViewController()
         let navigation = UINavigationController(rootViewController: onboardingViewController)
         window?.rootViewController = navigation
     }
     
     func goToDashboard() {
-        // TODO: dashboard instead of onboarding
-        let dashgoardViewController = PatientsViewController()
-        let navigation = UINavigationController(rootViewController: dashgoardViewController)
-        window?.rootViewController = navigation
+        let model = PatientViewModel(operation: .view)
+        let dashboardViewController = PatientsViewController(model: model)
+        if let navigationController = navigationController {
+            navigationController.setViewControllers([dashboardViewController], animated: true)
+        } else {
+            let navigation = UINavigationController(rootViewController: dashboardViewController)
+            self.window?.rootViewController = navigation
+        }
+    }
+    
+    func showLoadingScreen() {
+        let loadingViewController = LaunchScreenViewController(nibName: "LaunchScreenViewController-\(isPad ? "iPad" : "iPhone")", bundle: nil)
+        self.window?.rootViewController = loadingViewController
     }
     
     func createSplitControllerIfNecessary() {
@@ -122,11 +179,26 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         goToChooseStation()
     }
 
-    func goToForms(from vc: UIViewController) {
-        let formsModel = FormListViewModel()
+    func goToFormsSelection(beneficiary: Beneficiary?, from vc: UIViewController) {
+        let formsModel = FormListViewModel(beneficiary: beneficiary, selectionAction: .selectForm)
         let formsVC = FormListViewController(withModel: formsModel)
-        navigationController?.setViewControllers([formsVC], animated: true)
-        resetDetailsPane()
+        if let navigationController = vc.navigationController ?? navigationController {
+            navigationController.pushViewController(formsVC, animated: true)
+//        resetDetailsPane()
+        } else {
+            vc.present(formsVC, animated: true, completion: nil)
+        }
+    }
+    
+    func goToFormsFill(beneficiary: Beneficiary?, from vc: UIViewController) {
+        let formsModel = FormListViewModel(beneficiary: beneficiary, selectionAction: .fillForm)
+        let formsVC = FormListViewController(withModel: formsModel)
+        if let navigationController = vc.navigationController ?? navigationController {
+            navigationController.pushViewController(formsVC, animated: true)
+            //        resetDetailsPane()
+        } else {
+            vc.present(formsVC, animated: true, completion: nil)
+        }
     }
     
     func open(questionModel: QuestionAnswerViewModel) {
@@ -177,6 +249,18 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
+    private func showErrorUpdatingData() {
+        let alert = UIAlertController(title: "Error".localized,
+                                      message: "Error.DataDownloadFailed".localized,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Button_Retry".localized,
+                                      style: .default,
+                                      handler: { action in
+                                        self.showAppEntry(animated: false)
+        }))
+        window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
     private func openAppUrl() {
         let url = AppUpdateManager.shared.applicationURL
         if UIApplication.shared.canOpenURL(url) {
@@ -198,13 +282,16 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func navigationDrawer(_ navigationDrawer: NavigationDrawer, viewControllerAt index: Int) -> UIViewController {
-        return PatientsViewController()
+        let model = PatientViewModel(operation: .view)
+        return PatientsViewController(model: model)
     }
     
     func navigationDrawer(_ navigationDrawer: NavigationDrawer, didTapButtonAt index: Int) {
         switch index {
         case 0:
-            navigationDrawer.navigationController?.pushViewController(PatientsViewController(), animated: true)
+            let model = PatientViewModel(operation: .view)
+            let viewController = PatientsViewController(model: model)
+            navigationDrawer.navigationController?.pushViewController(viewController, animated: true)
         case 1:
             break
         case 2:
@@ -212,7 +299,8 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         case 3:
             break
         case 4:
-            self.goToLogin(animated: true)
+            AccountManager.shared.logout()
+            self.showAppEntry(animated: true)
         default:
             break
         }

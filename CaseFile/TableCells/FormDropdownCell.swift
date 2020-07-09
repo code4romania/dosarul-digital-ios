@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol FormDropdownCellDelegate {
+protocol FormDropdownCellDelegate: class {
     func didSelectDropdown(in cell: FormDropdownCell)
 }
 
 class FormDropdownCell: UITableViewCell {
     
-    var delegate: FormDropdownCellDelegate?
+    weak var delegate: FormDropdownCellDelegate?
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var dropdown: DropdownButton!
     

@@ -53,8 +53,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ap-UY-Ypf">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="333"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-station" translatesAutoresizingMaskIntoConstraints="NO" id="p87-MO-2bd">
-                            <rect key="frame" x="105.5" y="71" width="203" height="191.5"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-patient" translatesAutoresizingMaskIntoConstraints="NO" id="p87-MO-2bd">
+                            <rect key="frame" x="121" y="93.5" width="172" height="146.5"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.13725490196078433" green="0.15294117647058825" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
@@ -82,6 +82,6 @@
         </view>
     </objects>
     <resources>
-        <image name="onboarding-station" width="203" height="191.5"/>
+        <image name="onboarding-patient" width="172" height="146.5"/>
     </resources>
 </document>

@@ -32,7 +32,7 @@
                     <rect key="frame" x="0.0" y="94" width="414" height="724"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x85-3u-qGO" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x85-3u-qGO" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
                     <rect key="frame" x="16" y="818" width="382" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="aPG-gC-J5u"/>
