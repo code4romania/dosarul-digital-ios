@@ -30,8 +30,10 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Form" representedClassName="Form" syncable="YES" codeGenerationType="class">
+        <attribute name="completionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="forms" inverseEntity="Beneficiary"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SectionInfo" inverseName="form" inverseEntity="SectionInfo"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -63,14 +65,11 @@
         <attribute name="propertyName" optional="YES" attributeType="String"/>
         <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="revisions" inverseEntity="Beneficiary"/>
     </entity>
-    <entity name="SectionInfo" representedClassName="SectionInfo" syncable="YES">
-        <attribute name="arriveTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="countyCode" optional="YES" attributeType="String"/>
-        <attribute name="leaveTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="medium" optional="YES" attributeType="String"/>
-        <attribute name="presidentGender" optional="YES" attributeType="String"/>
+    <entity name="SectionInfo" representedClassName="SectionInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="sectionDescription" optional="YES" attributeType="String"/>
         <attribute name="sectionId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="synced" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Form" inverseName="sections" inverseEntity="Form"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="sectionInfo" inverseEntity="Note"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="sectionInfo" inverseEntity="Question"/>
     </entity>
@@ -88,11 +87,11 @@
     <elements>
         <element name="Answer" positionX="376" positionY="459" width="128" height="133"/>
         <element name="Beneficiary" positionX="180" positionY="405" width="128" height="253"/>
-        <element name="Form" positionX="189" positionY="414" width="128" height="73"/>
+        <element name="Form" positionX="189" positionY="414" width="128" height="103"/>
         <element name="Note" positionX="198" positionY="288" width="128" height="133"/>
         <element name="Question" positionX="178" positionY="447" width="128" height="193"/>
         <element name="Revision" positionX="198" positionY="423" width="128" height="88"/>
-        <element name="SectionInfo" positionX="-11" positionY="252" width="128" height="178"/>
+        <element name="SectionInfo" positionX="-11" positionY="252" width="128" height="133"/>
         <element name="User" positionX="180" positionY="405" width="128" height="103"/>
     </elements>
 </model>

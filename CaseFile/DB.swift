@@ -141,15 +141,14 @@ class DB: NSObject {
     }
     
     func currentSectionInfo() -> SectionInfo? {
-        guard let county = PreferencesManager.shared.county,
-            let stationId = PreferencesManager.shared.section else { return nil }
-        return sectionInfo(for: county, sectionId: stationId)
+        guard let stationId = PreferencesManager.shared.section else { return nil }
+        return sectionInfo(sectionId: stationId)
     }
     
-    func sectionInfo(for county: String, sectionId: Int) -> SectionInfo {
+    func sectionInfo(sectionId: Int) -> SectionInfo {
         let request: NSFetchRequest<SectionInfo> = SectionInfo.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "countyCode == %@ && sectionId == %d", county, Int16(sectionId))
+        request.predicate = NSPredicate(format: "sectionId == %d", Int16(sectionId))
         let sections = try? CoreData.context.fetch(request)
         if let sectionInfo = sections?.first {
             return sectionInfo
@@ -157,7 +156,6 @@ class DB: NSObject {
             // create it
             let sectionInfoEntityDescription = NSEntityDescription.entity(forEntityName: "SectionInfo", in: CoreData.context)
             let newSectioInfo = SectionInfo(entity: sectionInfoEntityDescription!, insertInto: CoreData.context)
-            newSectioInfo.countyCode = county
             newSectioInfo.sectionId = Int16(sectionId)
             newSectioInfo.synced = false
             try! CoreData.context.save()
@@ -176,11 +174,13 @@ class DB: NSObject {
     }
     
     func getUnsyncedQuestions() -> [Question] {
-        guard let section = currentSectionInfo() else { return [] }
+        guard let currentUser = currentUser() else {
+            return []
+        }
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
+        #warning("also add predicate only for current user")
         let syncedPredicate = NSPredicate(format: "synced == false")
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, syncedPredicate])
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [syncedPredicate])
         let unsyncedQuestions = CoreData.fetch(request) as? [Question]
         return unsyncedQuestions ?? []
     }

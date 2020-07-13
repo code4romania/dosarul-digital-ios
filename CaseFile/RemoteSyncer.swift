@@ -45,13 +45,7 @@ class RemoteSyncer: NSObject {
             return
         }
         
-        if !section.synced {
-            uploadSectionInfo(section, then: { error in
-                self.uploadUnsyncAnswersAndNotes(then: callback)
-            })
-        } else {
-            self.uploadUnsyncAnswersAndNotes(then: callback)
-        }
+        self.uploadUnsyncAnswersAndNotes(then: callback)
     }
     
     func uploadUnsyncAnswersAndNotes(then callback: @escaping (RemoteSyncerError?) -> Void) {
@@ -67,37 +61,6 @@ class RemoteSyncer: NSObject {
                 callback(errors.first)
             })
         }
-    }
-    
-    func uploadSectionInfo(_ section: SectionInfo, then callback: @escaping (RemoteSyncerError?) -> Void) {
-        let stationId = Int(section.sectionId)
-        guard let county = section.countyCode,
-            let medium = SectionInfo.Medium(rawValue: section.medium ?? ""),
-            let presidentGenre = SectionInfo.Genre(rawValue: section.presidentGender ?? "") else {
-                callback(.invalidStationData)
-                return
-        }
-        
-        let dateFmt = APIManager.shared.apiDateFormatter
-        let arrivalTime = section.arriveTime != nil ? dateFmt.string(from: section.arriveTime!) : ""
-        let leaveTime = section.leaveTime != nil ? dateFmt.string(from: section.leaveTime!) : ""
-        
-        let section = UpdatePollingStationRequest(
-            id: stationId,
-            countyCode: county,
-            isUrbanArea: medium == .urban,
-            leaveTime: leaveTime,
-            arrivalTime: arrivalTime,
-            isPresidentFemale: presidentGenre == .woman)
-        
-        APIManager.shared.upload(pollingStation: section) { error in
-            if let error = error {
-                callback(.stationError(reason: error))
-            } else {
-                callback(nil)
-            }
-        }
-        
     }
     
     func uploadUnsyncedNotes(then callback: @escaping (RemoteSyncerError?) -> Void) {
@@ -144,7 +107,7 @@ class RemoteSyncer: NSObject {
     }
 
     func uploadUnsyncedQuestions(then callback: @escaping (RemoteSyncerError?) -> Void) {
-        guard let section = DB.shared.currentSectionInfo() else { return }
+        let beneficiary: Beneficiary!
         let questions = DB.shared.getUnsyncedQuestions()
         var answers: [AnswerRequest] = []
         for question in questions {
@@ -157,12 +120,12 @@ class RemoteSyncer: NSObject {
                     answerRequests.append(option)
                 }
             }
-            let question = AnswerRequest(
+            #warning("set beneficiary id")
+            let answer = AnswerRequest(
                 questionId: Int(question.id),
-                countyCode: section.countyCode ?? "",
-                pollingStationId: Int(section.sectionId),
+                beneficiaryId: 0,
                 options: answerRequests)
-            answers.append(question)
+            answers.append(answer)
         }
         
         guard answers.count > 0 else {
@@ -170,7 +133,10 @@ class RemoteSyncer: NSObject {
             return
         }
         
-        let request = UploadAnswersRequest(answers: answers)
+        #warning("change formid and date")
+        let request = UploadAnswersRequest(formId: 0,
+                                           completionDate: Date(),
+                                           answers: answers)
         DebugLog("Uploading answers for \(answers.count) questions...")
         APIManager.shared.upload(answers: request) { error in
             if let error = error {

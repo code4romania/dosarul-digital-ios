@@ -35,7 +35,7 @@ class QuestionListViewController: MVViewController {
         super.viewDidLoad()
         title = model.title
         configureTableView()
-        addContactDetailsToNavBar()
+//        addContactDetailsToNavBar()
         MVAnalytics.shared.log(event: .viewForm(code: model.formCode))
         bindToNotifications()
     }
@@ -54,6 +54,8 @@ class QuestionListViewController: MVViewController {
     
     fileprivate func configureTableView() {
         tableView.register(UINib(nibName: "QuestionTableCell", bundle: nil), forCellReuseIdentifier: QuestionTableCell.identifier)
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
     }
@@ -116,23 +118,21 @@ extension QuestionListViewController: UITableViewDataSource {
 
 extension QuestionListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let width = tableView.bounds.width
-        let header = DefaultTableHeader(frame: CGRect(x: 0, y: 0, width: width, height: TableSectionHeaderHeight))
         let title = model.sectionTitles[section]
-        header.titleLabel.text = title
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView(frame: .zero)
+        let description = model.sectionDescriptions[section]
+        return TitleSubtitleTableHeader(title: title, description: description)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return TableSectionHeaderHeight
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return TableSectionFooterHeight
+        return CGFloat.leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

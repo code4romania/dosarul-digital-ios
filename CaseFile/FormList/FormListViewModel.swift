@@ -66,10 +66,17 @@ class FormListViewModel: NSObject {
         self.selectionAction = selectionAction
         super.init()
         loadData()
+        setApplicationData()
     }
 
     func reload() {
         loadData()
+    }
+    
+    func setApplicationData() {
+        if let beneficiary = beneficiary {
+            ApplicationData.shared.setObject([beneficiary] as NSObject, for: .patient)
+        }
     }
     
     fileprivate func loadData() {
@@ -148,5 +155,10 @@ class FormListViewModel: NSObject {
     
     func setLoading(_ loading: Bool, error: Error?) {
         onLoadingChanged?(loading, error)
+    }
+    
+    deinit {
+        ApplicationData.shared.removeObject(for: .patient)
+        print("DEALLOC FORM LIST VIEW MODEL")
     }
 }

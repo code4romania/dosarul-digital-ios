@@ -158,26 +158,6 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     func createSplitControllerIfNecessary() {
         guard splitViewController == nil else { return }
     }
-    
-    func goToChooseStation() {
-        let sectionModel = SectionPickerViewModel()
-        let sectionController = SectionPickerViewController(withModel: sectionModel)
-        if isPad && splitViewController == nil {
-            AppDelegate.shared.window?.rootViewController = UISplitViewController()
-            splitViewController?.viewControllers = [UINavigationController()]
-            if isPad {
-                splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.allVisible
-            }
-        } else if isPhone {
-            AppDelegate.shared.window?.rootViewController = UINavigationController()
-        }
-        navigationController?.setViewControllers([sectionController], animated: true)
-        resetDetailsPane()
-    }
-    
-    func proceedToAuthenticated() {
-        goToChooseStation()
-    }
 
     func goToFormsSelection(beneficiary: Beneficiary?, from vc: UIViewController) {
         let formsModel = FormListViewModel(beneficiary: beneficiary, selectionAction: .selectForm)

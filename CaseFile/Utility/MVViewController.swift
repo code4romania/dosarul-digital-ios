@@ -78,7 +78,7 @@ class MVViewController: UIViewController {
         controller.didMove(toParent: self)
         headerViewController = controller
         controller.onChangeAction = { [weak self] in
-            self?.handleChangeSectionButtonAction()
+//            self?.handleChangeSectionButtonAction()
         }
     }
     
@@ -127,12 +127,6 @@ class MVViewController: UIViewController {
             present(error, animated: true, completion: nil)
         }
     }
-
-    fileprivate func handleChangeSectionButtonAction() {
-        MVAnalytics.shared.log(event: .tapChangeStation(fromScreen: String(describing: type(of: self))))
-        AppRouter.shared.goToChooseStation()
-    }
-    
 }
 
 extension UIViewController {

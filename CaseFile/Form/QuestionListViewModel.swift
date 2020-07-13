@@ -26,6 +26,10 @@ class QuestionListViewModel: NSObject {
     }
     
     var sectionTitles: [String] {
+        return sections.map { $0.code }
+    }
+    
+    var sectionDescriptions: [String?] {
         return sections.map { $0.description }
     }
     
@@ -43,7 +47,7 @@ class QuestionListViewModel: NSObject {
     
     func questions(inSection section: Int) -> [QuestionCellModel] {
         guard sections.count > section else { return [] }
-        guard let sectionInfo = DB.shared.currentSectionInfo() else { return [] }
+        let sectionInfo = DB.shared.sectionInfo(sectionId: section)
         
         let storedQuestions = sectionInfo.questions?.allObjects as? [Question] ?? []
         let mappedQuestions = storedQuestions.reduce(into: [Int: Question]()) { $0[Int($1.id)] = $1 }

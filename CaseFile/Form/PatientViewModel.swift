@@ -423,7 +423,6 @@ extension PatientViewModel {
                 beneficiary.age = Int16(beneficiary.birthDate?.currentAge ?? -1)
                 DB.shared.assignFormsToBeneficiary(beneficiary, formIds: addedForms)
                 DB.shared.unassignFormsFromBeneficiary(beneficiary, formIds: removedForms)
-                
             }
             CoreData.saveContext()
             completion?(beneficiaryId, error)

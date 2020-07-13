@@ -71,19 +71,19 @@ struct UploadNoteRequest: Codable {
 }
 
 struct UploadAnswersRequest: Codable {
+    var formId: Int
+    var completionDate: Date?
     var answers: [AnswerRequest]
 }
 
 struct AnswerRequest: Codable {
     var questionId: Int
-    var countyCode: String
-    var pollingStationId: Int
+    var beneficiaryId: Int
     var options: [AnswerOptionRequest]
     
     enum CodingKeys: String, CodingKey {
         case questionId
-        case countyCode
-        case pollingStationId = "pollingStationNumber"
+        case beneficiaryId
         case options
     }
 }
@@ -295,7 +295,7 @@ struct FormBeneficiaryResponse: Codable {
 struct FormSectionResponse: Codable {
     var sectionId: Int
     var code: String
-    var description: String
+    var description: String?
     var questions: [QuestionResponse]
     
     enum CodingKeys: String, CodingKey {

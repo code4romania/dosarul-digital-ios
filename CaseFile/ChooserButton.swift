@@ -22,10 +22,14 @@ class ChooserButton: UIButton {
     }
     
     fileprivate func setup() {
-        setBackgroundImage(UIImage.from(color: .chooserButtonBackground), for: .normal)
-        setBackgroundImage(UIImage.from(color: .chooserButtonSelectedBackground), for: .selected)
-        setBackgroundImage(UIImage.from(color: UIColor.chooserButtonSelectedBackground.withAlphaComponent(0.5)), for: .highlighted)
-        setBackgroundImage(UIImage.from(color: .chooserButtonSelectedBackground), for: [.selected, .highlighted])
+        setBackgroundImage(UIImage.from(color: .chooserButtonBackground),
+                           for: .normal)
+        setBackgroundImage(UIImage.from(color: .chooserButtonSelectedBackground),
+                           for: .selected)
+        setBackgroundImage(UIImage.from(color: UIColor.chooserButtonSelectedBackground.withAlphaComponent(0.5)),
+                           for: .highlighted)
+        setBackgroundImage(UIImage.from(color: .chooserButtonSelectedBackground),
+                           for: [.selected, .highlighted])
         
         setTitleColor(.defaultText, for: .normal)
         setTitleColor(.defaultText, for: .selected)

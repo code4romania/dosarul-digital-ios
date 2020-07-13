@@ -9,7 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class PatientDetailsViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate, UITableViewDelegate, UITableViewDataSource, BeneficiaryCellDelegate {
+class PatientDetailsViewController: MVViewController, EmptyDataSetSource, EmptyDataSetDelegate, UITableViewDelegate, UITableViewDataSource, BeneficiaryCellDelegate {
 
     let model: PatientViewModel
     let tableView = UITableView()

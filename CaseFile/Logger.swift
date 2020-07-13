@@ -2,17 +2,17 @@
 
 import Foundation
 import Firebase
-import Crashlytics
+import FirebaseCrashlytics
 
 func DebugLog(_ message: String, file: StaticString = #file, function: StaticString = #function, line: Int = #line) {
     let filename = URL(fileURLWithPath: file.description).lastPathComponent
     let output = "\(filename):\(line) \(function) $ \(message)"
-
+    
     #if targetEnvironment(simulator)
-        NSLogv("%@", getVaList([output]))
+    NSLogv("%@", getVaList([output]))
     #elseif DEBUG
-        CLSNSLogv("%@", getVaList([output]))
+    Crashlytics.crashlytics().log(format: "%@", arguments: getVaList([output]))
     #else
-        CLSLogv("%@", getVaList([output]))
+    Crashlytics.crashlytics().log(format: "%@", arguments: getVaList([output]))
     #endif
 }

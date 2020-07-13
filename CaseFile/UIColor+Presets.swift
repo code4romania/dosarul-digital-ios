@@ -15,6 +15,7 @@ extension UIColor {
 
     static var appBackground = UIColor(hexCode: 0xE5E5E5)
     static var headerBackground = UIColor(hexCode: 0xFFFFFF)
+    static var defaultTableHeaderText = UIColor(hexCode: 0x86868A)
     static var defaultText = UIColor(hexCode: 0x333E48)
     static var viewBackgroundPrimary = UIColor(hexCode: 0xFEFEFE)
 

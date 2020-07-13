@@ -13,8 +13,7 @@ enum ApiURL {
     case beneficiaries
     case beneficiariesDetailed
     case beneficiary(id: Int)
-    case pollingStationList
-    case pollingStation
+    case county
     case city(id: Int)
     case forms
     case form(id: Int)
@@ -29,8 +28,7 @@ enum ApiURL {
         case .beneficiaries: uri = "/v1/beneficiary"
         case .beneficiariesDetailed: uri = "/v1/beneficiary/details"
         case .beneficiary(let id): uri = "/v1/beneficiary/\(id)"
-        case .pollingStationList: uri = "/v1/county"
-        case .pollingStation: uri = "/v1/polling-station"
+        case .county: uri = "/v1/county"
         case .city(let id): uri = "/v1/county/\(id)/cities"
         case .forms: uri = "/v1/form"
         case .form(let id): uri = "/v1/form/\(id)"

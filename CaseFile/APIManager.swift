@@ -152,7 +152,7 @@ class APIManager: NSObject, APIManagerType {
     }
     
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) {
-        let url = ApiURL.pollingStationList.url()
+        let url = ApiURL.county.url()
         let headers = authorizationHeaders()
         
         Alamofire
@@ -351,7 +351,7 @@ class APIManager: NSObject, APIManagerType {
             return
         }
         
-        let url = ApiURL.pollingStation.url()
+        let url = ApiURL.county.url()
         let auth = authorizationHeaders()
         let headers = requestHeaders(withAuthHeaders: auth)
         let body = try! JSONEncoder().encode(pollingStation)
