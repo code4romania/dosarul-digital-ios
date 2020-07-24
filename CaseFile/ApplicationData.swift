@@ -61,7 +61,7 @@ class ApplicationData: NSObject {
 //    }
     
     func downloadUpdatedBeneficiaries(then callback: ((Error?) -> Void)?) {
-        APIManager.shared.fetchBeneficiaries { (beneficiaries, error) in
+        AppDelegate.dataSourceManager.fetchBeneficiaries { (beneficiaries, error) in
             guard error == nil else {
                 callback?(error)
                 return
@@ -77,8 +77,7 @@ class ApplicationData: NSObject {
     func downloadUpdatedForms(then callback: @escaping (Error?) -> Void) {
         DebugLog("Downloading new form summaries")
         
-        let api = APIManager.shared
-        api.fetchForms() { (forms, error) in
+        AppDelegate.dataSourceManager.fetchForms() { (forms, error) in
             if let error = error {
                 callback(error)
             } else {
@@ -92,7 +91,7 @@ class ApplicationData: NSObject {
     }
     
     fileprivate func downloadUpdatedFormsInSet(_ forms: [FormResponse], then callback: @escaping () -> Void) {
-        let api = APIManager.shared
+        let api = AppDelegate.dataSourceManager
         let existingForms = LocalStorage.shared.forms ?? []
         let indexedExistingForms = existingForms.reduce(into: [Int: FormResponse]()) { $0[$1.id] = $1 }
         let newForms = forms
@@ -118,7 +117,7 @@ class ApplicationData: NSObject {
             
             // delete any questions, answers, notes that were answered to the old form
             if let existing = indexedExistingForms[form.id] {
-                deleteUserData(forForm: form.code, formVersion: existing.version)
+                deleteUserData(forForm: form.id, formVersion: existing.version)
             }
             
             api.fetchForm(formId: form.id) { (formSections, error) in
@@ -136,8 +135,8 @@ class ApplicationData: NSObject {
         }
     }
     
-    fileprivate func deleteUserData(forForm formCode: String, formVersion: Int) {
-        let questions = DB.shared.getQuestions(forForm: formCode, formVersion: formVersion)
+    fileprivate func deleteUserData(forForm formId: Int, formVersion: Int) {
+        let questions = DB.shared.getQuestions(forForm: formId, formVersion: formVersion)
         DB.shared.delete(questions: questions)
     }
 }

@@ -303,7 +303,7 @@ class PatientViewModel: NSObject {
             completion?(nil)
             return
         }
-        APIManager.shared.fetchCounties(completion: { (counties, error) in
+        AppDelegate.dataSourceManager.fetchCounties(completion: { (counties, error) in
             if let counties = counties {
                 self.availableCounties = counties
                 self.availableCities = []
@@ -320,7 +320,7 @@ class PatientViewModel: NSObject {
             completion?(nil)
             return
         }
-        APIManager.shared.fetchCities(countyId: countyId, completion: { (cities, error) in
+        AppDelegate.dataSourceManager.fetchCities(countyId: countyId, completion: { (cities, error) in
             if let cities = cities {
                 self.availableCities = cities
                 LocalStorage.shared.setCities(cities, for: countyId)
@@ -333,7 +333,7 @@ class PatientViewModel: NSObject {
         guard let beneficiaryId = beneficiary?.id else {
             return
         }
-        APIManager.shared.fetchBeneficiary(beneficiaryId: Int(beneficiaryId)) { (beneficiary, error) in
+        AppDelegate.dataSourceManager.fetchBeneficiary(beneficiaryId: Int(beneficiaryId)) { (beneficiary, error) in
              
         }
     }
@@ -410,7 +410,7 @@ extension PatientViewModel {
                                                     formsIds: selectedForms,
                                                     newAllocatedFormsIds: addedForms,
                                                     dealocatedFormsIds: removedForms)
-        APIManager.shared.createOrUpdateBeneficiary(beneficiaryRequest, isNew: isNew) { (beneficiaryId, error) in
+        AppDelegate.dataSourceManager.createOrUpdateBeneficiary(beneficiaryRequest, isNew: isNew) { (beneficiaryId, error) in
             guard error == nil, let beneficiaryId = beneficiaryId else {
                 completion?(nil, error)
                 return

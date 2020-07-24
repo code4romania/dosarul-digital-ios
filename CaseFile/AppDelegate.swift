@@ -8,6 +8,15 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
         
     var window: UIWindow?
+    static var dataSourceManager: APIManagerType = {
+        if let infoDict = Bundle.main.infoDictionary,
+            let mockAPI = infoDict["MOCK_API"] as? Bool,
+            mockAPI == true {
+                return APIMock.shared
+        } else {
+                return APIManager.shared
+        }
+    }()
     
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate

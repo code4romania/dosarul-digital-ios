@@ -39,12 +39,6 @@ class RemoteSyncer: NSObject {
     }
     
     func syncUnsyncedData(then callback: @escaping (RemoteSyncerError?) -> Void) {
-        guard let section = DB.shared.currentSectionInfo() else {
-            // this shouldn't happen but hey
-            callback(.invalidStationData)
-            return
-        }
-        
         self.uploadUnsyncAnswersAndNotes(then: callback)
     }
     
@@ -64,7 +58,6 @@ class RemoteSyncer: NSObject {
     }
     
     func uploadUnsyncedNotes(then callback: @escaping (RemoteSyncerError?) -> Void) {
-        guard let section = DB.shared.currentSectionInfo() else { return }
         let notes = DB.shared.getUnsyncedNotes()
         var passedRequests = 0
         let totalRequests = notes.count
@@ -83,7 +76,7 @@ class RemoteSyncer: NSObject {
                 imageData: note.file as Data?,
                 questionId: note.questionID != -1 ? Int(note.questionID) : nil,
                 text: note.body ?? "")
-            APIManager.shared.upload(note: uploadRequest) { error in
+            AppDelegate.dataSourceManager.upload(note: uploadRequest) { error in
                 if let error = error {
                     errors.append(.noteError(reason: error))
                     DebugLog("Failed to uploaded note: \(error.localizedDescription)")
@@ -138,7 +131,7 @@ class RemoteSyncer: NSObject {
                                            completionDate: Date(),
                                            answers: answers)
         DebugLog("Uploading answers for \(answers.count) questions...")
-        APIManager.shared.upload(answers: request) { error in
+        AppDelegate.dataSourceManager.upload(answers: request) { error in
             if let error = error {
                 DebugLog("Uploading answers failed: \(error)")
                 callback(RemoteSyncerError.questionError(reason: error))

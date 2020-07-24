@@ -54,6 +54,7 @@ class QuestionAnswerViewController: MVViewController {
         super.viewDidLoad()
         configureCollectionView()
         bindToUpdateEvents()
+        localize()
         view.clipsToBounds = true
     }
     

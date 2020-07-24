@@ -30,7 +30,6 @@ class FormSetTableCell: UITableViewCell {
 
     @IBOutlet weak var outerCardContainer: UIView!
     @IBOutlet weak var cardContainer: UIView!
-    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var selectionView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var answeredLabel: UILabel!
@@ -70,9 +69,8 @@ class FormSetTableCell: UITableViewCell {
     }
     
     func update(withModel model: FormSetCellModel) {
-        iconView.image = model.icon
         titleLabel.attributedText = titleText(ofModel: model)
-        progressWidthConstraint.constant = model.progress * cardContainer.frame.size.width
+        progressWidthConstraint.constant = model.selectionType == .fillForm ? model.progress * cardContainer.frame.size.width : 0
         answeredLabel.text = model.answeredOutOfTotalQuestions
         answeredLabel.isHidden = model.selectionType == .selectForm
         progressContainer.isHidden = model.progress == 0
@@ -103,7 +101,6 @@ class FormSetTableCell: UITableViewCell {
     }
     
     func updateAsNote() {
-        iconView.image = UIImage(named: "icon-note-small")
         titleLabel.text = "Label_AddNote".localized
         titleLabel.textColor = .formNameText
         answeredLabel.text = nil

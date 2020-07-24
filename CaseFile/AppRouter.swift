@@ -69,7 +69,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         queue.async {
             // get beneficiaries
             group.enter()
-            APIManager.shared.fetchBeneficiaries { (beneficiaries, error) in
+            AppDelegate.dataSourceManager.fetchBeneficiaries { (beneficiaries, error) in
                 downloadError = error
                 defer {
                     group.leave()
@@ -83,7 +83,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
             }
             // get forms
             group.enter()
-            APIManager.shared.fetchForms { (forms, error) in
+            AppDelegate.dataSourceManager.fetchForms { (forms, error) in
                 downloadError = error
                 group.leave()
             }

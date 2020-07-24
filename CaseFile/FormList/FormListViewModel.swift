@@ -118,12 +118,10 @@ class FormListViewModel: NSObject {
     fileprivate func convertToViewModels(responses: [FormResponse]?) -> [FormSetCellModel]{
         var result: [FormSetCellModel] = []
         if let objects = responses {
-            // forms do not have sorting field
-            //            let sorted = objects.sorted { $0.order ?? 0 < $1.order ?? 0 }
             result = objects.map { set in
                 let formCodePrefix = set.code.first != nil ? String(set.code.first!).lowercased() : ""
                 let image = UIImage(named: "icon-formset-\(formCodePrefix)") ?? UIImage(named: "icon-formset-default")
-                let answeredQuestions = DB.shared.getAnsweredQuestions(inFormWithCode: set.code).count
+                let answeredQuestions = DB.shared.getAnsweredQuestions(inFormWithId: set.id).count
                 let formSections = LocalStorage.shared.loadForm(withId: set.id)
                 let totalQuestions = formSections?.reduce([QuestionResponse](), { $0 + $1.questions }).count ?? 0
                 let progress = totalQuestions > 0 ? CGFloat(answeredQuestions) / CGFloat(totalQuestions) : 0

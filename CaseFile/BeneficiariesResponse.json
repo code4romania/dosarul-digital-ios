@@ -1,0 +1,37 @@
+{
+    "200": {
+        "data": [
+            {
+                "beneficiaryId": 285,
+                "name": "Andrei Bouariu",
+                "age": 29,
+                "civilStatus": 0,
+                "county": "NEAMT",
+                "city": "MUNICIPIUL ROMAN",
+                "gender": 0,
+                "userId": 4,
+                "birthDate": "1991-07-09T22:00:00",
+                "countyId": 27,
+                "cityId": 1941,
+                "forms": [
+                    {
+                        "formId": 1,
+                        "completionDate": "0001-01-01T00:00:00",
+                        "description": "Description A",
+                        "code": "A",
+                        "totalQuestionsNo": 4,
+                        "questionsAnsweredNo": 0
+                    }
+                ],
+                "familyMembers": null
+            }
+        ],
+        "totalItems": 1,
+        "totalPages": 1,
+        "page": 1,
+        "pageSize": 20
+    },
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

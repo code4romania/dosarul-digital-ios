@@ -178,12 +178,17 @@ class QuestionAnswerViewModel: NSObject {
         var question: Question! = DB.shared.getQuestion(withId: questionModel.questionId)
         if question == nil {
             question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: CoreData.context) as? Question
-            question.form = form.code
+            question.formId = Int16(form.id)
             question.formVersion = Int16(form.version)
             question.id = Int16(questionModel.questionId)
-            question.synced = false
             question.type = Int16(questionModel.type.rawValue)
-            question.sectionInfo = DB.shared.currentSectionInfo()
+            if let sectionId = sections
+                .filter({ $0.questions
+                    .map({ $0.id })
+                    .contains(questionModel.questionId) })
+                .first?.sectionId {
+                question.sectionInfo = DB.shared.sectionInfo(sectionId: sectionId)
+            }
         }
         
         if let existingAnswers = question.answers {

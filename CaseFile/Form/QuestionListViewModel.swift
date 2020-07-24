@@ -33,6 +33,10 @@ class QuestionListViewModel: NSObject {
         return sections.map { $0.description }
     }
     
+    var sectionIds: [Int] {
+        return sections.map { $0.sectionId }
+    }
+    
     var formCode: String {
         return form.code
     }
@@ -45,9 +49,25 @@ class QuestionListViewModel: NSObject {
         super.init()
     }
     
+//    func questions(forForm formId: Int, version: Int) -> [QuestionCellModel] {
+//        let storedQuestions = DB.shared.getQuestions(forForm: formId, formVersion: version)
+//        let mappedQuestions = storedQuestions.reduce(into: [Int: Question]()) { $0[Int($1.id)] = $1 }
+//        
+//        return sections[section].questions.map { questionResponse -> QuestionCellModel in
+//            let stored = mappedQuestions[questionResponse.id]
+//            return QuestionCellModel(
+//                questionId: questionResponse.id,
+//                questionCode: questionResponse.code,
+//                questionText: questionResponse.text,
+//                isAnswered: stored?.answered ?? false,
+//                isSynced: stored?.synced ?? false,
+//                hasNoteAttached: stored?.note != nil)
+//        }
+//    }
+    
     func questions(inSection section: Int) -> [QuestionCellModel] {
         guard sections.count > section else { return [] }
-        let sectionInfo = DB.shared.sectionInfo(sectionId: section)
+        let sectionInfo = DB.shared.sectionInfo(sectionId: sectionIds[section])
         
         let storedQuestions = sectionInfo.questions?.allObjects as? [Question] ?? []
         let mappedQuestions = storedQuestions.reduce(into: [Int: Question]()) { $0[Int($1.id)] = $1 }

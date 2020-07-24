@@ -158,7 +158,7 @@ class DB: NSObject {
             let newSectioInfo = SectionInfo(entity: sectionInfoEntityDescription!, insertInto: CoreData.context)
             newSectioInfo.sectionId = Int16(sectionId)
             newSectioInfo.synced = false
-            try! CoreData.context.save()
+            try? CoreData.context.save()
             return newSectioInfo
         }
     }

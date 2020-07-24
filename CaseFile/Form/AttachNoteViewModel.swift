@@ -109,7 +109,7 @@ class AttachNoteViewModel: NSObject {
             MVAnalytics.shared.log(event: .addNote(hasAttachment: attachment != nil))
         }
         
-        APIManager.shared.upload(note: request) { apiError in
+        AppDelegate.dataSourceManager.upload(note: request) { apiError in
             if let error = apiError {
                 self.isSaving = false
                 callback(.uploadFailed(reason: error))

@@ -68,7 +68,7 @@ class LoginViewModel: NSObject {
         guard let phone = emailAddress, let pin = password else { return }
         isLoading = true
         onUpdate?()
-        APIManager.shared.login(email: phone, password: pin) { (user, error) in
+        AppDelegate.dataSourceManager.login(email: phone, password: pin) { (user, error) in
             if let error = error {
                 callback(.generic(reason: error.localizedDescription))
             } else {
