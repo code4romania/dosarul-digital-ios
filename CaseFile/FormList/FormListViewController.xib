@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="downloadingSpinner" destination="cM5-3h-3Lv" id="T24-wD-PJQ"/>
                 <outlet property="headerContainer" destination="gVA-9J-3GR" id="9Sa-ux-mvY"/>
+                <outlet property="headerContainerHeightConstraint" destination="SbE-Zv-JaK" id="Yi0-5b-gjH"/>
                 <outlet property="proceedButton" destination="tKq-LG-MhM" id="n5a-Az-k4h"/>
                 <outlet property="retryButton" destination="08L-24-Ci0" id="X7g-vm-O9m"/>
                 <outlet property="syncButton" destination="aFr-vX-iM6" id="qga-xP-Ot2"/>

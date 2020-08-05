@@ -31,6 +31,7 @@ class AddPatientViewController: MVViewController, UITableViewDelegate, UITableVi
 
     // MARK: - VC
     override func viewDidLoad() {
+        shouldOverrideHeaderContent = model.shouldOverrideHeaderContent
         super.viewDidLoad()
         switch model.operation {
         case .add:

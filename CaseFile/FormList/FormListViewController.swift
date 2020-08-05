@@ -232,6 +232,10 @@ class FormListViewController: MVViewController {
         }
     }
     
+    fileprivate func continueToFillDate() {
+        
+    }
+    
     fileprivate func continueToForm(withCode code: String) {
         guard let questionsModel = QuestionListViewModel(withFormUsingCode: code) else {
             let message = "Error: can't load question list model for form with code \(code)"
@@ -242,10 +246,14 @@ class FormListViewController: MVViewController {
         
         let questionsVC = QuestionListViewController(withModel: questionsModel)
         navigationController?.pushViewController(questionsVC, animated: true)
+        #warning("do not set completion date here")
+        ApplicationData.shared.setObject([Date()] as NSArray, for: .patientFormCompletionDate)
+        #warning("until here")
         AppRouter.shared.resetDetailsPane()
     }
     
     fileprivate func continueToNote() {
+        #warning("check this when it hits breakpoint")
         AppRouter.shared.openAddNote()
     }
     

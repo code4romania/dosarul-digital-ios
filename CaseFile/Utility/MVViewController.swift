@@ -17,6 +17,7 @@ class MVViewController: UIViewController {
 
     /// Connect the view that will contain the section info controller
     @IBOutlet weak var headerContainer: UIView!
+    @IBOutlet weak var headerContainerHeightConstraint: NSLayoutConstraint!
     weak var headerViewController: PatientHUDViewController?
     
     let TableSectionHeaderHeight: CGFloat = 52
@@ -24,6 +25,7 @@ class MVViewController: UIViewController {
     
     /// Set this to false in your `viewDidLoad` method before calling super to skip adding the station info header
     var shouldDisplayHeaderContainer = true
+    var shouldOverrideHeaderContent = true
 
     // MARK: - VC
 
@@ -61,11 +63,15 @@ class MVViewController: UIViewController {
     }
     
     fileprivate func configureHeader() {
-        guard shouldDisplayHeaderContainer else { return }
-        guard let headerContainer = headerContainer else { return }
+        guard shouldDisplayHeaderContainer else {
+            headerContainerHeightConstraint.constant = 0;
+            return
+        }
+        guard let headerContainer = headerContainer else {
+            return
+        }
         let viewModel = PatientHUDViewModel()
-        if let currentPatientArray = ApplicationData.shared.object(for: .patient) as? NSArray,
-            let currentPatient = currentPatientArray[0] as? Beneficiary {
+        if let currentPatient = ApplicationData.shared.beneficiary, shouldOverrideHeaderContent {
             viewModel.patient = currentPatient
         }
         let controller = PatientHUDViewController(model: viewModel)

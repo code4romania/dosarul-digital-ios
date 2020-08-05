@@ -64,6 +64,9 @@ class AttachNoteViewModel: NSObject {
     /// Subscribe to this to be notified whenever the model changes
     var onUpdate: (() -> Void)?
     
+    /// Subscribe to this to be notified whenever the parent model changes
+    var onParentUpdate: (() -> Void)?
+    
     init(withQuestionId questionId: Int? = nil) {
         self.questionId = questionId
         super.init()
@@ -95,10 +98,14 @@ class AttachNoteViewModel: NSObject {
             return
         }
         
-        let pollingStation = DB.shared.currentSectionInfo()!
-        #warning("change beneficiary id")
+        guard let beneficiary = ApplicationData.shared.beneficiary else {
+            callback(.saveFailed)
+            isSaving = false
+            return
+        }
+        
         let request = UploadNoteRequest(
-            beneficiaryId: 0,
+            beneficiaryId: Int(beneficiary.id),
             imageData: attachment?.data,
             questionId: questionId,
             text: text)
@@ -124,6 +131,7 @@ class AttachNoteViewModel: NSObject {
                 
                 self.isSaving = false
                 self.onUpdate?()
+                self.onParentUpdate?()
                 callback(nil)
             }
         }

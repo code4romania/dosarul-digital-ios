@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuestionListViewController" customModule="CaseFile" customModuleProvider="target">
             <connections>
                 <outlet property="headerContainer" destination="qro-GP-O0x" id="Zxb-HK-FaM"/>
+                <outlet property="headerContainerHeightConstraint" destination="3oI-gF-bYV" id="RC6-Zl-8Vg"/>
                 <outlet property="tableView" destination="pdi-he-7Op" id="FvI-eX-ucU"/>
                 <outlet property="view" destination="qV3-s6-7TY" id="cFC-OA-WzJ"/>
             </connections>

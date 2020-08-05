@@ -23,10 +23,84 @@
                         "questionsAnsweredNo": 0
                     }
                 ],
-                "familyMembers": null
+                "familyMembers": [
+                    {
+                        "beneficiaryId": 288,
+                        "name": "Dana Manole"
+                    }
+                ]
+            },
+            {
+                "beneficiaryId": 288,
+                "name": "Dana Manole",
+                "age": 14,
+                "civilStatus": 0,
+                "county": "DOLJ",
+                "city": "DRAGOTESTI",
+                "gender": 1,
+                "userId": 4,
+                "birthDate": "2006-07-09T22:00:00",
+                "countyId": 16,
+                "cityId": 1118,
+                "forms": [
+                    {
+                        "formId": 1,
+                        "completionDate": "0001-01-01T00:00:00",
+                        "description": "Description A",
+                        "code": "A",
+                        "totalQuestionsNo": 4,
+                        "questionsAnsweredNo": 0
+                    },
+                    {
+                        "formId": 7,
+                        "completionDate": "0001-01-01T00:00:00",
+                        "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
+                        "code": "FR",
+                        "totalQuestionsNo": 23,
+                        "questionsAnsweredNo": 0
+                    }
+                ],
+                "familyMembers": [
+                    {
+                        "beneficiaryId": 285,
+                        "name": "Andrei Bouariu"
+                    }
+                ]
+            },
+            {
+                "beneficiaryId": 312,
+                "name": "Diana Popescu",
+                "age": 12,
+                "civilStatus": 0,
+                "county": "BISTRITA-NASAUD",
+                "city": "LUNCA ILVEI",
+                "gender": 1,
+                "userId": 4,
+                "birthDate": "2008-07-19T22:00:00",
+                "countyId": 6,
+                "cityId": 456,
+                "forms": [
+                    {
+                        "formId": 1,
+                        "completionDate": "0001-01-01T00:00:00",
+                        "description": "Description A",
+                        "code": "A",
+                        "totalQuestionsNo": 4,
+                        "questionsAnsweredNo": 0
+                    },
+                    {
+                        "formId": 7,
+                        "completionDate": "0001-01-01T00:00:00",
+                        "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
+                        "code": "FR",
+                        "totalQuestionsNo": 23,
+                        "questionsAnsweredNo": 0
+                    }
+                ],
+                "familyMembers": []
             }
         ],
-        "totalItems": 1,
+        "totalItems": 3,
         "totalPages": 1,
         "page": 1,
         "pageSize": 20

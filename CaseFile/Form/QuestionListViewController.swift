@@ -35,7 +35,6 @@ class QuestionListViewController: MVViewController {
         super.viewDidLoad()
         title = model.title
         configureTableView()
-//        addContactDetailsToNavBar()
         MVAnalytics.shared.log(event: .viewForm(code: model.formCode))
         bindToNotifications()
     }

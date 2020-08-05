@@ -29,6 +29,7 @@ struct BeneficiaryRequest: Codable {
     var formsIds: [Int]?
     var newAllocatedFormsIds: [Int]?
     var dealocatedFormsIds: [Int]?
+    var isFamilyOfBeneficiaryId: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "beneficiaryId"
@@ -42,6 +43,7 @@ struct BeneficiaryRequest: Codable {
         case formsIds
         case newAllocatedFormsIds
         case dealocatedFormsIds
+        case isFamilyOfBeneficiaryId
     }
 }
 
@@ -270,7 +272,13 @@ struct FormResponse: Codable {
 }
 
 struct FamilyMemberResponse: Codable {
+    var beneficiaryId: Int
+    var name: String
     
+    enum CodingKeys: String, CodingKey {
+        case beneficiaryId
+        case name
+    }
 }
 
 // Forms on GET /beneficiary/{id}
@@ -313,6 +321,9 @@ struct QuestionResponse: Codable {
         case singleAnswer
         case singleAnswerWithText
         case multipleAnswerWithText
+        case text
+        case number
+        case date
     }
     
     var id: Int
@@ -321,6 +332,7 @@ struct QuestionResponse: Codable {
     var text: String
     var hint: String?
     var isMandatory: Bool
+    var charsNo: Int?
     var options: [QuestionOptionResponse]
     
     enum CodingKeys: String, CodingKey {

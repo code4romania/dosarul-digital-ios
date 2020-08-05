@@ -43,7 +43,7 @@ class QuestionTableCell: UITableViewCell {
         editIcon.isHidden = !model.hasNoteAttached
         checkIcon.isHidden = !model.isAnswered
         checkIcon.image = model.isSynced ? #imageLiteral(resourceName: "icon-check") : #imageLiteral(resourceName: "icon-check-greyed")
-        questionTextLabel.text = model.questionText
+        questionTextLabel.text = model.questionText + (model.isMandatory ? "*" : "")
     }
     
 }

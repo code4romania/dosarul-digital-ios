@@ -5,6 +5,7 @@
         <attribute name="inputAvailable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="inputText" optional="YES" attributeType="String"/>
         <attribute name="selected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="synced" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="beneficiary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="answers" inverseEntity="Beneficiary"/>
         <relationship name="question" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" inverseName="answers" inverseEntity="Question"/>
@@ -22,7 +23,9 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="answers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Answer" inverseName="beneficiary" inverseEntity="Answer"/>
+        <relationship name="familyMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="familyMembers" inverseEntity="Beneficiary"/>
         <relationship name="forms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaries" inverseEntity="Form"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="beneficiary" inverseEntity="Note"/>
         <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="beneficiaries" inverseEntity="Revision"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="beneficiaries" inverseEntity="User"/>
         <uniquenessConstraints>
@@ -48,14 +51,13 @@
         <attribute name="file" optional="YES" attributeType="Binary"/>
         <attribute name="questionID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="synced" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="beneficiary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="notes" inverseEntity="Beneficiary"/>
         <relationship name="sectionInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SectionInfo" inverseName="notes" inverseEntity="SectionInfo"/>
     </entity>
     <entity name="Question" representedClassName="Question" syncable="YES">
-        <attribute name="answered" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="formId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="formVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="synced" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="answers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Answer" inverseName="question" inverseEntity="Answer"/>
@@ -87,11 +89,11 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Answer" positionX="376" positionY="459" width="128" height="148"/>
-        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="268"/>
+        <element name="Answer" positionX="376" positionY="459" width="128" height="163"/>
+        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="298"/>
         <element name="Form" positionX="189" positionY="414" width="128" height="103"/>
-        <element name="Note" positionX="198" positionY="288" width="128" height="133"/>
-        <element name="Question" positionX="178" positionY="447" width="128" height="193"/>
+        <element name="Note" positionX="198" positionY="288" width="128" height="148"/>
+        <element name="Question" positionX="178" positionY="447" width="128" height="163"/>
         <element name="Revision" positionX="198" positionY="423" width="128" height="88"/>
         <element name="SectionInfo" positionX="-11" positionY="252" width="128" height="133"/>
         <element name="User" positionX="180" positionY="405" width="128" height="103"/>

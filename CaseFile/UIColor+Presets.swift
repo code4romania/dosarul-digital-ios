@@ -42,10 +42,12 @@ extension UIColor {
     static var drawerButtonForeground = UIColor.white
     static var drawerButtonForegroundHighlighted = UIColor(hexCode: 0x8CE4ED)
 
-    static var attachButtonForeground = actionButtonForeground
-    static var attachButtonForegroundDisabled = attachButtonForeground.withAlphaComponent(0.4)
-    static var attachButtonBackground = UIColor.clear
-    static var attachButtonBackgroundHighlighted = attachButtonForeground.withAlphaComponent(0.07)
+    static var attachButtonForegroundNormal = UIColor(hexCode: 0x8CE4ED)
+    static var attachButtonForegroundDisabled = UIColor(hexCode: 0x8CE4ED).withAlphaComponent(0.5)
+    static var attachButtonForegroundHighlighted = UIColor(hexCode: 0x6AE0EC)
+    static var attachButtonBackgroundNormal = UIColor.clear
+    static var attachButtonBackgroundDisabled = UIColor.clear
+    static var attachButtonBackgroundHighlighted = UIColor(hexCode: 0x8CE4ED).withAlphaComponent(0.2)
 
     static var cardBackground = UIColor.white
     static var cardBackgroundSelected = chooserButtonSelectedBackground

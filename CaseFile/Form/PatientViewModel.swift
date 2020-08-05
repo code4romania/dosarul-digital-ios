@@ -78,8 +78,6 @@ enum PatientViewModelOperation {
 }
 
 class PatientViewModel: NSObject {
-    /// This specifies whether the beneficiary is added from a relationship or not
-    var fromRelationship = false
     
     /// This specifies if the view model is to view, add or edit benficiary
     var operation: PatientViewModelOperation
@@ -96,12 +94,28 @@ class PatientViewModel: NSObject {
         }
     }
     
+    var isFamilyOfBeneficiary: Beneficiary? {
+        didSet {
+            if let isFamilyOfBeneficiary = isFamilyOfBeneficiary {
+                let object: NSArray = [isFamilyOfBeneficiary]
+                ApplicationData.shared.setObject(object, for: .patientFamilyMember)
+            } else {
+                ApplicationData.shared.removeObject(for: .patientFamilyMember)
+            }
+        }
+    }
+
+    /// If the beneficiary is set, decides whether the beneficiary name will be displayed in the header or not
+    var shouldOverrideHeaderContent = true
+    
     /// List of beneficiaries
     var beneficiaryList: [Beneficiary]? {
         DB.shared.currentUser()?.beneficiaries?
             .compactMap({ $0 as? Beneficiary })
             .sorted(by: { $0.id > $1.id })
     }
+    
+    var notesModel: NoteViewModel?
     
     /// Be notified when the API save state has changed
     var onSaveStateChanged: (() -> Void)?
@@ -351,6 +365,12 @@ class PatientViewModel: NSObject {
         beneficiary!.county = (countyForm.value as! CountyResponse).name
         beneficiary!.gender = Int16((genderForm.value as! Gender).rawValue)
         beneficiary!.user = DB.shared.currentUser()
+        if let familyMember = ApplicationData.shared.beneficiaryFamilyMember {
+            if let extendedFamilyMembers = familyMember.familyMembers {
+                beneficiary!.addToFamilyMembers(extendedFamilyMembers)
+            }
+            beneficiary!.addToFamilyMembers(familyMember)
+        }
     }
     
     func resetForm() {
@@ -360,6 +380,7 @@ class PatientViewModel: NSObject {
         _countyForm = nil
         _cityForm = nil
         _genderForm = nil
+        isFamilyOfBeneficiary = nil
         generalDataSource = [
             nameForm,
             birthForm,
@@ -374,13 +395,19 @@ class PatientViewModel: NSObject {
         CoreData.context.rollback()
     }
     
+    deinit {
+//        print("DEINIT PATIENT VIEW MODEL")
+//        if let isFamilyOfBeneficiary = isFamilyOfBeneficiary {
+//            beneficiary = isFamilyOfBeneficiary
+//        }
+    }
+    
 }
 
 extension PatientViewModel {
     // creates the beneficiary and their assigned forms on server
     static func createBeneficiary(completion:((Int?, APIError?) -> Void)?) {
-        guard let beneficiaryArray = ApplicationData.shared.object(for: ApplicationData.Keys.patient) as? NSArray,
-            let beneficiary = beneficiaryArray[0] as? Beneficiary,
+        guard let beneficiary = ApplicationData.shared.beneficiary,
             let formsArray = ApplicationData.shared.object(for: ApplicationData.Keys.patientForms) as? NSArray,
             let formsRemoved = ApplicationData.shared.object(for: ApplicationData.Keys.patientRemovedForms) as? NSArray,
             let formsAdded = ApplicationData.shared.object(for: ApplicationData.Keys.patientAddedForms) as? NSArray
@@ -399,6 +426,8 @@ extension PatientViewModel {
         let removedForms = isNew ? [] : formsRemoved
             .compactMap({ $0 as? FormSetCellModel })
             .map({ $0.id })
+        let familyMemberIdInt16 = ApplicationData.shared.beneficiaryFamilyMember?.id
+        let familyMemberId = familyMemberIdInt16 != nil ? Int(familyMemberIdInt16!) : nil
         let beneficiaryRequest = BeneficiaryRequest(id: beneficiary.id,
                                                     userId: beneficiary.userId,
                                                     name: beneficiary.name,
@@ -409,7 +438,8 @@ extension PatientViewModel {
                                                     gender: Gender(rawValue: Int(beneficiary.gender))!,
                                                     formsIds: selectedForms,
                                                     newAllocatedFormsIds: addedForms,
-                                                    dealocatedFormsIds: removedForms)
+                                                    dealocatedFormsIds: removedForms,
+                                                    isFamilyOfBeneficiaryId: familyMemberId)
         AppDelegate.dataSourceManager.createOrUpdateBeneficiary(beneficiaryRequest, isNew: isNew) { (beneficiaryId, error) in
             guard error == nil, let beneficiaryId = beneficiaryId else {
                 completion?(nil, error)

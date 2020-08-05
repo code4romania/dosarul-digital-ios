@@ -168,13 +168,14 @@ class QuestionAnswerViewController: MVViewController {
     }
     
     func handleAddNote(toQuestion question: QuestionAnswerCellModel) {
-        let noteModel = NoteViewModel(withQuestionId: question.questionId)
+        let noteModel = NoteViewModel(for: ApplicationData.shared.beneficiary, with: question.questionId)
         let noteController = NoteViewController(withModel: noteModel)
         navigationController?.pushViewController(noteController, animated: true)
     }
     
     func askForText(ofQuestion question: QuestionAnswerCellModel, answerIndex: Int,
                     then completion: @escaping (String?) -> Void) {
+        
         let textEntry = TextEntryViewController(nibName: "TextEntryViewController", bundle: nil)
         textEntry.initialText = question.questionAnswers[answerIndex].userText
         textEntry.onClose = completion

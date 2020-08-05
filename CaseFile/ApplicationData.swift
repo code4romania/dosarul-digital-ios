@@ -16,6 +16,8 @@ class ApplicationData: NSObject {
         case patientForms
         case patientAddedForms
         case patientRemovedForms
+        case patientFormCompletionDate
+        case patientFamilyMember
         case hud(view: UIView)
         
         var value: String {
@@ -28,6 +30,10 @@ class ApplicationData: NSObject {
                 return "ObjectPatientFormsAdded"
             case .patientRemovedForms:
                 return "ObjectPatientFormsRemoved"
+            case .patientFormCompletionDate:
+                return "ObjectPatientFormCompletionDate"
+                case .patientFamilyMember:
+                    return "ObjectPatientFamilyMember"
             case .hud(let view):
                 return String(format: "%p", unsafeBitCast(view, to: Int.self))
             }
@@ -52,13 +58,33 @@ class ApplicationData: NSObject {
         DebugLog("Removing object of type \(type) resulted in \(objectRepository)")
     }
     
+    var beneficiary: Beneficiary? {
+        guard let currentBeneficiaryArray = ApplicationData.shared.object(for: .patient) as? NSArray,
+            let currentBeneficiary = currentBeneficiaryArray[0] as? Beneficiary else {
+            return nil
+        }
+        return currentBeneficiary
+    }
+    
+    var beneficiaryFamilyMember: Beneficiary? {
+        guard let currentFamilyMemberArray = ApplicationData.shared.object(for: .patientFamilyMember) as? NSArray,
+            let familyMember = currentFamilyMemberArray[0] as? Beneficiary else {
+            return nil
+        }
+        return familyMember
+    }
+    
+    var completionDate: Date? {
+        guard let completionDateArray = ApplicationData.shared.object(for: .patientFormCompletionDate) as? NSArray,
+            let date = completionDateArray[0] as? Date else {
+            return nil
+        }
+        return date
+    }
+    
     private override init() {
         super.init()
     }
-    
-//    func downloadBeneficiaries(then callback: ((Error?, [BeneficiarySummaryResponse]))?) {
-//
-//    }
     
     func downloadUpdatedBeneficiaries(then callback: ((Error?) -> Void)?) {
         AppDelegate.dataSourceManager.fetchBeneficiaries { (beneficiaries, error) in

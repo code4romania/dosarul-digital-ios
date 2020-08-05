@@ -10,38 +10,6 @@
                 "userName": "Testing Casefile"
             },
             {
-                "id": 2,
-                "code": "B",
-                "description": "Description B",
-                "currentVersion": 1,
-                "date": "01.01.0001",
-                "userName": "Testing Casefile"
-            },
-            {
-                "id": 3,
-                "code": "C",
-                "description": "Description C",
-                "currentVersion": 1,
-                "date": "01.01.0001",
-                "userName": "Testing Casefile"
-            },
-            {
-                "id": 4,
-                "code": "D",
-                "description": "Description D",
-                "currentVersion": 1,
-                "date": "01.01.0001",
-                "userName": "Testing Casefile"
-            },
-            {
-                "id": 5,
-                "code": "E",
-                "description": "Description E",
-                "currentVersion": 1,
-                "date": "01.01.0001",
-                "userName": "Testing Casefile"
-            },
-            {
                 "id": 7,
                 "code": "FR",
                 "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",

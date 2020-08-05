@@ -15,6 +15,7 @@ struct QuestionCellModel {
     var isAnswered: Bool
     var isSynced: Bool
     var hasNoteAttached: Bool
+    var isMandatory: Bool
 }
 
 class QuestionListViewModel: NSObject {
@@ -49,22 +50,6 @@ class QuestionListViewModel: NSObject {
         super.init()
     }
     
-//    func questions(forForm formId: Int, version: Int) -> [QuestionCellModel] {
-//        let storedQuestions = DB.shared.getQuestions(forForm: formId, formVersion: version)
-//        let mappedQuestions = storedQuestions.reduce(into: [Int: Question]()) { $0[Int($1.id)] = $1 }
-//        
-//        return sections[section].questions.map { questionResponse -> QuestionCellModel in
-//            let stored = mappedQuestions[questionResponse.id]
-//            return QuestionCellModel(
-//                questionId: questionResponse.id,
-//                questionCode: questionResponse.code,
-//                questionText: questionResponse.text,
-//                isAnswered: stored?.answered ?? false,
-//                isSynced: stored?.synced ?? false,
-//                hasNoteAttached: stored?.note != nil)
-//        }
-//    }
-    
     func questions(inSection section: Int) -> [QuestionCellModel] {
         guard sections.count > section else { return [] }
         let sectionInfo = DB.shared.sectionInfo(sectionId: sectionIds[section])
@@ -74,13 +59,19 @@ class QuestionListViewModel: NSObject {
         
         return sections[section].questions.map { questionResponse -> QuestionCellModel in
             let stored = mappedQuestions[questionResponse.id]
+            var answer: Answer?
+            if let currentBeneficiary = ApplicationData.shared.beneficiary {
+                let beneficiaryPredicate = NSPredicate(format: "beneficiary == %@", currentBeneficiary)
+                answer = stored?.answers?.filtered(using: beneficiaryPredicate).first as? Answer
+            }
             return QuestionCellModel(
                 questionId: questionResponse.id,
                 questionCode: questionResponse.code,
                 questionText: questionResponse.text,
-                isAnswered: stored?.answered ?? false,
-                isSynced: stored?.synced ?? false,
-                hasNoteAttached: stored?.note != nil)
+                isAnswered: answer != nil,
+                isSynced: answer?.synced ?? false,
+                hasNoteAttached: stored?.note != nil,
+                isMandatory: questionResponse.isMandatory)
         }
     }
     

@@ -193,7 +193,14 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func openAddNote() {
-        let noteModel = NoteViewModel()
+        let noteModel = NoteViewModel(for: nil, with: nil)
+        openAddNote(noteModel: noteModel)
+    }
+    
+    func openAddNote(noteModel: NoteViewModel?) {
+        guard let noteModel = noteModel else {
+            return
+        }
         let controller = NoteViewController(withModel: noteModel)
         if isPad,
             let split = splitViewController {
@@ -202,6 +209,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         } else {
             navigationController?.pushViewController(controller, animated: true)
         }
+        
     }
     
     /// Will make the details pane go back to blank

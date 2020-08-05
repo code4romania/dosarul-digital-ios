@@ -46,7 +46,7 @@ class QuestionCollectionCell: UICollectionViewCell {
     func update(withModel model: QuestionAnswerCellModel) {
         currentModel = model
         questionCodeLabel.text = model.questionCode.uppercased()
-        questionTextLabel.text = model.questionText
+        questionTextLabel.text = model.questionText + (model.isMandatory ? "*" : "")
         
         answersStackView.arrangedSubviews.forEach {
             answersStackView.removeArrangedSubview($0)

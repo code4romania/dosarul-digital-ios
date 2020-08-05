@@ -2,7 +2,7 @@
 //  Question+CoreDataProperties.swift
 //  CaseFile
 //
-//  Created by Andrei Bouariu on 16/07/2020.
+//  Created by Andrei Bouariu on 26/07/2020.
 //  Copyright © 2020 Code4Ro. All rights reserved.
 //
 //
@@ -17,14 +17,12 @@ extension Question {
         return NSFetchRequest<Question>(entityName: "Question")
     }
 
-    @NSManaged public var answered: Bool
     @NSManaged public var formId: Int16
     @NSManaged public var formVersion: Int16
     @NSManaged public var id: Int16
     @NSManaged public var text: String?
     @NSManaged public var type: Int16
     @NSManaged public var answers: NSSet?
-    @NSManaged public var synced: Bool
     @NSManaged public var note: Note?
     @NSManaged public var sectionInfo: SectionInfo?
 

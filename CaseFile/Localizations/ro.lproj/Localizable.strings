@@ -16,7 +16,7 @@
 "Button_Settings" = "Setări";
 "Button_Retry" = "Încearcă din nou";
 "Button_AddNoteToQuestion" = "Adaugă o notă întrebării";
-"Button_Submit" = "Trimite";
+"Button_Submit" = "Salvează";
 "Button_AddPhotoVideo" = "Adaugă o poză sau video";
 "Button_OnboardingNext" = "ÎNAINTE";
 "Button_OnboardingPrevious" = "ÎNAPOI";
@@ -55,13 +55,13 @@
 "Label_PatientGeneralInfo" = "Date generale";
 
 "Label_AddNote" = "Adaugă o notă";
-"Label_TypeNote" = "Scrie aici nota";
+"Label_TypeNote" = "Scrie o notă aici";
 "Label_EnterStation" = "Introdu numărul secției (ex: 34)";
 "Label_Empty" = "Alege o întrebare sau adaugă o notă";
 
 "Option.Gallery" = "Încarcă din galerie";
-"Option.TakePhoto" = "Fă o fotografie";
-"Option.RecordVideo" = "Înregistrează un film";
+"Option.TakePhoto" = "Folosește camera";
+"Option.RecordVideo" = "Înregistrează video";
 
 "AlertMessage_EnableCameraAccess" = "Te rugăm să accesezi setările și să ne oferi permisiuni de acces la librăria de poze.";
 "AlertMessage_NewVersion" = "O nouă versiune a aplicației este disponibilă. Te rugăm să faci update pentru a folosi cele mai recente funcționalități.";
@@ -90,7 +90,7 @@
 "Title.FormSetsFill" = "Toate Formularele";
 "Title.FormSetsSelect" = "Alocă chestionare";
 "Title.Question" = "Întrebarea";
-"Title.Note" = "Notă";
+"Title.Note" = "Adaugă notă";
 "Title.NoteHistory" = "Istoricul Notelor";
 "Title.Section" = "Configurarea Secției";
 "Title.Language" = "Alege limba";
@@ -101,8 +101,8 @@
 "Title.Patients.Edit" = "Editare beneficiar";
 "Title.Forms" = "Chestionare";
 
-"Next" = "Următoarea";
-"Previous" = "Precedenta";
+"Next" = "Continuă";
+"Previous" = "Anterior";
 "Done" = "Gata";
 "Select" = "Selectează";
 "Cancel" = "Anulează";
@@ -142,6 +142,20 @@
 "Patients.Add.Field.Gender.Description" = "ex: feminin";
 "Patients.Add.Field.Relationship.Title" = "Relația familială";
 "Patients.Add.Field.Relationship.Description" = "ex: copil";
+
+"FamilyMembers.Title" = "Membri ai familiei";
+"FamilyMembers.Button.AddMembers" = "Adaugă";
+"FamilyMembers.Empty.Title" = "Nu există membri";
+"FamilyMembers.Empty.Description" = "Încă nu ai adaugat membri ai familiei.\nApasă butonul “Adaugă” de mai sus";
+
+"FormHistory.Title" = "Istoric evaluare beneficiar";
+"FormHistory.Empty.Title" = "Nu există istoric";
+"FormHistory.Empty.Description" = "Încă nu ai completat chestionare pentru acest beneficiar. Poți începe prin a apăsa butonul “Chestionar” de mai sus";
+
+"Notes.Title" = "Istoric note generale";
+"Notes.Button.AddNote" = "Adaugă";
+"Notes.Empty.Title" = "Nu există note";
+"Notes.Empty.Description" = "Încă nu ai adaugat note despre beneficiar.\nApasă butonul “Adaugă” de mai sus";
 
 "Patients.Summary.Age.Title" = "Vârstă";
 "Patients.Summary.CivilStatus.Title" = "Stare civilă";

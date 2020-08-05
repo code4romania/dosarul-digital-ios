@@ -11,19 +11,14 @@ import CoreData
 
 class DB: NSObject {
     static let shared = DB()
-
-    private var _currentUser: User?
     
     func currentUser() -> User? {
-        guard _currentUser == nil else {
-            return _currentUser
-        }
         guard let email = AccountManager.shared.email else {
             return nil
         }
         let request: NSFetchRequest<User> = User.fetchRequest()
         request.predicate = NSPredicate(format: "email == %@", email)
-        request.relationshipKeyPathsForPrefetching = ["beneficiaries", "beneficiaries.revisions"]
+        request.relationshipKeyPathsForPrefetching = ["beneficiaries", "beneficiaries.familyMembers"]
         request.fetchLimit = 1
         let matches = CoreData.fetch(request) as? [User]
         return matches?.first
@@ -62,7 +57,6 @@ class DB: NSObject {
     }
     
     func saveBeneficiaries(_ beneficiaries: [BeneficiaryDetailedResponse]) {
-        #warning("local beneficiaries are fully overwritten with the server values, even if some of their properties have been modified")
         let beneficiariesIds = beneficiaries.map { $0.id }
         
         // delete local beneficiaries who no longer exist on server for the currentUser
@@ -114,8 +108,26 @@ class DB: NSObject {
                 localForm.addToBeneficiaries(localBeneficiary)
             })
             
+            // remove family members
+            localBeneficiary.familyMembers = nil
+            
+            // add family members
+            if let familyMembersIds = beneficiary.familyMembers?.compactMap({ $0.beneficiaryId }),
+                familyMembersIds.count > 0 {
+                let request: NSFetchRequest<Beneficiary> = Beneficiary.fetchRequest()
+                request.predicate = NSPredicate(format: "id in %@", familyMembersIds)
+                if let familyMembers = CoreData.fetch(request) as? [Beneficiary] {
+                    localBeneficiary.addToFamilyMembers(NSSet(array: familyMembers))
+                }
+            }
         }
         do {
+            (currentUser()?.beneficiaries?.allObjects as? [Beneficiary])?.forEach({ (beneficiary) in
+                print("Beneficiary: \(beneficiary.name!):")
+                (beneficiary.familyMembers?.allObjects as? [Beneficiary])?.forEach({ (familyMember) in
+                    print(familyMember.name!)
+                })
+            })
             try CoreData.save()
         } catch {
             print(error)
@@ -135,7 +147,7 @@ class DB: NSObject {
     func unassignFormsFromBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
         beneficiary
             .forms?
-            .compactMap {$0 as? Form }
+            .compactMap { $0 as? Form }
             .filter { formIds.contains(Int($0.id)) }
             .forEach { CoreData.context.delete($0) }
     }
@@ -174,24 +186,18 @@ class DB: NSObject {
     }
     
     func getUnsyncedQuestions() -> [Question] {
-        guard let currentUser = currentUser() else {
-            return []
-        }
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        #warning("also add predicate only for current user")
-        let syncedPredicate = NSPredicate(format: "synced == false")
+        let syncedPredicate = NSPredicate(format: "ANY answers.synced == false")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [syncedPredicate])
         let unsyncedQuestions = CoreData.fetch(request) as? [Question]
         return unsyncedQuestions ?? []
     }
     
-    func getQuestions(forForm formCode: String, formVersion: Int) -> [Question] {
-        guard let section = currentSectionInfo() else { return [] }
+    func getQuestions(forForm formId: Int, formVersion: Int) -> [Question] {
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
-        let formPredicate = NSPredicate(format: "form == %@", formCode)
+        let formPredicate = NSPredicate(format: "formId == %d", formId)
         let formVersionPredicate = NSPredicate(format: "formVersion <= %d", Int16(formVersion))
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, formPredicate, formVersionPredicate])
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [formPredicate, formVersionPredicate])
         let matchedQuestions = CoreData.fetch(request) as? [Question]
         return matchedQuestions ?? []
     }
@@ -202,12 +208,13 @@ class DB: NSObject {
             if let answers = question.answers,
                 let all = answers.allObjects as? [Answer] {
                 for answer in all {
+                    if let notes = answer.beneficiary?.notes?.allObjects as? [Note] {
+                        for note in notes {
+                            CoreData.context.delete(note)
+                        }
+                    }
                     CoreData.context.delete(answer)
                 }
-            }
-            let notes = getNotes(attachedToQuestion: Int(question.id))
-            for note in notes {
-                CoreData.context.delete(note)
             }
             CoreData.context.delete(question)
             question.sectionInfo?.removeFromQuestions(question)
@@ -217,38 +224,34 @@ class DB: NSObject {
     }
     
     func getQuestion(withId id: Int) -> Question? {
-        guard let section = currentSectionInfo() else { return nil }
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
         let idPredicate = NSPredicate(format: "id == %d", id)
         request.fetchLimit = 1
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, idPredicate])
+        request.predicate = idPredicate
         let matches = CoreData.fetch(request) as? [Question]
         return matches?.first
     }
     
-    func getAnsweredQuestions(inFormWithCode formCode: String) -> [Question] {
-        guard let section = currentSectionInfo() else { return [] }
+    func getAnsweredQuestions(inFormWithId formId: Int, beneficiary: Beneficiary) -> [Question] {
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
-        let formPredicate = NSPredicate(format: "form == %@", formCode)
-        let answeredPredicate = NSPredicate(format: "answered == true")
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, formPredicate, answeredPredicate])
+        let formPredicate = NSPredicate(format: "formId == %d", formId)
+        let beneficiaryPredicate = NSPredicate(format: "ANY answers.beneficiary == %@", beneficiary)
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [formPredicate,
+                                                                                beneficiaryPredicate])
         let unsyncedQuestions = CoreData.fetch(request) as? [Question]
         return unsyncedQuestions ?? []
     }
     
     func setQuestionsSynced(withIds ids: [Int16]) {
-        guard let section = currentSectionInfo() else { return }
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
         let formPredicate = NSPredicate(format: "id IN %@", ids)
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, formPredicate])
+        request.predicate = formPredicate
         let unsyncedQuestions = CoreData.fetch(request) as? [Question] ?? []
-        for question in unsyncedQuestions {
-            question.synced = true
+        let unsyncedAnswers = unsyncedQuestions.compactMap({ $0.answers?.allObjects as? [Answer] }).flatMap({ $0 })
+        for answer in unsyncedAnswers {
+            answer.synced = true
         }
-        
+
         do {
             try CoreData.save()
         } catch {
@@ -259,24 +262,28 @@ class DB: NSObject {
     /// Returns the list of all saved notes in this section. Optionally you can pass the questionId to return
     /// only the notes attached to that question. If nil, it will return all notes that aren't attached to any question
     /// - Parameter questionId: the question id
-    func getNotes(attachedToQuestion questionId: Int?) -> [Note] {
-        guard let section = currentSectionInfo() else { return [] }
-        let request: NSFetchRequest<Note> = Note.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
-        let questionPredicate = NSPredicate(format: "questionID == %d", Int16(questionId ?? -1))
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, questionPredicate])
-        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        let notes = CoreData.fetch(request) as? [Note]
-        return notes ?? []
+    func getNotes(for beneficiary: Beneficiary?, attachedToQuestion questionId: Int?) -> [Note] {
+        guard let notes = beneficiary?.notes?.allObjects as? [Note] else {
+            return []
+        }
+        return notes
+            .filter({ $0.questionID == questionId ?? -1 })
+            .sorted(by: {
+                guard let firstDate = $0.date, let secondDate = $1.date else {
+                    return true
+                }
+                return firstDate.compare(secondDate) == .orderedDescending
+            })
     }
     
     func saveNote(withText text: String, fileAttachment: Data?, questionId: Int?) throws -> Note {
         let noteEntityDescription = NSEntityDescription.entity(forEntityName: "Note", in: CoreData.context)
         let note = Note(entity: noteEntityDescription!, insertInto: CoreData.context)
+        note.beneficiary = ApplicationData.shared.beneficiary
         note.body = text
         note.date = Date()
         note.questionID = Int16(questionId ?? -1)
-        note.file = fileAttachment as NSData?
+        note.file = fileAttachment
         note.synced = false
         note.sectionInfo = currentSectionInfo()
         try CoreData.save()

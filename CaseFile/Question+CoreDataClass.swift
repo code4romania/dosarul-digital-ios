@@ -2,7 +2,7 @@
 //  Question+CoreDataClass.swift
 //  CaseFile
 //
-//  Created by Andrei Bouariu on 16/07/2020.
+//  Created by Andrei Bouariu on 26/07/2020.
 //  Copyright © 2020 Code4Ro. All rights reserved.
 //
 //

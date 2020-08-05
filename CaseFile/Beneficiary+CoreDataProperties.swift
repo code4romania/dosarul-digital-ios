@@ -2,7 +2,7 @@
 //  Beneficiary+CoreDataProperties.swift
 //  CaseFile
 //
-//  Created by Andrei Bouariu on 19/07/2020.
+//  Created by Andrei Bouariu on 29/07/2020.
 //  Copyright © 2020 Code4Ro. All rights reserved.
 //
 //
@@ -28,10 +28,46 @@ extension Beneficiary {
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
     @NSManaged public var userId: Int16
+    @NSManaged public var answers: NSSet?
+    @NSManaged public var familyMembers: NSSet?
     @NSManaged public var forms: NSSet?
     @NSManaged public var revisions: NSSet?
     @NSManaged public var user: User?
-    @NSManaged public var answers: NSSet?
+    @NSManaged public var notes: NSSet?
+
+}
+
+// MARK: Generated accessors for answers
+extension Beneficiary {
+
+    @objc(addAnswersObject:)
+    @NSManaged public func addToAnswers(_ value: Answer)
+
+    @objc(removeAnswersObject:)
+    @NSManaged public func removeFromAnswers(_ value: Answer)
+
+    @objc(addAnswers:)
+    @NSManaged public func addToAnswers(_ values: NSSet)
+
+    @objc(removeAnswers:)
+    @NSManaged public func removeFromAnswers(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for familyMembers
+extension Beneficiary {
+
+    @objc(addFamilyMembersObject:)
+    @NSManaged public func addToFamilyMembers(_ value: Beneficiary)
+
+    @objc(removeFamilyMembersObject:)
+    @NSManaged public func removeFromFamilyMembers(_ value: Beneficiary)
+
+    @objc(addFamilyMembers:)
+    @NSManaged public func addToFamilyMembers(_ values: NSSet)
+
+    @objc(removeFamilyMembers:)
+    @NSManaged public func removeFromFamilyMembers(_ values: NSSet)
 
 }
 
@@ -69,19 +105,19 @@ extension Beneficiary {
 
 }
 
-// MARK: Generated accessors for answers
+// MARK: Generated accessors for notes
 extension Beneficiary {
 
-    @objc(addAnswersObject:)
-    @NSManaged public func addToAnswers(_ value: Answer)
+    @objc(addNotesObject:)
+    @NSManaged public func addToNotes(_ value: Note)
 
-    @objc(removeAnswersObject:)
-    @NSManaged public func removeFromAnswers(_ value: Answer)
+    @objc(removeNotesObject:)
+    @NSManaged public func removeFromNotes(_ value: Note)
 
-    @objc(addAnswers:)
-    @NSManaged public func addToAnswers(_ values: NSSet)
+    @objc(addNotes:)
+    @NSManaged public func addToNotes(_ values: NSSet)
 
-    @objc(removeAnswers:)
-    @NSManaged public func removeFromAnswers(_ values: NSSet)
+    @objc(removeNotes:)
+    @NSManaged public func removeFromNotes(_ values: NSSet)
 
 }

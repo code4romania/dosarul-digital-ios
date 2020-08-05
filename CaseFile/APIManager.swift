@@ -69,11 +69,6 @@ extension APIManagerType {
     /// POST or PUT /api/v1/beneficiary
     func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?) { }
     
-    /// Form requests
-    /// GET /api/v1/form/{id}
-    func fetchForm(formId: Int,
-                   completion: (([FormSectionResponse]?, APIError?) -> Void)?) { }
-    
     func upload(pollingStation: UpdatePollingStationRequest,
                 completion: ((APIError?) -> Void)?) { }
     
@@ -286,15 +281,7 @@ class APIManager: NSObject, APIManagerType {
     }
     
     func fetchForms(completion: (([FormResponse]?, APIError?) -> Void)?) {
-        var url = ApiURL.forms.url()
-//        if RemoteConfigManager.shared.value(of: .filterDiasporaForms).boolValue {
-//            if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-//                urlComponents.queryItems = [URLQueryItem(name: "diaspora", value: "\(diaspora ? "true" : "false")")]
-//                if let newURL = urlComponents.url {
-//                    url = newURL
-//                }
-//            }
-//        }
+        let url = ApiURL.forms.url()
         
         let headers = authorizationHeaders()
         
@@ -371,9 +358,13 @@ class APIManager: NSObject, APIManagerType {
         let auth = authorizationHeaders()
         let headers = requestHeaders(withAuthHeaders: auth)
 
+        guard let beneficiary = ApplicationData.shared.beneficiary else {
+            completion?(.generic(reason: "Missing beneficiary id"))
+            return
+        }
+        
         var parameters: [String: String] = [
-//            "CountyCode": note.countyCode,
-//            "PollingStationNumber": String(note.pollingStationId ?? -1),
+            "BeneficiaryId": String(beneficiary.id),
             "Text": note.text
         ]
         if let questionId = note.questionId {
@@ -518,6 +509,20 @@ class APIMock: NSObject, APIManagerType {
         do {
             let response = try JSONDecoder().decode(FormListResponse.self, from: data)
             completion?(response.forms, nil)
+        } catch {
+            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
+    
+    func fetchForm(formId: Int, completion: (([FormSectionResponse]?, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "FormResponse\(formId)", ext: "json", statusCode: 200) else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        
+        do {
+            let response = try JSONDecoder().decode([FormSectionResponse].self, from: data)
+            completion?(response, nil)
         } catch {
             completion?(nil, .incorrectFormat(reason: error.localizedDescription))
         }

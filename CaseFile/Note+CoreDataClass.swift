@@ -1,9 +1,10 @@
 //
 //  Note+CoreDataClass.swift
-//  MonitorizareVot
+//  CaseFile
 //
-//  Created by Corneliu Chitanu on 08/12/2016.
-//  Copyright © 2016 Code4Ro. All rights reserved.
+//  Created by Andrei Bouariu on 29/07/2020.
+//  Copyright © 2020 Code4Ro. All rights reserved.
+//
 //
 
 import Foundation

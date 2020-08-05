@@ -2,7 +2,7 @@
 //  Answer+CoreDataProperties.swift
 //  CaseFile
 //
-//  Created by Andrei Bouariu on 19/07/2020.
+//  Created by Andrei Bouariu on 26/07/2020.
 //  Copyright © 2020 Code4Ro. All rights reserved.
 //
 //
@@ -22,7 +22,8 @@ extension Answer {
     @NSManaged public var inputText: String?
     @NSManaged public var selected: Bool
     @NSManaged public var text: String?
-    @NSManaged public var question: Question?
+    @NSManaged public var synced: Bool
     @NSManaged public var beneficiary: Beneficiary?
+    @NSManaged public var question: Question?
 
 }

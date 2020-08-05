@@ -20,6 +20,9 @@ class NoteViewController: MVViewController {
     /// This backs the history table view's header to allow the user to add notes
     lazy var attachNoteController: AttachNoteViewController = {
         let noteModel = AttachNoteViewModel(withQuestionId: model.questionId)
+        noteModel.onParentUpdate = { [weak self] in
+            self?.model.onUpdate?()
+        }
         let controller = AttachNoteViewController(withModel: noteModel)
         return controller
     }()
@@ -42,15 +45,10 @@ class NoteViewController: MVViewController {
     // MARK: - VC
     
     override func viewDidLoad() {
-        if AppRouter.shared.isPad {
-            shouldDisplayHeaderContainer = false
-        }
+        shouldDisplayHeaderContainer = false
         super.viewDidLoad()
         title = "Title.Note".localized
         configureTableView()
-        if !AppRouter.shared.isPad {
-            addContactDetailsToNavBar()
-        }
         configureSubviews()
     }
     
@@ -116,7 +114,7 @@ class NoteViewController: MVViewController {
         options.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
         options.popoverPresentationController?.sourceRect = sourceView.frame
         options.popoverPresentationController?.sourceView = sourceView.superview
-        options.view.tintColor = .navigationBarTint
+        options.view.tintColor = .defaultText
         present(options, animated: true, completion: nil)
     }
     

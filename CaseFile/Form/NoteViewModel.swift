@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum NoteViewModelType {
+    case generic
+    case form
+}
+
 /// This VM backs the note cells
 struct NoteCellModel {
     var note: Note
@@ -19,17 +24,24 @@ struct NoteCellModel {
 class NoteViewModel: NSObject {
     
     var questionId: Int?
+    var beneficiary: Beneficiary?
     
     var notes: [NoteCellModel] = []
     
-    init(withQuestionId questionId: Int? = nil) {
+    /// Subscribe to this to be notified whenever the model changes
+    var onUpdate: (() -> Void)?
+    
+    init(for beneficiary: Beneficiary?, with questionId: Int?) {
         self.questionId = questionId
+        self.beneficiary = beneficiary
         super.init()
         load()
     }
     
     func load() {
-        notes = DB.shared.getNotes(attachedToQuestion: questionId).map { model(fromDbObject: $0) }
+        notes = DB.shared.getNotes(for: beneficiary,
+                                   attachedToQuestion: questionId)
+            .map { model(fromDbObject: $0) }
     }
     
     fileprivate func model(fromDbObject dbObject: Note) -> NoteCellModel {

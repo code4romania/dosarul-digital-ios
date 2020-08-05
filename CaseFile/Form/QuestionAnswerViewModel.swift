@@ -31,6 +31,7 @@ struct QuestionAnswerCellModel {
     var isNoteAttached: Bool
     var isSaved: Bool
     var isSynced: Bool
+    var isMandatory: Bool
     
     mutating func setIsNoteAttached(_ attached: Bool) { isNoteAttached = attached }
     mutating func setIsSaved(_ isSaved: Bool) { self.isSaved = isSaved }
@@ -69,7 +70,15 @@ class QuestionAnswerViewModel: NSObject {
         
         var models: [QuestionAnswerCellModel] = []
         for questionMeta in allQuestions {
-            let answered = DB.shared.getQuestion(withId: questionMeta.id)
+            let question = DB.shared.getQuestion(withId: questionMeta.id)
+            
+            // Logic is based on the first answer found for the form and beneficiary. We assume that all other answers for the same form and beneficiary have the same synchronization status since they're performed in the same API call.
+            var firstAnswer: Answer?
+            if let beneficiary = ApplicationData.shared.beneficiary,
+            question?.answers != nil {
+                let answeredByBeneficiaryPredicate = NSPredicate(format: "beneficiary = %@", beneficiary)
+                firstAnswer = question!.answers!.filtered(using: answeredByBeneficiaryPredicate).first as? Answer
+            }
             let options = questionMeta.options
 
             let acceptsMultipleAnswers = [
@@ -77,10 +86,12 @@ class QuestionAnswerViewModel: NSObject {
                 QuestionResponse.QuestionType.multipleAnswerWithText]
                 .contains(questionMeta.questionType)
 
-            let storedAnswers = answered?.answers?.allObjects as? [Answer] ?? []
-            let mappedAnswers = storedAnswers.reduce(into: [Int: Answer]()) { $0[Int($1.id)] = $1 }
+            let storedAnswers = question?.answers?.allObjects as? [Answer] ?? []
+            let mappedAnswers = storedAnswers
+                .filter({ $0.beneficiary != nil && $0.beneficiary == ApplicationData.shared.beneficiary })
+                .reduce(into: [Int: Answer]()) { $0[Int($1.id)] = $1 }
             
-            let isNoteAttached = answered?.note != nil
+            let isNoteAttached = question?.note != nil
 
             var answerModels: [QuestionAnswerCellModel.AnswerModel] = []
             for optionMeta in options {
@@ -102,8 +113,9 @@ class QuestionAnswerViewModel: NSObject {
                 acceptsMultipleAnswers: acceptsMultipleAnswers,
                 questionAnswers: answerModels,
                 isNoteAttached: isNoteAttached,
-                isSaved: answered != nil,
-                isSynced: answered?.synced == true)
+                isSaved: firstAnswer != nil,
+                isSynced: firstAnswer?.synced == true,
+                isMandatory: questionMeta.isMandatory)
             models.append(model)
         }
         self.questions = models
@@ -175,6 +187,11 @@ class QuestionAnswerViewModel: NSObject {
     }
     
     func save(withModel questionModel: QuestionAnswerCellModel) {
+        
+        guard let currentBeneficiary = ApplicationData.shared.beneficiary else {
+            return
+        }
+                
         var question: Question! = DB.shared.getQuestion(withId: questionModel.questionId)
         if question == nil {
             question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: CoreData.context) as? Question
@@ -191,26 +208,26 @@ class QuestionAnswerViewModel: NSObject {
             }
         }
         
-        if let existingAnswers = question.answers {
-            question.removeFromAnswers(existingAnswers)
+        if let allAnswersPerQuestion = question.answers {
+            let predicate = NSPredicate(format: "beneficiary == %@", currentBeneficiary)
+            let result = allAnswersPerQuestion.filtered(using: predicate) as NSSet
+            question.removeFromAnswers(result)
         }
         
         // add the new answers
-        var isAnswered = false
         let answerSet = NSMutableSet()
         for answerModel in questionModel.questionAnswers {
             guard answerModel.isSelected else { continue }
-            isAnswered = true
             let answerEntity = NSEntityDescription.insertNewObject(forEntityName: "Answer", into: CoreData.context) as! Answer
             answerEntity.id = Int16(answerModel.optionId)
             answerEntity.inputAvailable = answerModel.isFreeText
             answerEntity.inputText = answerModel.userText
             answerEntity.selected = true
+            answerEntity.beneficiary = currentBeneficiary
+            answerEntity.question = question
+            answerEntity.synced = false
             answerSet.add(answerEntity)
         }
-        question.answers = answerSet
-        question.answered = isAnswered
-        question.synced = false
         try! CoreData.save()
     }
 }

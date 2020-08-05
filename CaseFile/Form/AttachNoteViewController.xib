@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttachNoteViewController" customModule="MonitorizareVot" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttachNoteViewController" customModule="CaseFile" customModuleProvider="target">
             <connections>
                 <outlet property="attachButton" destination="zK8-Iq-Ayl" id="JBb-f1-1Jl"/>
                 <outlet property="attachmentStackView" destination="cUs-cu-Zbp" id="Eba-ml-T96"/>
@@ -30,10 +30,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7Fu-ot-pwE">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="478.5"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="466.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Da3-Qs-TAh">
-                            <rect key="frame" x="16" y="36" width="382" height="418.5"/>
+                            <rect key="frame" x="16" y="24" width="382" height="418.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="a3y-Yz-Sgz">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="418.5"/>
@@ -100,7 +100,7 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zK8-Iq-Ayl" customClass="AttachButton" customModule="MonitorizareVot" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zK8-Iq-Ayl" customClass="AttachButton" customModule="CaseFile" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="267.5" width="350" height="43"/>
                                                     <inset key="contentEdgeInsets" minX="0.0" minY="13" maxX="0.0" maxY="13"/>
                                                     <inset key="titleEdgeInsets" minX="7" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -111,7 +111,7 @@
                                                         <action selector="handleAttachAction:" destination="-1" eventType="touchUpInside" id="7Fv-Ww-b4b"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUA-rY-k5J" customClass="ActionButton" customModule="MonitorizareVot" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUA-rY-k5J" customClass="ActionButton" customModule="CaseFile" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="326.5" width="350" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="HC3-wh-rHj"/>
@@ -144,7 +144,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Da3-Qs-TAh" firstAttribute="top" secondItem="7Fu-ot-pwE" secondAttribute="top" constant="36" id="5rg-X4-XaN"/>
+                        <constraint firstItem="Da3-Qs-TAh" firstAttribute="top" secondItem="7Fu-ot-pwE" secondAttribute="top" constant="24" id="5rg-X4-XaN"/>
                         <constraint firstAttribute="trailing" secondItem="Da3-Qs-TAh" secondAttribute="trailing" constant="16" id="QwK-xd-Xor"/>
                         <constraint firstItem="Da3-Qs-TAh" firstAttribute="leading" secondItem="7Fu-ot-pwE" secondAttribute="leading" constant="16" id="g5g-rR-zdw"/>
                         <constraint firstAttribute="bottom" secondItem="Da3-Qs-TAh" secondAttribute="bottom" constant="24" id="kwM-3r-oPy"/>
