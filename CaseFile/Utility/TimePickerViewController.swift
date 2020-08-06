@@ -22,11 +22,8 @@ class TimePickerViewController: UIViewController {
     init(withModel model: TimePickerViewModel) {
         self.model = model
         super.init(nibName: "TimePickerViewController", bundle: nil)
-        if #available(iOS 13.0, *) {
-            modalPresentationStyle = .automatic
-        } else {
-            modalPresentationStyle = .overCurrentContext
-        }
+        modalPresentationStyle = .overFullScreen
+        modalPresentationStyle = .overCurrentContext
     }
     
     required init?(coder: NSCoder) {
@@ -47,13 +44,12 @@ class TimePickerViewController: UIViewController {
     // MARK: - Config
     
     fileprivate func configureView() {
-        container.backgroundColor = .navigationBarBackground
-        container.tintColor = .navigationBarTint
+        container.backgroundColor = .navigationBarTint
+        container.tintColor = .navigationBarBackground
         container.layer.shadowColor = UIColor.cardDarkerShadow.cgColor
         container.layer.shadowRadius = Configuration.shadowRadius
         container.layer.shadowOffset = .zero
         container.layer.shadowOpacity = Configuration.shadowOpacity
-        container.layer.cornerRadius = Configuration.buttonCornerRadius
     }
     
     fileprivate func configureTexts() {

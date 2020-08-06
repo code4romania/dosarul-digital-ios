@@ -84,7 +84,7 @@ class MVViewController: UIViewController {
         controller.didMove(toParent: self)
         headerViewController = controller
         controller.onChangeAction = { [weak self] in
-//            self?.handleChangeSectionButtonAction()
+            self?.navigationController?.popToRootViewController(animated: true)
         }
     }
     

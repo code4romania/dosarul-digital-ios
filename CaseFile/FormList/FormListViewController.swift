@@ -237,19 +237,15 @@ class FormListViewController: MVViewController {
     }
     
     fileprivate func continueToForm(withCode code: String) {
-        guard let questionsModel = QuestionListViewModel(withFormUsingCode: code) else {
+        guard let formDateModel = FormDateViewModel(withFormUsingCode: code) else {
             let message = "Error: can't load question list model for form with code \(code)"
             let alert = UIAlertController.error(withMessage: message)
             present(alert, animated: true, completion: nil)
             return
         }
         
-        let questionsVC = QuestionListViewController(withModel: questionsModel)
-        navigationController?.pushViewController(questionsVC, animated: true)
-        #warning("do not set completion date here")
-        ApplicationData.shared.setObject([Date()] as NSArray, for: .patientFormCompletionDate)
-        #warning("until here")
-        AppRouter.shared.resetDetailsPane()
+        let formDateVC = FormDateViewController(withModel: formDateModel)
+        navigationController?.pushViewController(formDateVC, animated: true)
     }
     
     fileprivate func continueToNote() {

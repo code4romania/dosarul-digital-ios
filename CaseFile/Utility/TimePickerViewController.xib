@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimePickerViewController" customModule="MonitorizareVot" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimePickerViewController" customModule="CaseFile" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="Zpu-uB-2iR" id="KwN-D4-Jhx"/>
                 <outlet property="container" destination="B0N-ND-2kb" id="0yY-VH-0iM"/>
@@ -23,13 +23,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YP7-6a-xZ6">
-                    <rect key="frame" x="0.0" y="44" width="414" height="558"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="592"/>
                     <connections>
                         <action selector="handleCancelButtonTap:" destination="-1" eventType="touchUpInside" id="1zL-xQ-8ME"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0N-ND-2kb">
-                    <rect key="frame" x="0.0" y="602" width="414" height="260"/>
+                    <rect key="frame" x="0.0" y="636" width="414" height="260"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cz1-E0-Wwj">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="260"/>
@@ -91,7 +91,7 @@
                 <constraint firstItem="B0N-ND-2kb" firstAttribute="trailing" secondItem="WeD-so-1q4" secondAttribute="trailing" priority="999" id="9Ik-4T-b0J"/>
                 <constraint firstItem="B0N-ND-2kb" firstAttribute="top" secondItem="YP7-6a-xZ6" secondAttribute="bottom" id="N9s-Fa-sfO"/>
                 <constraint firstItem="YP7-6a-xZ6" firstAttribute="top" secondItem="WeD-so-1q4" secondAttribute="top" id="SSa-Zb-0jT"/>
-                <constraint firstItem="WeD-so-1q4" firstAttribute="bottom" secondItem="B0N-ND-2kb" secondAttribute="bottom" id="XEt-fe-MaR"/>
+                <constraint firstAttribute="bottom" secondItem="B0N-ND-2kb" secondAttribute="bottom" id="XEt-fe-MaR"/>
                 <constraint firstItem="YP7-6a-xZ6" firstAttribute="leading" secondItem="WeD-so-1q4" secondAttribute="leading" id="d9H-Zz-vGn"/>
                 <constraint firstItem="B0N-ND-2kb" firstAttribute="centerX" secondItem="WeD-so-1q4" secondAttribute="centerX" id="j8I-dx-3lK"/>
                 <constraint firstItem="B0N-ND-2kb" firstAttribute="leading" secondItem="WeD-so-1q4" secondAttribute="leading" priority="999" id="rUE-jb-M1a"/>

@@ -54,6 +54,8 @@
 
 "Label_PatientGeneralInfo" = "Date generale";
 
+"Label_Form_Fill_Date" = "Data completării";
+
 "Label_AddNote" = "Adaugă o notă";
 "Label_TypeNote" = "Scrie o notă aici";
 "Label_EnterStation" = "Introdu numărul secției (ex: 34)";
@@ -128,8 +130,6 @@
 
 "Patients.Add.Field.Name.Title" = "Nume și prenume";
 "Patients.Add.Field.Name.Description" = "Ex. Dana Manole";
-"Patients.Add.Field.Date.Title" = "Data nașterii";
-"Patients.Add.Field.Date.Description" = "selectează data";
 "Patients.Add.Field.Date.Title" = "Data nașterii";
 "Patients.Add.Field.Date.Description" = "selectează data";
 "Patients.Add.Field.CivilStatus.Title" = "Stare civilă";

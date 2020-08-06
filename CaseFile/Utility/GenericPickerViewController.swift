@@ -23,11 +23,7 @@ class GenericPickerViewController: UIViewController {
     init(withModel model: GenericPickerViewModel) {
         self.model = model
         super.init(nibName: "GenericPickerViewController", bundle: nil)
-        if #available(iOS 13.0, *) {
-            modalPresentationStyle = .automatic
-        } else {
-            modalPresentationStyle = .overCurrentContext
-        }
+        modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -44,13 +40,12 @@ class GenericPickerViewController: UIViewController {
     // MARK: - Config
     
     fileprivate func configureView() {
-        container.backgroundColor = .navigationBarBackground
-        container.tintColor = .navigationBarTint
+        container.backgroundColor = .navigationBarTint
+        container.tintColor = .navigationBarBackground
         container.layer.shadowColor = UIColor.cardDarkerShadow.cgColor
         container.layer.shadowRadius = Configuration.shadowRadius
         container.layer.shadowOffset = .zero
         container.layer.shadowOpacity = Configuration.shadowOpacity
-        container.layer.cornerRadius = Configuration.buttonCornerRadius
     }
     
     fileprivate func configureTexts() {
