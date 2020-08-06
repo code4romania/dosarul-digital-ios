@@ -201,7 +201,16 @@ class QuestionAnswerViewController: MVViewController {
         let currentRow = getDisplayedRow()
         guard currentRow < model.questions.count - 1 else {
             // we're done, so let's back out of this screen
-            navigationController?.popViewController(animated: true)
+            if let viewControllers = navigationController?.viewControllers {
+                if viewControllers.count > 3 {
+                    let targetViewController = viewControllers[viewControllers.count - 4]
+                    navigationController?.popToViewController(targetViewController, animated: true)
+                } else {
+                    navigationController?.popViewController(animated: true)
+                }
+            } else {
+                navigationController?.popViewController(animated: true)
+            }
             return
         }
         let indexPath = IndexPath(row: currentRow + 1, section: 0)

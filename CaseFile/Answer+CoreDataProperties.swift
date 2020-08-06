@@ -17,6 +17,7 @@ extension Answer {
         return NSFetchRequest<Answer>(entityName: "Answer")
     }
 
+    @NSManaged public var fillDate: Date?
     @NSManaged public var id: Int16
     @NSManaged public var inputAvailable: Bool
     @NSManaged public var inputText: String?

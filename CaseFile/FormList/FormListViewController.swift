@@ -236,18 +236,6 @@ class FormListViewController: MVViewController {
         
     }
     
-    fileprivate func continueToForm(withCode code: String) {
-        guard let formDateModel = FormDateViewModel(withFormUsingCode: code) else {
-            let message = "Error: can't load question list model for form with code \(code)"
-            let alert = UIAlertController.error(withMessage: message)
-            present(alert, animated: true, completion: nil)
-            return
-        }
-        
-        let formDateVC = FormDateViewController(withModel: formDateModel)
-        navigationController?.pushViewController(formDateVC, animated: true)
-    }
-    
     fileprivate func continueToNote() {
         #warning("check this when it hits breakpoint")
         AppRouter.shared.openAddNote()
@@ -320,7 +308,7 @@ extension FormListViewController: UITableViewDelegate {
             case 0:
                 // form was tapped
                 let formSet = model.forms[indexPath.row]
-                continueToForm(withCode: formSet.code)
+                AppRouter.shared.goToFormDate(withId: formSet.id, for: model.beneficiary, from: self)
             default:
                 // add note was tapped
                 continueToNote()

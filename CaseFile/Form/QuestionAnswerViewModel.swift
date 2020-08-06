@@ -53,8 +53,8 @@ class QuestionAnswerViewModel: NSObject {
     /// Bind to this callback to be notified whenever the model data is updated
     var onModelUpdate: (() -> Void)?
     
-    init?(withFormUsingCode code: String, currentQuestionId: Int) {
-        guard let form = LocalStorage.shared.getFormSummary(withCode: code),
+    init?(withFormUsingId id: Int, currentQuestionId: Int) {
+        guard let form = LocalStorage.shared.getFormSummary(withId: id),
             let sections = LocalStorage.shared.loadForm(withId: form.id) else { return nil }
         self.form = form
         self.sections = sections
@@ -204,7 +204,7 @@ class QuestionAnswerViewModel: NSObject {
                     .map({ $0.id })
                     .contains(questionModel.questionId) })
                 .first?.sectionId {
-                question.sectionInfo = DB.shared.sectionInfo(sectionId: sectionId)
+                question.sectionInfo = DB.shared.sectionInfo(sectionId: sectionId, formId: nil)
             }
         }
         
@@ -226,6 +226,7 @@ class QuestionAnswerViewModel: NSObject {
             answerEntity.beneficiary = currentBeneficiary
             answerEntity.question = question
             answerEntity.synced = false
+            answerEntity.fillDate = ApplicationData.shared.formFillDate
             answerSet.add(answerEntity)
         }
         try! CoreData.save()

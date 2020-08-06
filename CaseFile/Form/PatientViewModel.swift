@@ -115,6 +115,32 @@ class PatientViewModel: NSObject {
             .sorted(by: { $0.id > $1.id })
     }
     
+    // List of completed forms
+    var filledForms: [FormSummaryCellModel]? {
+        guard let beneficiary = beneficiary,
+            let forms = beneficiary.forms?.allObjects as? [Form] else {
+                return []
+        }
+        var filledForms = [FormSummaryCellModel]()
+        for form in forms {
+            let answeredQuestions = DB.shared.getAnsweredQuestions(inFormWithId: Int(form.id),
+                                                                   beneficiary: beneficiary).count
+            let answers = DB.shared.getAnswers(inFormWithId: Int(form.id),
+                                               beneficiary: beneficiary)
+            let formSections = LocalStorage.shared.loadForm(withId: Int(form.id))
+            let totalQuestions = formSections?.reduce([QuestionResponse](), { $0 + $1.questions }).count ?? 0
+            if let firstAnswer = answers.first,
+                answeredQuestions == totalQuestions {
+                let synced = answers.filter({ $0.synced }).count == answers.count
+                filledForms.append(FormSummaryCellModel(synced: synced,
+                                                        fillDate: firstAnswer.fillDate,
+                                                        name: form.formDescription,
+                                                        formId: Int(form.id)))
+            }
+        }
+        return filledForms
+    }
+    
     var notesModel: NoteViewModel?
     
     /// Be notified when the API save state has changed
@@ -122,6 +148,9 @@ class PatientViewModel: NSObject {
     
     /// Be notified whenever the model data changes so you can update the interface with fresh data
     var onStateChanged: (() -> Void)?
+    
+    /// Be notified when a form is filled
+    var onFormFilled: (() -> Void)?
     
     var canContinue: Bool {
         return self.generalDataSource.allSatisfy { $0.value != nil }
@@ -341,15 +370,6 @@ class PatientViewModel: NSObject {
             }
             completion?(error)
         })
-    }
-    
-    func fetchBeneficiaryDetails() {
-        guard let beneficiaryId = beneficiary?.id else {
-            return
-        }
-        AppDelegate.dataSourceManager.fetchBeneficiary(beneficiaryId: Int(beneficiaryId)) { (beneficiary, error) in
-             
-        }
     }
     
     func processForm() {

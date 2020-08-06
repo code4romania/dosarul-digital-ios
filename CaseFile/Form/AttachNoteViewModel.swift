@@ -119,6 +119,8 @@ class AttachNoteViewModel: NSObject {
         AppDelegate.dataSourceManager.upload(note: request) { apiError in
             if let error = apiError {
                 self.isSaving = false
+                self.onUpdate?()
+                self.onParentUpdate?()
                 callback(.uploadFailed(reason: error))
                 DebugLog("Note upload failed: \(error.localizedDescription)")
             } else {

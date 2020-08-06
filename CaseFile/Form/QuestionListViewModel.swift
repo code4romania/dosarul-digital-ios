@@ -42,17 +42,35 @@ class QuestionListViewModel: NSObject {
         return form.code
     }
     
-    init?(withFormUsingCode code: String) {
-        guard let form = LocalStorage.shared.getFormSummary(withCode: code),
+    var formId: Int {
+        return form.id
+    }
+    
+    init?(withFormUsingId id: Int) {
+        guard let form = LocalStorage.shared.getFormSummary(withId: id),
             let sections = LocalStorage.shared.loadForm(withId: form.id) else { return nil }
         self.form = form
         self.sections = sections
         super.init()
     }
     
+    func updateAnswers(with formDate: Date) {
+        guard let beneficiary = ApplicationData.shared.beneficiary,
+            let answers = beneficiary.answers?.allObjects as? [Answer] else {
+            return
+        }
+        for answer in answers {
+            guard let answerFormId = answer.question?.sectionInfo?.form?.id,
+                Int(answerFormId) == form.id else {
+                    continue
+            }
+            answer.fillDate = formDate
+        }
+    }
+    
     func questions(inSection section: Int) -> [QuestionCellModel] {
         guard sections.count > section else { return [] }
-        let sectionInfo = DB.shared.sectionInfo(sectionId: sectionIds[section])
+        let sectionInfo = DB.shared.sectionInfo(sectionId: sectionIds[section], formId: form.id)
         
         let storedQuestions = sectionInfo.questions?.allObjects as? [Question] ?? []
         let mappedQuestions = storedQuestions.reduce(into: [Int: Question]()) { $0[Int($1.id)] = $1 }

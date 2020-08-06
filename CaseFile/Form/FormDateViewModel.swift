@@ -10,7 +10,7 @@ import UIKit
 
 class FormDateViewModel: NSObject {
     fileprivate var form: FormResponse
-    let code: String
+    let id: Int
     
     var title: String {
         return form.description
@@ -29,10 +29,10 @@ class FormDateViewModel: NSObject {
     
     var onUpdate: (() -> ())?
        
-    init?(withFormUsingCode code: String) {
-        guard let form = LocalStorage.shared.getFormSummary(withCode: code) else { return nil }
+    init?(withFormUsingId id: Int) {
+        guard let form = LocalStorage.shared.getFormSummary(withId: id) else { return nil }
         self.form = form
-        self.code = code
+        self.id = id
         super.init()
     }
     

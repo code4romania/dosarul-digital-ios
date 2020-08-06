@@ -160,7 +160,7 @@ class FormListViewModel: NSObject {
     }
     
     deinit {
-        ApplicationData.shared.removeObject(for: .patient)
+//        ApplicationData.shared.removeObject(for: .patient)
         print("DEALLOC FORM LIST VIEW MODEL")
     }
 }

@@ -357,14 +357,9 @@ class APIManager: NSObject, APIManagerType {
         let url = ApiURL.uploadNote.url()
         let auth = authorizationHeaders()
         let headers = requestHeaders(withAuthHeaders: auth)
-
-        guard let beneficiary = ApplicationData.shared.beneficiary else {
-            completion?(.generic(reason: "Missing beneficiary id"))
-            return
-        }
         
         var parameters: [String: String] = [
-            "BeneficiaryId": String(beneficiary.id),
+            "BeneficiaryId": String(note.beneficiaryId),
             "Text": note.text
         ]
         if let questionId = note.questionId {

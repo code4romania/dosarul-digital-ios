@@ -106,6 +106,8 @@
 		7535045724DB15740067BFF4 /* FormDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535045524DB15740067BFF4 /* FormDateViewController.swift */; };
 		7535045824DB15740067BFF4 /* FormDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535045624DB15740067BFF4 /* FormDateViewController.xib */; };
 		7535045A24DB15B60067BFF4 /* FormDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535045924DB15B60067BFF4 /* FormDateViewModel.swift */; };
+		7535046724DC349C0067BFF4 /* FormSummaryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535046524DC349C0067BFF4 /* FormSummaryTableCell.swift */; };
+		7535046824DC349C0067BFF4 /* FormSummaryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535046624DC349C0067BFF4 /* FormSummaryTableCell.xib */; };
 		754121B2248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B3248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B4248ECBF8002EE5C7 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA498247C57080048CC07 /* String+Validation.swift */; };
@@ -463,6 +465,8 @@
 		7535045524DB15740067BFF4 /* FormDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDateViewController.swift; sourceTree = "<group>"; };
 		7535045624DB15740067BFF4 /* FormDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormDateViewController.xib; sourceTree = "<group>"; };
 		7535045924DB15B60067BFF4 /* FormDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDateViewModel.swift; sourceTree = "<group>"; };
+		7535046524DC349C0067BFF4 /* FormSummaryTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSummaryTableCell.swift; sourceTree = "<group>"; };
+		7535046624DC349C0067BFF4 /* FormSummaryTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormSummaryTableCell.xib; sourceTree = "<group>"; };
 		7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalConfiguration.xcconfig; sourceTree = "<group>"; };
 		754121BD248ED9CD002EE5C7 /* LoginResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LoginResponse.json; sourceTree = "<group>"; };
 		754121BF248EDA31002EE5C7 /* BeneficiariesResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BeneficiariesResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
@@ -655,6 +659,8 @@
 				2810413B236C2EC300B7422C /* NoteHistoryTableCell.xib */,
 				7561270924D77D4900225A45 /* FamilyMemberTableCell.swift */,
 				7561270A24D77D4900225A45 /* FamilyMemberTableCell.xib */,
+				7535046524DC349C0067BFF4 /* FormSummaryTableCell.swift */,
+				7535046624DC349C0067BFF4 /* FormSummaryTableCell.xib */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -1170,6 +1176,7 @@
 				75EEA49F247C5C390048CC07 /* LaunchScreen-iPhone.xib in Resources */,
 				28104131236B5CA500B7422C /* AttachNoteViewController.xib in Resources */,
 				7501A91A24ABED2200E4F85B /* LaunchScreenViewController-iPhone.xib in Resources */,
+				7535046824DC349C0067BFF4 /* FormSummaryTableCell.xib in Resources */,
 				28844A57233F94FD00DEEA44 /* GenericPickerViewController.xib in Resources */,
 				289E1E85235F2674000C92A0 /* FormListViewController.xib in Resources */,
 				28844A5D233F9AB700DEEA44 /* TimePickerViewController.xib in Resources */,
@@ -1463,6 +1470,7 @@
 				28FB66B423699D7400336DBA /* TextEntryViewController.swift in Sources */,
 				28E7245C233F59260096454D /* PatientHUDViewController.swift in Sources */,
 				271595B521465EBA00BECC9C /* String+Localization.swift in Sources */,
+				7535046724DC349C0067BFF4 /* FormSummaryTableCell.swift in Sources */,
 				286D3869236439990091B23F /* QuestionListViewModel.swift in Sources */,
 				75D0848E248560900034499D /* OnboardingViewController.swift in Sources */,
 				7561270B24D77D4B00225A45 /* FamilyMemberTableCell.swift in Sources */,

@@ -19,6 +19,9 @@ class QuestionListViewController: MVViewController {
     init(withModel model: QuestionListViewModel) {
         self.model = model
         super.init(nibName: "QuestionListViewController", bundle: nil)
+        if let formFillDate = ApplicationData.shared.formFillDate {
+            self.model.updateAnswers(with: formFillDate)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -75,7 +78,7 @@ class QuestionListViewController: MVViewController {
     // MARK: - Actions
 
     fileprivate func openQuestion(_ question: QuestionCellModel) {
-        guard let questionAnswer = QuestionAnswerViewModel(withFormUsingCode: model.formCode,
+        guard let questionAnswer = QuestionAnswerViewModel(withFormUsingId: model.formId,
                                                            currentQuestionId: question.questionId) else { return }
         AppRouter.shared.open(questionModel: questionAnswer)
     }

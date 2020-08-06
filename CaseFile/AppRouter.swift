@@ -181,6 +181,30 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         }
     }
     
+    func goToFormDate(withId id: Int, for beneficiary: Beneficiary?, from viewController: UIViewController) {
+        guard let formDateModel = FormDateViewModel(withFormUsingId: id) else {
+            let message = "Error: can't load question list model for form with id \(id)"
+            let alert = UIAlertController.error(withMessage: message)
+            viewController.present(alert, animated: true, completion: nil)
+            return
+        }
+        guard let beneficiary = beneficiary else {
+            let message = "Error: missing beneficiary"
+            let alert = UIAlertController.error(withMessage: message)
+            viewController.present(alert, animated: true, completion: nil)
+            return
+        }
+        if let formDate = DB.shared.getAnswers(inFormWithId: id, beneficiary: beneficiary).first?.fillDate {
+            formDateModel.date = formDate
+        }
+        let formDateVC = FormDateViewController(withModel: formDateModel)
+        if let navigationController = viewController.navigationController {
+            navigationController.pushViewController(formDateVC, animated: true)
+        } else {
+            viewController.present(formDateVC, animated: true, completion: nil)
+        }
+    }
+    
     func open(questionModel: QuestionAnswerViewModel) {
         let controller = QuestionAnswerViewController(withModel: questionModel)
         if isPad,

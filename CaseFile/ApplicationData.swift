@@ -50,12 +50,12 @@ class ApplicationData: NSObject {
     
     func setObject(_ object: NSObject, for type: Keys) {
         objectRepository.setObject(object, forKey: NSString(string: type.value))
-        DebugLog("Setting object of type \(type) resulted in \(objectRepository)")
+        print("Setting object of type \(type) resulted in \(objectRepository)")
     }
     
     func removeObject(for type: Keys) {
         objectRepository.removeObject(forKey: NSString(string: type.value))
-        DebugLog("Removing object of type \(type) resulted in \(objectRepository)")
+         print("Removing object of type \(type) resulted in \(objectRepository)")
     }
     
     var beneficiary: Beneficiary? {
@@ -74,7 +74,7 @@ class ApplicationData: NSObject {
         return familyMember
     }
     
-    var completionDate: Date? {
+    var formFillDate: Date? {
         guard let completionDateArray = ApplicationData.shared.object(for: .patientFormCompletionDate) as? NSArray,
             let date = completionDateArray[0] as? Date else {
             return nil

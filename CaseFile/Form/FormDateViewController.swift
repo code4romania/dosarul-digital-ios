@@ -29,6 +29,7 @@ class FormDateViewController: MVViewController {
         super.viewDidLoad()
         configureAppearance()
         bindToModelUpdates()
+        updateInterface()
     }
     
     fileprivate func configureAppearance() {
@@ -69,8 +70,8 @@ class FormDateViewController: MVViewController {
     }
     
     @objc func proceedButtonTouched(sender: Any) {
-        guard let questionsModel = QuestionListViewModel(withFormUsingCode: model.code) else {
-            let message = "Error: can't load question list model for form with code \(model.code)"
+        guard let questionsModel = QuestionListViewModel(withFormUsingId: model.id) else {
+            let message = "Error: can't load question list model for form with id \(model.id)"
             let alert = UIAlertController.error(withMessage: message)
             present(alert, animated: true, completion: nil)
             return

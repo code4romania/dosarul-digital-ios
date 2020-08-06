@@ -31,10 +31,16 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
         navigationItem.title = "Title.Patients.Details".localized
         configureTableView()
         configureNotes()
+        bindToModelUpdates()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         model.operation = .view
     }
     
@@ -56,6 +62,8 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
                            forCellReuseIdentifier: "BeneficiaryCell")
         tableView.register(UINib(nibName: "NoteHistoryTableCell", bundle: nil),
                            forCellReuseIdentifier: NoteHistoryTableCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "FormSummaryTableCell", bundle: nil),
+                           forCellReuseIdentifier: FormSummaryTableCell.reuseIdentifier)
         tableView.register(UINib(nibName: "FamilyMemberTableCell", bundle: nil),
                            forCellReuseIdentifier: FamilyMemberTableCell.reuseIdentifier)
         
@@ -70,6 +78,12 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
         self.model.notesModel = NoteViewModel(for: self.model.beneficiary, with: nil)
         self.model.notesModel?.onUpdate = { [weak self] in
             self?.model.notesModel?.load()
+            self?.tableView.reloadData()
+        }
+    }
+    
+    func bindToModelUpdates() {
+        model.onFormFilled = { [weak self] in
             self?.tableView.reloadData()
         }
     }
@@ -90,7 +104,7 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
             return model.beneficiary?.familyMembers?.count ?? 0
         // History
         case 2:
-            return 0
+            return model.filledForms?.count ?? 0
         // Notes
         case 3:
             return model.notesModel!.notes.count
@@ -122,6 +136,15 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
                     return UITableViewCell()
             }
             cell.beneficiary = familyMembers[indexPath.row]
+            return cell
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FormSummaryTableCell",
+                                                           for: indexPath) as? FormSummaryTableCell,
+                let filledForms = model.filledForms,
+                filledForms.count > indexPath.row else {
+                    return UITableViewCell()
+            }
+            cell.update(with: filledForms[indexPath.row])
             return cell
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteHistoryTableCell.reuseIdentifier,
@@ -177,10 +200,12 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
     
     func viewForFormHistory() -> UIView? {
         formHistoryHeaderView = GenericTableHeader(title: "FormHistory.Title".localized,
-                                        buttonTitle: nil,
-                                        emptyImage: UIImage(named: "icon-empty-form-history"),
-                                        emptyTitle: "FormHistory.Empty.Title".localized,
-                                        emptyDescription: "FormHistory.Empty.Description".localized)
+                                                   buttonTitle: nil,
+                                                   emptyImage: model.filledForms?.count == 0 ?
+                                                    UIImage(named: "icon-empty-form-history") : nil,
+                                                   emptyTitle: model.filledForms?.count == 0 ?
+                                                    "FormHistory.Empty.Title".localized : nil,
+                                                   emptyDescription: model.filledForms?.count == 0 ? "FormHistory.Empty.Description".localized : nil)
         formHistoryHeaderView?.delegate = self
         return formHistoryHeaderView
     }
@@ -198,8 +223,8 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-            // Family members
         case 1:
+            // Family members
             guard let familyMembers = model.beneficiary?.familyMembers?.allObjects as? [Beneficiary],
                 familyMembers.count > indexPath.row else {
                     return
@@ -208,8 +233,18 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
             let beneficiaryDetailsVC = PatientDetailsViewController(viewModel: model)
             self.navigationController?.pushViewController(beneficiaryDetailsVC, animated: true)
             self.navigationController?.viewControllers.removeAll(where: { $0 == self })
-            // Forms
         case 2:
+            // Forms
+            guard let filledForms = model.filledForms,
+                filledForms.count > indexPath.row else {
+                let message = "Error: can't load question list model for form"
+                let alert = UIAlertController.error(withMessage: message)
+                present(alert, animated: true, completion: nil)
+                return
+            }
+            AppRouter.shared.goToFormDate(withId: filledForms[indexPath.row].formId,
+                                          for: model.beneficiary,
+                                          from: self)
             break
         default:
             break

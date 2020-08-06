@@ -105,6 +105,8 @@ class DB: NSObject {
                 let localForm = localForms?.filter({ $0.id == form.id }).first ?? Form(entity: formEntityDescription!,
                                                                                        insertInto: CoreData.context)
                 localForm.id = form.id
+                localForm.formDescription = form.description
+                localForm.code = form.code
                 localForm.addToBeneficiaries(localBeneficiary)
             })
             
@@ -122,12 +124,6 @@ class DB: NSObject {
             }
         }
         do {
-            (currentUser()?.beneficiaries?.allObjects as? [Beneficiary])?.forEach({ (beneficiary) in
-                print("Beneficiary: \(beneficiary.name!):")
-                (beneficiary.familyMembers?.allObjects as? [Beneficiary])?.forEach({ (familyMember) in
-                    print(familyMember.name!)
-                })
-            })
             try CoreData.save()
         } catch {
             print(error)
@@ -137,9 +133,11 @@ class DB: NSObject {
     
     func assignFormsToBeneficiary(_ beneficiary: Beneficiary, formIds:[Int]) {
         formIds.forEach { (addedFormId) in
-            let formEntityDescription = NSEntityDescription.entity(forEntityName: "Form", in: CoreData.context)
-            let form = Form(entity: formEntityDescription!, insertInto: CoreData.context)
-            form.id = Int16(addedFormId)
+            let request: NSFetchRequest<Form> = Form.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %d", addedFormId)
+            guard let forms = CoreData.fetch(request) as? [Form], let form = forms.first else {
+                return
+            }
             beneficiary.addToForms(form)
         }
     }
@@ -154,14 +152,14 @@ class DB: NSObject {
     
     func currentSectionInfo() -> SectionInfo? {
         guard let stationId = PreferencesManager.shared.section else { return nil }
-        return sectionInfo(sectionId: stationId)
+        return sectionInfo(sectionId: stationId, formId: nil)
     }
     
-    func sectionInfo(sectionId: Int) -> SectionInfo {
-        let request: NSFetchRequest<SectionInfo> = SectionInfo.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "sectionId == %d", Int16(sectionId))
-        let sections = try? CoreData.context.fetch(request)
+    func sectionInfo(sectionId: Int, formId: Int?) -> SectionInfo {
+        let sectionRequest: NSFetchRequest<SectionInfo> = SectionInfo.fetchRequest()
+        sectionRequest.fetchLimit = 1
+        sectionRequest.predicate = NSPredicate(format: "sectionId == %d", Int16(sectionId))
+        let sections = try? CoreData.context.fetch(sectionRequest)
         if let sectionInfo = sections?.first {
             return sectionInfo
         } else {
@@ -170,17 +168,23 @@ class DB: NSObject {
             let newSectioInfo = SectionInfo(entity: sectionInfoEntityDescription!, insertInto: CoreData.context)
             newSectioInfo.sectionId = Int16(sectionId)
             newSectioInfo.synced = false
+            if let formId = formId {
+                let formRequest: NSFetchRequest<Form> = Form.fetchRequest()
+                formRequest.fetchLimit = 1
+                formRequest.predicate = NSPredicate(format: "id == %d", Int16(formId))
+                if let form = try? CoreData.context.fetch(formRequest).first {
+                    newSectioInfo.form = form
+                }
+            }
             try? CoreData.context.save()
             return newSectioInfo
         }
     }
     
     func getUnsyncedNotes() -> [Note] {
-        guard let section = currentSectionInfo() else { return [] }
         let request: NSFetchRequest<Note> = Note.fetchRequest()
-        let sectionPredicate = NSPredicate(format: "sectionInfo == %@", section)
         let syncedPredicate = NSPredicate(format: "synced == false")
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sectionPredicate, syncedPredicate])
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [syncedPredicate])
         let unsyncedNotes = CoreData.fetch(request) as? [Note]
         return unsyncedNotes ?? []
     }
@@ -240,6 +244,21 @@ class DB: NSObject {
                                                                                 beneficiaryPredicate])
         let unsyncedQuestions = CoreData.fetch(request) as? [Question]
         return unsyncedQuestions ?? []
+    }
+    
+    func getAnswers(inFormWithId formId: Int, beneficiary: Beneficiary) -> [Answer] {
+        guard let answers = beneficiary.answers?.allObjects as? [Answer] else {
+            return []
+        }
+        var result = [Answer]()
+        for answer in answers {
+            guard let formId = answer.question?.sectionInfo?.form?.id,
+                Int(formId) == formId else {
+                    continue
+            }
+            result.append(answer)
+        }
+        return result
     }
     
     func setQuestionsSynced(withIds ids: [Int16]) {

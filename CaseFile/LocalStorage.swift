@@ -39,7 +39,7 @@ protocol LocalStorageType: NSObject {
     var forms: [FormResponse]? { set get }
     
     func getCounty(withCode code: String) -> CountyResponse?
-    func getFormSummary(withCode code: String) -> FormResponse?
+    func getFormSummary(withId id: Int) -> FormResponse?
     func loadForm(withId formId: Int) -> [FormSectionResponse]?
     func saveForm(_ form: [FormSectionResponse], withId formId: Int)
     
@@ -99,9 +99,9 @@ class LocalStorage: NSObject, LocalStorageType {
         save(codable: form, withFilename: .form(id: formId))
     }
     
-    func getFormSummary(withCode code: String) -> FormResponse? {
+    func getFormSummary(withId id: Int) -> FormResponse? {
         guard let forms = forms else { return nil }
-        return forms.filter { $0.code == code }.first
+        return forms.filter { $0.id == id }.first
     }
     
     func getCounty(withCode code: String) -> CountyResponse? {

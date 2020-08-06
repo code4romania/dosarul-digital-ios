@@ -70,9 +70,12 @@ class RemoteSyncer: NSObject {
         DebugLog("Uploading \(totalRequests) notes...")
         
         for note in notes {
-            #warning("change beneficiary id")
+            guard let beneficiaryId = note.beneficiary?.id else {
+                DebugLog("Note has no beneficiary")
+                continue
+            }
             let uploadRequest = UploadNoteRequest(
-                beneficiaryId: 0,
+                beneficiaryId: Int(beneficiaryId),
                 imageData: note.file as Data?,
                 questionId: note.questionID != -1 ? Int(note.questionID) : nil,
                 text: note.body ?? "")
