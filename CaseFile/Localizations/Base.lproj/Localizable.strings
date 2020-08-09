@@ -1,8 +1,10 @@
 //  Created by Code4Romania
 
 "Button_Login" = "Login";
+"Button_Verify" = "Verifică";
+"Button_Resend" = "Retrimite";
 "Button_Continue" = "Continuă";
-"Button_ChangePatient" = "Schimbă";
+"Button_Change" = "Schimbă";
 "Button_Urban" = "Urban";
 "Button_Rural" = "Rural";
 "Button_Male" = "Bărbat";
@@ -51,6 +53,13 @@
 "Label_Login_Description" = "Introdu datele tale pentru\na accesa aplicația";
 "Label_EmailTextInput_Placeholder" = "Email";
 "Label_PasswordTextInput_Placeholder" = "Parola";
+"Label_Verify" = "Verificare";
+"Label_Verify_Description" = "Introdu codul primit pe telefon";
+"Label_Verify_Instruction" = "Nu ai primit un cod?";
+"Label_Password_Change" = "Schimbă parola";
+"Label_Password_Change_Description" = "Parola noua trebuie sa aiba minim 8 caractere, cel putin o cifra, o majuscula si un caracter special";
+"Label_Password_Change_TextInput_Placeholder" = "Noua ta parolă";
+"Label_Password_Change_Confirmation_TextInput_Placeholder" = "Rescrie parola";
 
 "Label_PatientGeneralInfo" = "Date generale";
 

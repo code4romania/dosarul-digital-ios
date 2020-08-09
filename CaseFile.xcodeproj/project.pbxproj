@@ -108,6 +108,9 @@
 		7535045A24DB15B60067BFF4 /* FormDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535045924DB15B60067BFF4 /* FormDateViewModel.swift */; };
 		7535046724DC349C0067BFF4 /* FormSummaryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535046524DC349C0067BFF4 /* FormSummaryTableCell.swift */; };
 		7535046824DC349C0067BFF4 /* FormSummaryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535046624DC349C0067BFF4 /* FormSummaryTableCell.xib */; };
+		7535047A24E00FAA0067BFF4 /* CodeVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535047724E00FA90067BFF4 /* CodeVerificationViewController.swift */; };
+		7535047B24E00FAA0067BFF4 /* CodeVerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535047824E00FA90067BFF4 /* CodeVerificationViewController.xib */; };
+		7535047C24E00FAA0067BFF4 /* CodeVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535047924E00FA90067BFF4 /* CodeVerificationViewModel.swift */; };
 		754121B2248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B3248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B4248ECBF8002EE5C7 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA498247C57080048CC07 /* String+Validation.swift */; };
@@ -184,6 +187,9 @@
 		75D08491248560900034499D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75D0848A248560900034499D /* OnboardingViewController.xib */; };
 		75D08492248560900034499D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75D0848A248560900034499D /* OnboardingViewController.xib */; };
 		75D08493248560900034499D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75D0848A248560900034499D /* OnboardingViewController.xib */; };
+		75E7502B24E08D1200AED27C /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75E7502824E08D1100AED27C /* ResetPasswordViewController.xib */; };
+		75E7502C24E08D1200AED27C /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7502924E08D1100AED27C /* ResetPasswordViewController.swift */; };
+		75E7502D24E08D1200AED27C /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7502A24E08D1200AED27C /* ResetPasswordViewModel.swift */; };
 		75E837C1246198BD00DB9146 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2817EA152358CD0A0029AD4C /* APIManager.swift */; };
 		75E837C2246198BD00DB9146 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2817EA152358CD0A0029AD4C /* APIManager.swift */; };
 		75E837C32461990B00DB9146 /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DBDAA3236EE26D004EAD83 /* UIViewController+Helpers.swift */; };
@@ -467,6 +473,9 @@
 		7535045924DB15B60067BFF4 /* FormDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDateViewModel.swift; sourceTree = "<group>"; };
 		7535046524DC349C0067BFF4 /* FormSummaryTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSummaryTableCell.swift; sourceTree = "<group>"; };
 		7535046624DC349C0067BFF4 /* FormSummaryTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormSummaryTableCell.xib; sourceTree = "<group>"; };
+		7535047724E00FA90067BFF4 /* CodeVerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewController.swift; sourceTree = "<group>"; };
+		7535047824E00FA90067BFF4 /* CodeVerificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CodeVerificationViewController.xib; sourceTree = "<group>"; };
+		7535047924E00FA90067BFF4 /* CodeVerificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewModel.swift; sourceTree = "<group>"; };
 		7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalConfiguration.xcconfig; sourceTree = "<group>"; };
 		754121BD248ED9CD002EE5C7 /* LoginResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LoginResponse.json; sourceTree = "<group>"; };
 		754121BF248EDA31002EE5C7 /* BeneficiariesResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BeneficiariesResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
@@ -508,6 +517,9 @@
 		75D084882485608F0034499D /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		75D08489248560900034499D /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		75D0848A248560900034499D /* OnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
+		75E7502824E08D1100AED27C /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
+		75E7502924E08D1100AED27C /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		75E7502A24E08D1200AED27C /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		75E837BC2461987B00DB9146 /* CaseFileUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaseFileUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		75EEA498247C57080048CC07 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		75EEA49E247C5C390048CC07 /* LaunchScreen-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "LaunchScreen-iPhone.xib"; sourceTree = "<group>"; };
@@ -600,6 +612,12 @@
 				281A4B8D236D7B90001AD277 /* LoginViewModel.swift */,
 				281A4B89236D7B85001AD277 /* LoginViewController.swift */,
 				281A4B8A236D7B85001AD277 /* LoginViewController.xib */,
+				7535047924E00FA90067BFF4 /* CodeVerificationViewModel.swift */,
+				7535047724E00FA90067BFF4 /* CodeVerificationViewController.swift */,
+				7535047824E00FA90067BFF4 /* CodeVerificationViewController.xib */,
+				75E7502A24E08D1200AED27C /* ResetPasswordViewModel.swift */,
+				75E7502924E08D1100AED27C /* ResetPasswordViewController.swift */,
+				75E7502824E08D1100AED27C /* ResetPasswordViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1152,6 +1170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28FB66AA236706CA00336DBA /* QuestionCollectionCell.xib in Resources */,
+				75E7502B24E08D1200AED27C /* ResetPasswordViewController.xib in Resources */,
 				75D0847924855EF70034499D /* OnboardingChildViewController.xib in Resources */,
 				75D08491248560900034499D /* OnboardingViewController.xib in Resources */,
 				28104137236B5DE000B7422C /* NoteViewController.xib in Resources */,
@@ -1188,6 +1207,7 @@
 				75461B8F24BCE4BA002AC088 /* GoogleService-Info.plist in Resources */,
 				754121BE248ED9CD002EE5C7 /* LoginResponse.json in Resources */,
 				289E1E8D235F2ABE000C92A0 /* FormSetTableCell.xib in Resources */,
+				7535047B24E00FAA0067BFF4 /* CodeVerificationViewController.xib in Resources */,
 				756126F824D0926B00225A45 /* FormResponse7.json in Resources */,
 				2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */,
 				286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */,
@@ -1425,7 +1445,9 @@
 				28104142236C3FD500B7422C /* Alerts.swift in Sources */,
 				7501A91624ABB21C00E4F85B /* LaunchScreenViewController.swift in Sources */,
 				7561270524D21B4F00225A45 /* Beneficiary+CoreDataClass.swift in Sources */,
+				7535047A24E00FAA0067BFF4 /* CodeVerificationViewController.swift in Sources */,
 				28C3639523646D480084065C /* DefaultTableHeader.swift in Sources */,
+				7535047C24E00FAA0067BFF4 /* CodeVerificationViewModel.swift in Sources */,
 				EF3DC3951DE9DB02006F9D73 /* CoreDataInitialiser.swift in Sources */,
 				2817EA1C2358F2140029AD4C /* PreferencesManager.swift in Sources */,
 				7561270624D21B4F00225A45 /* Beneficiary+CoreDataProperties.swift in Sources */,
@@ -1433,6 +1455,7 @@
 				28104140236C3A4900B7422C /* Formatters.swift in Sources */,
 				281A4B87236CC625001AD277 /* DropdownButton.swift in Sources */,
 				28104139236B5DEF00B7422C /* NoteViewModel.swift in Sources */,
+				75E7502D24E08D1200AED27C /* ResetPasswordViewModel.swift in Sources */,
 				28A4B776237364FE00E6D2A8 /* RemoteConfigManager.swift in Sources */,
 				28FB66B0236855E400336DBA /* DB.swift in Sources */,
 				7535045A24DB15B60067BFF4 /* FormDateViewModel.swift in Sources */,
@@ -1492,6 +1515,7 @@
 				7561270824D21B4F00225A45 /* Note+CoreDataProperties.swift in Sources */,
 				28844A5C233F9AB700DEEA44 /* TimePickerViewController.swift in Sources */,
 				756126EF24CDB83B00225A45 /* Question+CoreDataClass.swift in Sources */,
+				75E7502C24E08D1200AED27C /* ResetPasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

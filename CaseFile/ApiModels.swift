@@ -120,6 +120,14 @@ struct LoginResponse: Codable {
     }
 }
 
+struct TwoFactorAuthenticationResponse: Codable {
+    var success: Bool?
+}
+
+struct ResetPasswordResponse: Codable {
+    var success: Bool?
+}
+
 struct BeneficiaryListResponse: Codable {
     var beneficiaries: [BeneficiaryResponse]
     var totalItems: Int

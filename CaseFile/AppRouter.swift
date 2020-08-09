@@ -116,13 +116,15 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     
     func goToLogin(animated: Bool) {
         let entryViewController = LoginViewController()
+        let navController = UINavigationController(rootViewController: entryViewController)
+        navController.setNavigationBarHidden(true, animated: false)
         if let window = window, animated == true {
-            window.rootViewController = entryViewController
+            window.rootViewController = navController
             let options: UIView.AnimationOptions = .transitionCrossDissolve
             let duration: TimeInterval = 0.3
             UIView.transition(with: window, duration: duration, options: options, animations: {}, completion: nil)
         } else {
-            window?.rootViewController = entryViewController
+            window?.rootViewController = navController
         }
     }
 

@@ -19,6 +19,12 @@ protocol APIManagerType: NSObject {
                password: String,
                completion: ((LoginResponse?, APIError?) -> Void)?)
     
+    /// POST TBD
+    func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?)
+    
+    /// POST TBD
+    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?)
+    
     /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?)
     
@@ -56,6 +62,10 @@ protocol APIManagerType: NSObject {
 
 // remove extension after all methods are implemented in all conforming classes
 extension APIManagerType {
+    
+    func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?) { }
+    
+    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?) { }
     
     /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) { }
@@ -140,6 +150,20 @@ class APIManager: NSObject, APIManagerType {
             } else {
                 completion?(nil, .loginFailed(reason: "No data received"))
             }
+        }
+    }
+    
+    func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?) {
+        #warning("Implement method")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            completion?(TwoFactorAuthenticationResponse(success: true), nil)
+        }
+    }
+    
+    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?) {
+        #warning("Implement method")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            completion?(ResetPasswordResponse(success: true), nil)
         }
     }
     

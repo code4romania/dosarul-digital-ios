@@ -9,20 +9,20 @@
 import UIKit
 import KeyboardLayoutGuide
 
-class LoginViewController: MVViewController {
+class ResetPasswordViewController: MVViewController {
     
-    var model: LoginViewModel = LoginViewModel()
+    var model = ResetPasswordViewModel()
     
-    @IBOutlet weak var loginTitle: UILabel!
-    @IBOutlet weak var loginDescription: UILabel!
+    @IBOutlet weak var viewTitle: UILabel!
+    @IBOutlet weak var viewDescription: UILabel!
     @IBOutlet weak var vmLogoView: UIView!
     @IBOutlet weak var vmLogoPlainView: UIImageView!
     @IBOutlet weak var vmLogoBubblesView: UIImageView!
     @IBOutlet weak var outerCardContainer: UIView!
-    @IBOutlet weak var emailContainer: UIView!
     @IBOutlet weak var passwordContainer: UIView!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordConfirmationContainer: UIView!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordConfirmationTextfield: UITextField!
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var loginButton: ActionButton!
     @IBOutlet weak var backgroundPlainAspectRatioIpadConstraint: NSLayoutConstraint!
@@ -49,6 +49,7 @@ class LoginViewController: MVViewController {
     }
     
     fileprivate func configureViews() {
+        
         loginViewBottomToKeyboardConstraint = outerCardContainer.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor,
                                                                                          constant: -32)
         outerCardContainer.layer.shadowColor = UIColor.cardDarkerShadow.cgColor
@@ -58,12 +59,12 @@ class LoginViewController: MVViewController {
         outerCardContainer.layer.cornerRadius = Configuration.buttonCornerRadius
         outerCardContainer.backgroundColor = .cardBackground
         
-        emailContainer.layer.cornerRadius = Configuration.buttonCornerRadius
-        emailContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
-        emailContainer.layer.borderWidth = 1
         passwordContainer.layer.cornerRadius = Configuration.buttonCornerRadius
         passwordContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
         passwordContainer.layer.borderWidth = 1
+        passwordConfirmationContainer.layer.cornerRadius = Configuration.buttonCornerRadius
+        passwordConfirmationContainer.layer.borderColor = UIColor.textViewContainerBorder.cgColor
+        passwordConfirmationContainer.layer.borderWidth = 1
         
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
@@ -91,8 +92,8 @@ class LoginViewController: MVViewController {
     
     fileprivate func updateInterface() {
         updateLoginButtonState()
-        emailTextField.text = model.emailAddress
         passwordTextField.text = model.password
+        passwordConfirmationTextfield.text = model.passwordConfirmation
         if model.isLoading {
             loader.startAnimating()
         } else {
@@ -101,22 +102,10 @@ class LoginViewController: MVViewController {
     }
     
     private func setupStaticText() {
-        loginTitle.text = "Label_Login".localized
-        loginDescription.text = "Label_Login_Description".localized
-        emailTextField.placeholder = "Label_EmailTextInput_Placeholder".localized
-        passwordTextField.placeholder = "Label_PasswordTextInput_Placeholder".localized
-        
-//        updateVersionLabel()
-    }
-    
-    private func updateVersionLabel() {
-        guard let info = Bundle.main.infoDictionary else { return }
-        let version = info["CFBundleShortVersionString"] ?? "1.0"
-        let build = info["CFBundleVersion"] ?? "1"
-        var versionString = "v\(version)"
-        #if DEBUG
-        versionString += "(\(build))"
-        #endif
+        viewTitle.text = "Label_Password_Change".localized
+        viewDescription.text = "Label_Password_Change_Description".localized
+        passwordTextField.placeholder = "Label_Password_Change_TextInput_Placeholder".localized
+        passwordConfirmationTextfield.placeholder = "Label_Password_Change_Confirmation_TextInput_Placeholder".localized
     }
     
     fileprivate func setVMLogo(visible: Bool, animated: Bool) {
@@ -133,24 +122,22 @@ class LoginViewController: MVViewController {
     
     // MARK: - Actions
     
-    func login() {
+    func resetPassword() {
         guard model.isReady else { return }
-        model.login { [weak self] error in
+        model.resetPassword { [weak self] (error) in
             if let error = error {
                 let alert = UIAlertController.error(withMessage: error.localizedDescription)
                 self?.present(alert, animated: true, completion: nil)
                 MVAnalytics.shared.log(event: .loginFailed(error: error.localizedDescription))
             } else {
                 self?.proceedToNextScreen()
-                // TODO: Do we ask for push notifications?
-//                self?.askForPushNotificationsPermissions()
             }
         }
     }
     
     @objc private func toggleCodeInputVisibility(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        passwordTextField.isSecureTextEntry = sender.isSelected
+        passwordConfirmationTextfield.isSecureTextEntry = sender.isSelected
     }
     
     func askForPushNotificationsPermissions() {
@@ -159,15 +146,16 @@ class LoginViewController: MVViewController {
     }
 
     @IBAction func handleLoginButtonTap(_ sender: Any) {
-        login()
+        resetPassword()
     }
     
     func proceedToNextScreen() {
-        navigationController?.pushViewController(CodeVerificationViewController(), animated: true)
+        OnboardingViewModel.shouldShowWelcome = true
+        AppRouter.shared.showAppEntry(animated: true)
     }
 }
 
-extension LoginViewController: UITextFieldDelegate {
+extension ResetPasswordViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if AppRouter.shared.isPhone {
             setVMLogo(visible: false, animated: true)
@@ -176,25 +164,25 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField {
-            passwordTextField.becomeFirstResponder()
+        if textField == passwordTextField {
+            passwordConfirmationTextfield.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
             if AppRouter.shared.isPhone {
                 setVMLogo(visible: true, animated: true)
             }
-            login()
+            resetPassword()
         }
         return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let updated = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        let updatedValue = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         switch textField {
-        case emailTextField:
-            model.emailAddress = updated
         case passwordTextField:
-            model.password = updated
+            model.password = updatedValue
+        case passwordConfirmationTextfield:
+            model.passwordConfirmation = updatedValue
         default:
             break
         }

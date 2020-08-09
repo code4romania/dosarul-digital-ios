@@ -66,16 +66,23 @@ class DB: NSObject {
             .filter { !beneficiariesIds.contains($0.id) }
             .forEach { CoreData.context.delete($0) }
         
+        // get all beneficiaries from the database
+        let request: NSFetchRequest<Beneficiary> = Beneficiary.fetchRequest()
+        guard let allBeneficiaries = CoreData.fetch(request) as? [Beneficiary] else {
+            return
+        }
+        
         // add new beneficiaries
         beneficiaries.forEach { (beneficiary) in
             let beneficiaryEntityDescription = NSEntityDescription.entity(forEntityName: "Beneficiary",
                                                                           in: CoreData.context)
             
-            let localBeneficiary = currentUser()?
-                .beneficiaries?
-                .compactMap({ $0 as? Beneficiary })
-                .filter({ $0.id == beneficiary.id }).first ?? Beneficiary(entity: beneficiaryEntityDescription!,
-                                                                           insertInto: CoreData.context)
+            
+            
+            let localBeneficiary = allBeneficiaries
+                .filter({ $0.id == beneficiary.id })
+                .first ?? Beneficiary(entity: beneficiaryEntityDescription!,
+                                      insertInto: CoreData.context)
             localBeneficiary.user = currentUser()
             localBeneficiary.age = beneficiary.age
             localBeneficiary.birthDate = beneficiary.birthDate

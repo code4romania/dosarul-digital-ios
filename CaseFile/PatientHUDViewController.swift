@@ -64,7 +64,7 @@ class PatientHUDViewController: UIViewController {
     fileprivate func configureTexts() {
         changeButton.isHidden = model.patient == nil
         if let patient = model.patient {
-            changeButton?.setTitle("Button_ChangePatient".localized, for: .normal)
+            changeButton?.setTitle("Button_Change".localized, for: .normal)
             titleLabel.text = patient.name
         } else {
             titleLabel.text = "Label_PatientGeneralInfo".localized
