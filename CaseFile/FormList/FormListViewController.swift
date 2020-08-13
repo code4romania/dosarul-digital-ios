@@ -15,15 +15,15 @@ class FormListViewController: MVViewController {
     @IBOutlet weak var syncingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var syncDetailsLabel: UILabel!
     @IBOutlet weak var syncButton: ActionButton!
-    @IBOutlet weak var syncContainerHeightZero: NSLayoutConstraint!
     @IBOutlet weak var syncContainer: UIView!
     @IBOutlet weak var proceedButton: ActionButton!
     @IBOutlet weak var retryButton: ActionButton!
     @IBOutlet weak var downloadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var tableViewBottomToSyncViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableViewBottomToProceedButtonConstraint: NSLayoutConstraint!
+    @IBOutlet var syncContainerHeightZero: NSLayoutConstraint!
+    @IBOutlet var tableViewBottomToSyncViewConstraint: NSLayoutConstraint!
+    @IBOutlet var tableViewBottomToProceedButtonConstraint: NSLayoutConstraint!
     
     // MARK: - Object
     
@@ -152,6 +152,10 @@ class FormListViewController: MVViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
         retryButton.isHidden = true
+
+        syncContainerHeightZero.isActive = false
+        tableViewBottomToSyncViewConstraint.isActive = true
+        
     }
     
     fileprivate func configureSyncContainer() {
@@ -163,6 +167,7 @@ class FormListViewController: MVViewController {
     
     fileprivate func configureProceedButton() {
         tableViewBottomToProceedButtonConstraint.isActive = true
+        syncContainerHeightZero.isActive = false
         proceedButton.setTitle("Button_Continue".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(proceedButtonTouched(sender:)), for: .touchUpInside)
     }
@@ -205,6 +210,7 @@ class FormListViewController: MVViewController {
 
     fileprivate func setSyncContainer(hidden: Bool) {
         syncContainerHeightZero.isActive = hidden
+        tableViewBottomToSyncViewConstraint.isActive = hidden
         view.layoutIfNeeded()
     }
 
@@ -237,7 +243,6 @@ class FormListViewController: MVViewController {
     }
     
     fileprivate func continueToNote() {
-        #warning("check this when it hits breakpoint")
         AppRouter.shared.openAddNote()
     }
     

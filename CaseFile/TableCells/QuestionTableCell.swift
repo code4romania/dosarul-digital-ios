@@ -41,6 +41,7 @@ class QuestionTableCell: UITableViewCell {
     func update(withModel model: QuestionCellModel) {
         codeLabel.text = model.questionCode.uppercased()
         editIcon.isHidden = !model.hasNoteAttached
+        editIcon.image = model.isNoteSynced ? #imageLiteral(resourceName: "icon-note-sync") : #imageLiteral(resourceName: "icon-note-unsync")
         checkIcon.isHidden = !model.isAnswered
         checkIcon.image = model.isSynced ? #imageLiteral(resourceName: "icon-check") : #imageLiteral(resourceName: "icon-check-greyed")
         questionTextLabel.text = model.questionText + (model.isMandatory ? "*" : "")

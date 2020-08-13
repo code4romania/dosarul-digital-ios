@@ -14,6 +14,7 @@ struct QuestionCellModel {
     var questionText: String
     var isAnswered: Bool
     var isSynced: Bool
+    var isNoteSynced: Bool
     var hasNoteAttached: Bool
     var isMandatory: Bool
 }
@@ -78,17 +79,27 @@ class QuestionListViewModel: NSObject {
         return sections[section].questions.map { questionResponse -> QuestionCellModel in
             let stored = mappedQuestions[questionResponse.id]
             var answer: Answer?
+            var hasNotes = false
+            var allNotesSynced = false
             if let currentBeneficiary = ApplicationData.shared.beneficiary {
-                let beneficiaryPredicate = NSPredicate(format: "beneficiary == %@", currentBeneficiary)
+                let beneficiaryPredicate = NSPredicate(format: "beneficiary == %@ AND question.id == %d", currentBeneficiary, questionResponse.id)
                 answer = stored?.answers?.filtered(using: beneficiaryPredicate).first as? Answer
+
+                let beneficiaryNotes = currentBeneficiary.notes?.allObjects as? [Note]
+                if let questionNotes = beneficiaryNotes?.filter({ Int($0.questionID) == questionResponse.id }) {
+                    hasNotes = questionNotes.count > 0
+                    allNotesSynced = questionNotes.allSatisfy({ $0.synced })
+                }
             }
+            
             return QuestionCellModel(
                 questionId: questionResponse.id,
                 questionCode: questionResponse.code,
                 questionText: questionResponse.text,
                 isAnswered: answer != nil,
                 isSynced: answer?.synced ?? false,
-                hasNoteAttached: stored?.note != nil,
+                isNoteSynced: allNotesSynced,
+                hasNoteAttached: hasNotes,
                 isMandatory: questionResponse.isMandatory)
         }
     }

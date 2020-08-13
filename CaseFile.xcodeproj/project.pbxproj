@@ -150,6 +150,7 @@
 		759892022497E99E00106BDF /* AddPatientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 759891FE2497E99E00106BDF /* AddPatientViewController.xib */; };
 		759892032497E99E00106BDF /* AddPatientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 759891FE2497E99E00106BDF /* AddPatientViewController.xib */; };
 		759892042497E99E00106BDF /* AddPatientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 759891FE2497E99E00106BDF /* AddPatientViewController.xib */; };
+		75AF4FE124E5DD5600E7559E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AF4FE024E5DD5600E7559E /* Math.swift */; };
 		75B22E172498146100AD6BA8 /* PatientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B22E162498146100AD6BA8 /* PatientViewModel.swift */; };
 		75B22E1A2498195100AD6BA8 /* FormTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B22E182498195100AD6BA8 /* FormTextCell.swift */; };
 		75B22E1B2498195100AD6BA8 /* FormTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75B22E192498195100AD6BA8 /* FormTextCell.xib */; };
@@ -500,6 +501,7 @@
 		759891FB2497E09800106BDF /* CitiesResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CitiesResponse.json; sourceTree = "<group>"; };
 		759891FD2497E99E00106BDF /* AddPatientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPatientViewController.swift; sourceTree = "<group>"; };
 		759891FE2497E99E00106BDF /* AddPatientViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPatientViewController.xib; sourceTree = "<group>"; };
+		75AF4FE024E5DD5600E7559E /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		75B22E162498146100AD6BA8 /* PatientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewModel.swift; sourceTree = "<group>"; };
 		75B22E182498195100AD6BA8 /* FormTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextCell.swift; sourceTree = "<group>"; };
 		75B22E192498195100AD6BA8 /* FormTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormTextCell.xib; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				28DBDAA3236EE26D004EAD83 /* UIViewController+Helpers.swift */,
 				271595B421465EBA00BECC9C /* String+Localization.swift */,
 				75EEA498247C57080048CC07 /* String+Validation.swift */,
+				75AF4FE024E5DD5600E7559E /* Math.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				28FB66B423699D7400336DBA /* TextEntryViewController.swift in Sources */,
 				28E7245C233F59260096454D /* PatientHUDViewController.swift in Sources */,
 				271595B521465EBA00BECC9C /* String+Localization.swift in Sources */,
+				75AF4FE124E5DD5600E7559E /* Math.swift in Sources */,
 				7535046724DC349C0067BFF4 /* FormSummaryTableCell.swift in Sources */,
 				286D3869236439990091B23F /* QuestionListViewModel.swift in Sources */,
 				75D0848E248560900034499D /* OnboardingViewController.swift in Sources */,

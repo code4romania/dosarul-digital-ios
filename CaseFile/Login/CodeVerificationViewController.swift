@@ -146,7 +146,12 @@ class CodeVerificationViewController: MVViewController {
     }
     
     func proceedToNextScreen() {
-        navigationController?.pushViewController(ResetPasswordViewController(), animated: true)
+        if AccountManager.shared.firstLogin ?? false {
+            navigationController?.pushViewController(ResetPasswordViewController(), animated: true)
+        } else {
+            OnboardingViewModel.shouldShowWelcome = true
+            AppRouter.shared.showAppEntry(animated: true)
+        }
     }
 }
 

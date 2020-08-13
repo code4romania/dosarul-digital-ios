@@ -76,6 +76,7 @@ class LoginViewModel: NSObject {
                 AccountManager.shared.email = user?.email
                 AccountManager.shared.accessToken = user?.accessToken
                 AccountManager.shared.expiresIn = user?.expiresIn
+                AccountManager.shared.firstLogin = user?.firstLogin
                 callback(nil)
             }
             self.isLoading = false

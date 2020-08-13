@@ -110,12 +110,14 @@ struct LoginResponse: Codable {
     var email: String?
     var accessToken: String?
     var expiresIn: Int?
+    var firstLogin: Bool?
     var error: String?
 
     enum CodingKeys: String, CodingKey {
         case email
         case accessToken = "access_token"
         case expiresIn = "expires_in"
+        case firstLogin = "first_login"
         case error
     }
 }
@@ -297,14 +299,16 @@ struct FormBeneficiaryResponse: Codable {
     var code: String
     var totalQuestionsNo: Int
     var questionsAnsweredNo: Int
+    var userName: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "formId"
-        case completionDate
+        case completionDate = "date"
         case description
         case code
         case totalQuestionsNo
         case questionsAnsweredNo
+        case userName
     }
 }
 

@@ -197,8 +197,11 @@ class DB: NSObject {
     }
     
     func getUnsyncedQuestions() -> [Question] {
+        guard let currentUser = currentUser() else {
+            return []
+        }
         let request: NSFetchRequest<Question> = Question.fetchRequest()
-        let syncedPredicate = NSPredicate(format: "ANY answers.synced == false")
+        let syncedPredicate = NSPredicate(format: "ANY answers.synced == false AND ANY answers.beneficiary.user == %@", currentUser)
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [syncedPredicate])
         let unsyncedQuestions = CoreData.fetch(request) as? [Question]
         return unsyncedQuestions ?? []
@@ -317,64 +320,3 @@ class DB: NSObject {
     }
     
 }
-
-/*
-extension DB {
-    func udpateBeneficiary(_ beneficiary: inout Beneficiary, with response: BeneficiaryResponse) {
-        beneficiary.userId = response.userId ?? beneficiary.userId
-        beneficiary.id = response.id
-        beneficiary.name = response.name
-        beneficiary.civilStatus = response.civilStatus
-        beneficiary.birthDate = response.birthDate
-        beneficiary.age = response.age ?? beneficiary.age
-        beneficiary.county = response.county ?? beneficiary.county
-        beneficiary.countyId = response.countyId ?? beneficiary.countyId
-        beneficiary.cityId = response.cityId ?? beneficiary.cityId
-        beneficiary.gender = response.gender ?? beneficiary.gender
-        #warning("process family members and forms")
-        /**
- var userId: Int16?                      // received on /api/v1/beneficiary/{id}
-        var id: Int16                           // always received
-        var name: String                        // always received
-        var civilStatus: Int16                  // always received
-        var birthDate: Date?                    // received on /api/v1/beneficiary/{id}
-        var age: Int16?                         // received on /api/v1/beneficiary
-        var county: String?                     // received on /api/v1/beneficiary
-        var city: String?                       // received on /api/v1/beneficiary
-        var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
-        var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
-        var gender: Int16?                      // always received
-        var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
-        var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
- */
-    }
-    
-    func beneficiaryRequest(from beneficiary: Beneficiary) -> BeneficiaryRequest {
-        let beneficiaryRequest = BeneficiaryRequest(id: Int(beneficiary.id),
-                                                    userId: Int(beneficiary.userId),
-                                                    name: beneficiary.name,
-                                                    birthDate: beneficiary.birthDate,
-                                                    civilStatus: CivilStatus(rawValue: Int(beneficiary.civilStatus))!,
-                                                    cityId: Int(beneficiary.cityId),
-                                                    countyId: Int(beneficiary.countyId),
-                                                    gender: Gender(Int(beneficiary.gender)),
-                                                    formIds: formsArray.compactMap({
-                                                        ($0 as? FormSetCellModel)?.id
-                                                    }),
-                                                    newAllocatedFormsIds: nil,
-                                                    dealocatedFormsIds: nil)
-        beneficiary.birthDate = model.birthDate
-        beneficiary.cityId = Int(model.cityId)
-        beneficiary.countyId = Int(model.countyId)
-        beneficiary.id = Int(model.id)
-        beneficiary.name = model.name
-        beneficiary.userId = Int(model.userId)
-        if let civilStatus = CivilStatus(rawValue: Int(model.civilStatus)) {
-            beneficiary.civilStatus = civilStatus
-        }
-        if let gender = Gender(rawValue: Int(model.gender)) {
-            beneficiary.gender = gender
-        }
-    }
-}
-*/

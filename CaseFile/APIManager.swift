@@ -422,7 +422,9 @@ class APIManager: NSObject, APIManagerType {
         let url = ApiURL.uploadAnswer.url()
         let auth = authorizationHeaders()
         let headers = requestHeaders(withAuthHeaders: auth)
-        let body = try! JSONEncoder().encode(answers)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(self.apiDateFormatter)
+        let body = try! encoder.encode(answers)
         
         Alamofire
             .upload(body, to: url, method: .post, headers: headers)

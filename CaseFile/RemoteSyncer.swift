@@ -103,25 +103,34 @@ class RemoteSyncer: NSObject {
     }
 
     func uploadUnsyncedQuestions(then callback: @escaping (RemoteSyncerError?) -> Void) {
-        let beneficiary: Beneficiary!
         let questions = DB.shared.getUnsyncedQuestions()
         var answers: [AnswerRequest] = []
+        var answerRequestsByFormId = [Int: [AnswerRequest]]()
+        var fillDates = [Int: Date]()
         for question in questions {
-            var answerRequests: [AnswerOptionRequest] = []
+            var answerRequestsByBeneficiaryId = [Int: [AnswerOptionRequest]]()
             if let questionAnswers = question.answers?.allObjects as? [Answer] {
                 for qAnswer in questionAnswers {
-                    guard qAnswer.selected else { continue }
+                    guard let beneficiaryId = qAnswer.beneficiary?.id, qAnswer.selected else { continue }
                     // TODO: what should be sent, text or inputText as the value?
                     let option = AnswerOptionRequest(id: Int(qAnswer.id), value: qAnswer.inputText)
-                    answerRequests.append(option)
+                    if answerRequestsByBeneficiaryId[Int(beneficiaryId)] == nil {
+                        answerRequestsByBeneficiaryId[Int(beneficiaryId)] = []
+                    }
+                    answerRequestsByBeneficiaryId[Int(beneficiaryId)]?.append(option)
+                    if let fillDate = qAnswer.fillDate, fillDates[Int(question.formId)] == nil {
+                        fillDates[Int(question.formId)] = fillDate
+                    }
                 }
             }
-            #warning("set beneficiary id")
-            let answer = AnswerRequest(
-                questionId: Int(question.id),
-                beneficiaryId: 0,
-                options: answerRequests)
-            answers.append(answer)
+            for (beneficiaryId, answerRequest) in answerRequestsByBeneficiaryId {
+                let answer = AnswerRequest(
+                    questionId: Int(question.id),
+                    beneficiaryId: beneficiaryId,
+                    options: answerRequest)
+                answers.append(answer)
+            }
+            answerRequestsByFormId[Int(question.formId)] = answers
         }
         
         guard answers.count > 0 else {
@@ -129,27 +138,28 @@ class RemoteSyncer: NSObject {
             return
         }
         
-        #warning("change formid and date")
-        let request = UploadAnswersRequest(formId: 0,
-                                           completionDate: Date(),
-                                           answers: answers)
-        DebugLog("Uploading answers for \(answers.count) questions...")
-        AppDelegate.dataSourceManager.upload(answers: request) { error in
-            if let error = error {
-                DebugLog("Uploading answers failed: \(error)")
-                callback(RemoteSyncerError.questionError(reason: error))
-            } else {
-                DebugLog("Uploaded answers.")
-                
-                // update the questions sync status
-                self.markQuestionsAsSynced(usingAnswers: answers)
-                
-                // notify any interested objects
-                NotificationCenter.default.post(name: RemoteSyncer.answersSyncedNotification,
-                                                object: self,
-                                                userInfo: [RemoteSyncer.notificationAnswersKey: answers])
-                
-                callback(nil)
+        for (formId, answers) in answerRequestsByFormId {
+            let request = UploadAnswersRequest(formId: formId,
+                                               completionDate: fillDates[formId],
+                                               answers: answers)
+            DebugLog("Uploading answers for \(answers.count) questions...")
+            AppDelegate.dataSourceManager.upload(answers: request) { error in
+                if let error = error {
+                    DebugLog("Uploading answers failed: \(error)")
+                    callback(RemoteSyncerError.questionError(reason: error))
+                } else {
+                    DebugLog("Uploaded answers.")
+                    
+                    // update the questions sync status
+                    self.markQuestionsAsSynced(usingAnswers: answers)
+                    
+                    // notify any interested objects
+                    NotificationCenter.default.post(name: RemoteSyncer.answersSyncedNotification,
+                                                    object: self,
+                                                    userInfo: [RemoteSyncer.notificationAnswersKey: answers])
+                    
+                    callback(nil)
+                }
             }
         }
     }

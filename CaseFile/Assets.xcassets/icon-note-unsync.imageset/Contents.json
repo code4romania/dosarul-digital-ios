@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-sync.png",
+      "filename" : "saved local.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-sync@2x.png",
+      "filename" : "saved local@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-sync@3x.png",
+      "filename" : "saved local@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

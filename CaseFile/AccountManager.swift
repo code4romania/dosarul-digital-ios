@@ -20,6 +20,9 @@ protocol AccountManagerType: NSObject {
     /// The user's email
     var email: String? { get set }
     
+    /// First login
+    var firstLogin: Bool? { get set }
+    
     func logout()
 }
 
@@ -70,9 +73,12 @@ class AccountManager: NSObject, AccountManagerType {
         }
     }
     
+    var firstLogin: Bool?
+    
     func logout() {
         accessToken = nil
         email = nil
         expiresIn = nil
+        firstLogin = nil
     }
 }

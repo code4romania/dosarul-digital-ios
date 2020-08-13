@@ -74,10 +74,12 @@ class QuestionAnswerViewModel: NSObject {
             
             // Logic is based on the first answer found for the form and beneficiary. We assume that all other answers for the same form and beneficiary have the same synchronization status since they're performed in the same API call.
             var firstAnswer: Answer?
-            if let beneficiary = ApplicationData.shared.beneficiary,
-            question?.answers != nil {
+            var hasNotes = false
+            if let beneficiary = ApplicationData.shared.beneficiary, question?.answers != nil {
                 let answeredByBeneficiaryPredicate = NSPredicate(format: "beneficiary = %@", beneficiary)
                 firstAnswer = question!.answers!.filtered(using: answeredByBeneficiaryPredicate).first as? Answer
+                let notes = beneficiary.notes?.allObjects as? [Note]
+                hasNotes = notes?.filter({ Int($0.questionID) == questionMeta.id }).count ?? 0 > 0
             }
             let options = questionMeta.options
 
@@ -90,8 +92,6 @@ class QuestionAnswerViewModel: NSObject {
             let mappedAnswers = storedAnswers
                 .filter({ $0.beneficiary != nil && $0.beneficiary == ApplicationData.shared.beneficiary })
                 .reduce(into: [Int: Answer]()) { $0[Int($1.id)] = $1 }
-            
-            let isNoteAttached = question?.note != nil
 
             var answerModels: [QuestionAnswerCellModel.AnswerModel] = []
             for optionMeta in options {
@@ -112,7 +112,7 @@ class QuestionAnswerViewModel: NSObject {
                 type: questionMeta.questionType,
                 acceptsMultipleAnswers: acceptsMultipleAnswers,
                 questionAnswers: answerModels,
-                isNoteAttached: isNoteAttached,
+                isNoteAttached: hasNotes,
                 isSaved: firstAnswer != nil,
                 isSynced: firstAnswer?.synced == true,
                 isMandatory: questionMeta.isMandatory)
