@@ -344,7 +344,7 @@ struct QuestionResponse: Codable {
     var text: String
     var hint: String?
     var isMandatory: Bool
-    var charsNo: Int?
+    var numberOfCharacters: Int?
     var options: [QuestionOptionResponse]
     
     enum CodingKeys: String, CodingKey {
@@ -354,6 +354,7 @@ struct QuestionResponse: Codable {
         case text
         case hint
         case isMandatory
+        case numberOfCharacters = "charsNo"
         case options = "optionsToQuestions"
     }
 }

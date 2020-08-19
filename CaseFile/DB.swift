@@ -262,8 +262,8 @@ class DB: NSObject {
         }
         var result = [Answer]()
         for answer in answers {
-            guard let formId = answer.question?.sectionInfo?.form?.id,
-                Int(formId) == formId else {
+            guard let storedFormId = answer.question?.sectionInfo?.form?.id,
+                Int(storedFormId) == formId else {
                     continue
             }
             result.append(answer)

@@ -33,10 +33,6 @@ class QuestionTableCell: UITableViewCell {
         selectedBackgroundView = UIView(frame: .zero)
         selectedBackgroundView?.backgroundColor = .clear
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        selectedView.alpha = selected ? 1 : 0
-    }
     
     func update(withModel model: QuestionCellModel) {
         codeLabel.text = model.questionCode.uppercased()

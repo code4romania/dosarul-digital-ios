@@ -88,6 +88,9 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
                 group.leave()
             }
             
+            // get answers
+            
+            // get notes
             
             group.notify(queue: DispatchQueue.main) {
                 completion?(downloadError)

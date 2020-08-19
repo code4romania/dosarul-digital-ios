@@ -32,6 +32,7 @@ struct QuestionAnswerCellModel {
     var isSaved: Bool
     var isSynced: Bool
     var isMandatory: Bool
+    var numberOfCharacters: Int?
     
     mutating func setIsNoteAttached(_ attached: Bool) { isNoteAttached = attached }
     mutating func setIsSaved(_ isSaved: Bool) { self.isSaved = isSaved }
@@ -115,13 +116,14 @@ class QuestionAnswerViewModel: NSObject {
                 isNoteAttached: hasNotes,
                 isSaved: firstAnswer != nil,
                 isSynced: firstAnswer?.synced == true,
-                isMandatory: questionMeta.isMandatory)
+                isMandatory: questionMeta.isMandatory,
+                numberOfCharacters: questionMeta.numberOfCharacters)
             models.append(model)
         }
         self.questions = models
     }
     
-    fileprivate func setCurrentIndex(withQuestionId questionId: Int) {
+    func setCurrentIndex(withQuestionId questionId: Int) {
         currentQuestionIndex = questions.firstIndex(where: { $0.questionId == questionId }) ?? 0
     }
     

@@ -31,4 +31,8 @@ extension Date {
     func toString() -> String {
         return DateFormatter.defaultDateFormatter.string(from: self)
     }
+    
+    func toString(dateFormatter: DateFormatter) -> String {
+        return dateFormatter.string(from: self)
+    }
 }

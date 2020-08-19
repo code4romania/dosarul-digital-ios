@@ -57,6 +57,7 @@ extension UIColor {
 
     static var textViewContainerBorder = UIColor(hexCode: 0xDDDDDD)
     static var textViewContainerBg = UIColor(hexCode: 0xFCFCFC)
+    static var textViewContainerSolidBorder = UIColor(hexCode: 0x333E48).withAlphaComponent(0.3)
     
     static var cn_lightGray = UIColor(hexCode: 0x989898)
     static var cn_lightBlue = UIColor(hexCode: 0x3468EF)

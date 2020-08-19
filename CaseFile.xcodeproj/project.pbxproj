@@ -151,6 +151,7 @@
 		759892032497E99E00106BDF /* AddPatientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 759891FE2497E99E00106BDF /* AddPatientViewController.xib */; };
 		759892042497E99E00106BDF /* AddPatientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 759891FE2497E99E00106BDF /* AddPatientViewController.xib */; };
 		75AF4FE124E5DD5600E7559E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AF4FE024E5DD5600E7559E /* Math.swift */; };
+		75AF50C024EC1D8F00E7559E /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AF50BF24EC1D8E00E7559E /* TextView.swift */; };
 		75B22E172498146100AD6BA8 /* PatientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B22E162498146100AD6BA8 /* PatientViewModel.swift */; };
 		75B22E1A2498195100AD6BA8 /* FormTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B22E182498195100AD6BA8 /* FormTextCell.swift */; };
 		75B22E1B2498195100AD6BA8 /* FormTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75B22E192498195100AD6BA8 /* FormTextCell.xib */; };
@@ -502,6 +503,7 @@
 		759891FD2497E99E00106BDF /* AddPatientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPatientViewController.swift; sourceTree = "<group>"; };
 		759891FE2497E99E00106BDF /* AddPatientViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddPatientViewController.xib; sourceTree = "<group>"; };
 		75AF4FE024E5DD5600E7559E /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		75AF50BF24EC1D8E00E7559E /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		75B22E162498146100AD6BA8 /* PatientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewModel.swift; sourceTree = "<group>"; };
 		75B22E182498195100AD6BA8 /* FormTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextCell.swift; sourceTree = "<group>"; };
 		75B22E192498195100AD6BA8 /* FormTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormTextCell.xib; sourceTree = "<group>"; };
@@ -874,6 +876,14 @@
 			name = Forms;
 			sourceTree = "<group>";
 		};
+		75AF50BE24EC1D6900E7559E /* Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				75AF50BF24EC1D8E00E7559E /* TextView.swift */,
+			);
+			path = Inputs;
+			sourceTree = "<group>";
+		};
 		E7E1F2C21DDB586100CE52FC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,6 +1013,7 @@
 		EF4BD3E21D9E64F30042BEC7 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				75AF50BE24EC1D6900E7559E /* Inputs */,
 				28C3639323646D300084065C /* TableHeaders */,
 				28FB66A6236706A600336DBA /* CollectionCells */,
 				289E1E89235F2AA2000C92A0 /* TableCells */,
@@ -1424,6 +1435,7 @@
 				EF4BD3921D9D08DE0042BEC7 /* s.xcdatamodeld in Sources */,
 				28C3638F2364512E0084065C /* QuestionTableCell.swift in Sources */,
 				281A4B8E236D7B90001AD277 /* LoginViewModel.swift in Sources */,
+				75AF50C024EC1D8F00E7559E /* TextView.swift in Sources */,
 				28104130236B5CA500B7422C /* AttachNoteViewController.swift in Sources */,
 				75B22E172498146100AD6BA8 /* PatientViewModel.swift in Sources */,
 				7501A93624ADFCDB00E4F85B /* User+CoreDataClass.swift in Sources */,

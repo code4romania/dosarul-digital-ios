@@ -58,8 +58,6 @@ class FormSetTableCell: UITableViewCell {
     fileprivate func updateSelectionState(selected: Bool) {
         switch selectionType {
         case .fillForm:
-            cardContainer.backgroundColor = selected ?
-                UIColor.cardBackgroundSelected : UIColor.cardBackground
             selectionView.isHidden = true
         case .selectForm:
             selectionView.isHidden = !selected

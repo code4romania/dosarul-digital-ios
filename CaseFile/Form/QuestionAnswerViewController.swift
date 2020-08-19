@@ -83,7 +83,6 @@ class QuestionAnswerViewController: MVViewController {
             NotificationCenter.default.post(name: QuestionAnswerViewController.questionSavedNotification, object: nil)
             self?.updateInterface()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(handleOrientationChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     fileprivate func localize() {
@@ -104,6 +103,7 @@ class QuestionAnswerViewController: MVViewController {
     }
     
     func handleQuestionChanged() {
+        self.view.endEditing(false)
         updateCurrentQuestionRelatedElements()
         let currentPage = getDisplayedRow()
         if currentPage != lastViewedQuestionIndex
@@ -112,6 +112,7 @@ class QuestionAnswerViewController: MVViewController {
             lastViewedQuestionIndex = currentPage
 
             let question = model.questions[currentPage]
+            model.setCurrentIndex(withQuestionId: question.questionId)
             NotificationCenter.default.post(name: QuestionAnswerViewController.questionChangedNotification,
                                             object: self,
                                             userInfo: [QuestionAnswerViewController.questionUserInfoKey: question])
@@ -149,7 +150,30 @@ class QuestionAnswerViewController: MVViewController {
     
     // MARK: - Actions
     
-    func handleAnswer(ofQuestion question: QuestionAnswerCellModel, answerIndex: Int) {
+    func handleAnswer(ofQuestion question: QuestionAnswerCellModel, answerIndex: Int, answerText: String?) {
+        // handle new added types
+        switch question.type {
+        case .date:
+            askForDate(ofQuestion: question, answerIndex: answerIndex) { date in
+                self.model.updateUserText(ofQuestion: question,
+                                          answerIndex: answerIndex,
+                                          userText: date?.toString(dateFormatter: APIManager.shared.apiDateFormatter))
+                self.updateInterface()
+                NotificationCenter.default.post(name: QuestionAnswerViewController.questionSavedNotification, object: nil)
+            }
+            return
+        case .number:
+            fallthrough
+        case .text:
+            self.model.updateUserText(ofQuestion: question,
+                                      answerIndex: answerIndex,
+                                      userText: answerText)
+            self.updateInterface()
+            NotificationCenter.default.post(name: QuestionAnswerViewController.questionSavedNotification, object: nil)
+            return
+        default:
+            break
+        }
         // then, if it requires free text and the answer was not selected already, ask for it
         if question.questionAnswers[answerIndex].isFreeText
             && !question.questionAnswers[answerIndex].isSelected {
@@ -173,7 +197,8 @@ class QuestionAnswerViewController: MVViewController {
         navigationController?.pushViewController(noteController, animated: true)
     }
     
-    func askForText(ofQuestion question: QuestionAnswerCellModel, answerIndex: Int,
+    func askForText(ofQuestion question: QuestionAnswerCellModel,
+                    answerIndex: Int,
                     then completion: @escaping (String?) -> Void) {
         
         let textEntry = TextEntryViewController(nibName: "TextEntryViewController", bundle: nil)
@@ -184,6 +209,32 @@ class QuestionAnswerViewController: MVViewController {
             navigation.modalPresentationStyle = .formSheet
         }
         present(navigation, animated: true, completion: nil)
+    }
+    
+    func askForDate(ofQuestion question: QuestionAnswerCellModel,
+                    answerIndex: Int,
+                    then completion: @escaping (Date?) -> Void) {
+        var selectedDate: Date?
+        if let selected = question.questionAnswers[answerIndex].userText {
+            selectedDate = APIManager.shared.apiDateFormatter.date(from: selected)
+        }
+        let pickerModel = TimePickerViewModel(withTime: selectedDate, dateFormatter: DateFormatter.defaultDateFormatter)
+        let picker = TimePickerViewController(withModel: pickerModel)
+        picker.onCompletion = { [weak self] value in
+            completion(value)
+            self?.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
+        
+        
+//        let textEntry = TextEntryViewController(nibName: "TextEntryViewController", bundle: nil)
+//        textEntry.initialText = question.questionAnswers[answerIndex].userText
+//        textEntry.onClose = completion
+//        let navigation = UINavigationController(rootViewController: textEntry)
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            navigation.modalPresentationStyle = .formSheet
+//        }
+//        present(navigation, animated: true, completion: nil)
     }
     
     @IBAction func handleGoPrevious(_ sender: Any) {
@@ -220,15 +271,6 @@ class QuestionAnswerViewController: MVViewController {
                                         userInfo: [QuestionAnswerViewController.questionUserInfoKey: question])
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
-    
-    @objc func handleOrientationChange() {
-        collectionView.alpha = 0
-        DispatchQueue.main.async {
-            self.updateInterface()
-            self.scrollToCurrentIndex()
-            self.collectionView.alpha = 1
-        }
-    }
 }
 
 
@@ -246,7 +288,11 @@ extension QuestionAnswerViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! QuestionCollectionCell
         let question = model.questions[indexPath.row]
         cell.update(withModel: question)
-        cell.onAnswerSelection = { self.handleAnswer(ofQuestion: $0, answerIndex: $1) }
+        cell.onAnswerSelection = { self.handleAnswer(ofQuestion: $0, answerIndex: $1, answerText: nil) }
+        cell.onAnswerText = { (model, index, text) in
+            model.questionAnswers[0].userText = text
+            self.handleAnswer(ofQuestion: model, answerIndex: index, answerText: text)
+        }
         cell.onAddNote = { self.handleAddNote(toQuestion: $0) }
         return cell
     }
