@@ -1,0 +1,259 @@
+{
+    "200": [
+      {
+        "name": "ALBA",
+        "code": "AB",
+        "countyId": 24,
+        "order": 0
+      },
+      {
+        "name": "ARAD",
+        "code": "AR",
+        "countyId": 1,
+        "order": 0
+      },
+      {
+        "name": "ARGES",
+        "code": "AG",
+        "countyId": 25,
+        "order": 0
+      },
+      {
+        "name": "BACAU",
+        "code": "BC",
+        "countyId": 26,
+        "order": 0
+      },
+      {
+        "name": "BIHOR",
+        "code": "BH",
+        "countyId": 27,
+        "order": 0
+      },
+      {
+        "name": "BISTRITA-NASAUD",
+        "code": "BN",
+        "countyId": 28,
+        "order": 0
+      },
+      {
+        "name": "BOTOSANI",
+        "code": "BT",
+        "countyId": 29,
+        "order": 0
+      },
+      {
+        "name": "BRAILA",
+        "code": "BR",
+        "countyId": 31,
+        "order": 0
+      },
+      {
+        "name": "BRASOV",
+        "code": "BV",
+        "countyId": 30,
+        "order": 0
+      },
+      {
+        "name": "BUCURESTI",
+        "code": "B",
+        "countyId": 6,
+        "order": 0
+      },
+      {
+        "name": "BUZAU",
+        "code": "BZ",
+        "countyId": 33,
+        "order": 0
+      },
+      {
+        "name": "CALARASI",
+        "code": "CL",
+        "countyId": 34,
+        "order": 0
+      },
+      {
+        "name": "CARAS-SEVERIN",
+        "code": "CS",
+        "countyId": 42,
+        "order": 0
+      },
+      {
+        "name": "CLUJ",
+        "code": "CJ",
+        "countyId": 35,
+        "order": 0
+      },
+      {
+        "name": "CONSTANTA",
+        "code": "CT",
+        "countyId": 36,
+        "order": 0
+      },
+      {
+        "name": "COVASNA",
+        "code": "CV",
+        "countyId": 37,
+        "order": 0
+      },
+      {
+        "name": "DÂMBOVITA",
+        "code": "DB",
+        "countyId": 38,
+        "order": 0
+      },
+      {
+        "name": "DOLJ",
+        "code": "DJ",
+        "countyId": 39,
+        "order": 0
+      },
+      {
+        "name": "GALATI",
+        "code": "GL",
+        "countyId": 40,
+        "order": 0
+      },
+      {
+        "name": "GIURGIU",
+        "code": "GR",
+        "countyId": 41,
+        "order": 0
+      },
+      {
+        "name": "GORJ",
+        "code": "GJ",
+        "countyId": 23,
+        "order": 0
+      },
+      {
+        "name": "HARGHITA",
+        "code": "HR",
+        "countyId": 32,
+        "order": 0
+      },
+      {
+        "name": "HUNEDOARA",
+        "code": "HD",
+        "countyId": 22,
+        "order": 0
+      },
+      {
+        "name": "IALOMITA",
+        "code": "IL",
+        "countyId": 10,
+        "order": 0
+      },
+      {
+        "name": "IASI",
+        "code": "IS",
+        "countyId": 2,
+        "order": 0
+      },
+      {
+        "name": "ILFOV",
+        "code": "IF",
+        "countyId": 3,
+        "order": 0
+      },
+      {
+        "name": "MARAMURES",
+        "code": "MM",
+        "countyId": 4,
+        "order": 0
+      },
+      {
+        "name": "MEHEDINTI",
+        "code": "MH",
+        "countyId": 5,
+        "order": 0
+      },
+      {
+        "name": "MURES",
+        "code": "MS",
+        "countyId": 7,
+        "order": 0
+      },
+      {
+        "name": "NEAMT",
+        "code": "NT",
+        "countyId": 8,
+        "order": 0
+      },
+      {
+        "name": "OLT",
+        "code": "OT",
+        "countyId": 9,
+        "order": 0
+      },
+      {
+        "name": "PRAHOVA",
+        "code": "PH",
+        "countyId": 11,
+        "order": 0
+      },
+      {
+        "name": "SALAJ",
+        "code": "SJ",
+        "countyId": 12,
+        "order": 0
+      },
+      {
+        "name": "SATU MARE",
+        "code": "SM",
+        "countyId": 20,
+        "order": 0
+      },
+      {
+        "name": "SIBIU",
+        "code": "SB",
+        "countyId": 13,
+        "order": 0
+      },
+      {
+        "name": "SUCEAVA",
+        "code": "SV",
+        "countyId": 14,
+        "order": 0
+      },
+      {
+        "name": "TELEORMAN",
+        "code": "TR",
+        "countyId": 15,
+        "order": 0
+      },
+      {
+        "name": "TIMIS",
+        "code": "TM",
+        "countyId": 16,
+        "order": 0
+      },
+      {
+        "name": "TULCEA",
+        "code": "TL",
+        "countyId": 17,
+        "order": 0
+      },
+      {
+        "name": "VÂLCEA",
+        "code": "VL",
+        "countyId": 19,
+        "order": 0
+      },
+      {
+        "name": "VASLUI",
+        "code": "VS",
+        "countyId": 18,
+        "order": 0
+      },
+      {
+        "name": "VRANCEA",
+        "code": "VN",
+        "countyId": 21,
+        "order": 0
+      }
+    ],
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

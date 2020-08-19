@@ -1,0 +1,25 @@
+{
+    "200": {
+        "formVersions": [
+            {
+                "id": 1,
+                "code": "A",
+                "description": "Description A",
+                "currentVersion": 1,
+                "date": "01.01.0001",
+                "userName": "Testing Casefile"
+            },
+            {
+                "id": 7,
+                "code": "FR",
+                "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
+                "currentVersion": 1,
+                "date": "17.07.2020",
+                "userName": "Testing Casefile"
+            }
+        ]
+    },
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

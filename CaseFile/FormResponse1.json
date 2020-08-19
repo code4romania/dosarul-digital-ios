@@ -1,0 +1,131 @@
+{
+    
+    "200": [
+        {
+            "sectionId": 1,
+            "title": "AB",
+            "description": "Description of another section",
+            "questions": [
+                {
+                    "questionId": 1,
+                    "code": "Q1",
+                    "sectionId": 1,
+                    "questionType": 1,
+                    "text": "1: Iti place sportul? (se alege o singura optiune selectabila)",
+                    "hint": null,
+                    "isMandatory": false,
+                    "optionsToQuestions": [
+                        {
+                            "idOption": 1,
+                            "text": "Metrou",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 2,
+                            "text": "Altele (specificaţi)",
+                            "isFreeText": true
+                        },
+                        {
+                            "idOption": 3,
+                            "text": "Transmisia automatã",
+                            "isFreeText": false
+                        }
+                    ]
+                },
+                {
+                    "questionId": 2,
+                    "code": "Q2",
+                    "sectionId": 1,
+                    "questionType": 0,
+                    "text": "1: Ce tipuri de sport iti plac? (se pot alege optiuni multiple)",
+                    "hint": null,
+                    "isMandatory": false,
+                    "optionsToQuestions": [
+                        {
+                            "idOption": 4,
+                            "text": "Transmisia manualã",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 5,
+                            "text": "Inot",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 6,
+                            "text": "Nu",
+                            "isFreeText": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "sectionId": 2,
+            "title": "AC",
+            "description": "Description of section",
+            "questions": [
+                {
+                    "questionId": 3,
+                    "code": "Q3",
+                    "sectionId": 2,
+                    "questionType": 2,
+                    "text": "1: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
+                    "hint": null,
+                    "isMandatory": false,
+                    "optionsToQuestions": [
+                        {
+                            "idOption": 7,
+                            "text": "Atletism",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 8,
+                            "text": "Nu stiu",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 9,
+                            "text": "Da",
+                            "isFreeText": false
+                        }
+                    ]
+                },
+                {
+                    "questionId": 4,
+                    "code": "Q4",
+                    "sectionId": 2,
+                    "questionType": 3,
+                    "text": "1: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
+                    "hint": null,
+                    "isMandatory": false,
+                    "optionsToQuestions": [
+                        {
+                            "idOption": 10,
+                            "text": "Tramvai",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 11,
+                            "text": "Alergare",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 12,
+                            "text": "Autobuz",
+                            "isFreeText": false
+                        },
+                        {
+                            "idOption": 13,
+                            "text": "Da",
+                            "isFreeText": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

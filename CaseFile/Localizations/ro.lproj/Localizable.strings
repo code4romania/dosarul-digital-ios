@@ -1,0 +1,194 @@
+//  Created by Code4Romania
+
+"Button_Login" = "Login";
+"Button_Verify" = "Verifică";
+"Button_Resend" = "Retrimite";
+"Button_Continue" = "Continuă";
+"Button_Change" = "Schimbă";
+"Button_Urban" = "Urban";
+"Button_Rural" = "Rural";
+"Button_Male" = "Bărbat";
+"Button_Female" = "Femeie";
+"Button_ContinueToForms" = "Continuă către formulare";
+"Button_SyncData" = "Sincronizează datele manual";
+"Button_Add" = "Adaugă";
+"Button_Send" = "Trimite";
+"Button_Delete" = "Șterge";
+"Button_Settings" = "Setări";
+"Button_Retry" = "Încearcă din nou";
+"Button_AddNoteToQuestion" = "Adaugă o notă";
+"Button_Submit" = "Salvează";
+"Button_AddPhotoVideo" = "Adaugă o poză sau video";
+"Button_OnboardingNext" = "ÎNAINTE";
+"Button_OnboardingPrevious" = "ÎNAPOI";
+"Button_OnboardingStart" = "START";
+"Button_AddPatient" = "Adaugă beneficiar nou";
+"Button_FillForm" = "Completează chestionar";
+"Button_Form" = "Chestionar";
+"Button_SendFile" = "Trimite fișă";
+"Button_Edit" = "Editează";
+
+"Label_MyPatients" = "Pacienții mei";
+"Label_Info" = "Info";
+"Label_Contacts" = "Contacte rapide";
+"Label_Settings" = "Setări";
+"Label_LogOut" = "Log Out";
+
+"Label_CountyLocation" = "În ce mediu se află secția?";
+"Label_CountyPresidentGender" = "Președintele secției este";
+"Label_CountyArriveTime" = "Ora sosirii în secție";
+"Label_CountyLeaveTime" = "Ora plecării din secție";
+"Label_AddNote" = "Adaugă notă";
+"Label_Saved" = "Salvat local";
+"Label_Synced" = "Sincronizat";
+
+"Label_ChooseStation" = "Alege secția în care te afli";
+"Label_County" = "Județ / Sector";
+"Label_StationNumber" = "Numărul secției";
+"Label_SelectOption" = "Alege o opțiune";
+"Label_DevelopedBy" = "dezvoltat de";
+
+"Label_Login" = "Login";
+"Label_Login_Description" = "Introdu datele tale pentru\na accesa aplicația";
+"Label_EmailTextInput_Placeholder" = "Email";
+"Label_PasswordTextInput_Placeholder" = "Parola";
+"Label_Verify" = "Verificare";
+"Label_Verify_Description" = "Introdu codul primit pe telefon";
+"Label_Verify_Instruction" = "Nu ai primit un cod?";
+"Label_Password_Change" = "Schimbă parola";
+"Label_Password_Change_Description" = "Parola noua trebuie sa aiba minim 8 caractere, cel putin o cifra, o majuscula si un caracter special";
+"Label_Password_Change_TextInput_Placeholder" = "Noua ta parolă";
+"Label_Password_Change_Confirmation_TextInput_Placeholder" = "Rescrie parola";
+
+"Label_PatientGeneralInfo" = "Date generale";
+
+"Label_Form_Fill_Date" = "Data completării";
+
+"Label_AddNote" = "Adaugă o notă";
+"Label_TypeNote" = "Scrie o notă aici";
+"Label_EnterStation" = "Introdu numărul secției (ex: 34)";
+"Label_Empty" = "Alege o întrebare sau adaugă o notă";
+
+"Option.Gallery" = "Încarcă din galerie";
+"Option.TakePhoto" = "Folosește camera";
+"Option.RecordVideo" = "Înregistrează video";
+
+"AlertMessage_EnableCameraAccess" = "Te rugăm să accesezi setările și să ne oferi permisiuni de acces la librăria de poze.";
+"AlertMessage_NewVersion" = "O nouă versiune a aplicației este disponibilă. Te rugăm să faci update pentru a folosi cele mai recente funcționalități.";
+
+"Error_Unknown" = "A apărut o eroare necunoscută";
+"LoginError_Unknown" = "Nu te-am putut autentifica. Eroare necunoscută. Te rugăm să ne contactezi.";
+
+"Error" = "Eroare";
+"OK" = "OK";
+
+"Error.IncorrectFormat" = "Formatul răspunsului este incorect";
+"Error.Server" = "Nu am putut comunica cu serverul";
+"Error.TokenExpired" = "Autentificarea ți-a expirat. Te rog să te autentifici din nou.";
+"Error.DataDownloadFailed" = "Nu am reușit să descărcăm ultimele date. Te rugăm să încerci mai târziu.";
+"Error.SaveNoteFailed" = "Nu am reușit să salvăm nota. Te rugăm să încerci mai târziu.";
+"Error.UploadNoteFailed" = "Nu am reușit să trimitem la server nota. Vom încerca mai târziu.";
+"Error.SelectCountyFirst" = "Te rugăm să alegi județul/sectorul pentru a putea alege secția";
+"Error.IncorrectStationNumber" = "Număr secție incorect. Te rugăm să verifici corectitudinea combinației județ - număr secție";
+"Error.InternetConnection" = "Ai nevoie de o conexiune la internet pentru a te conecta!";
+
+"Info.DataNotSyncronised" = "Se pare că unele răspunsuri nu au fost sincronizate. Apasă butonul de mai jos pentru a trimite răspunsurile din nou";
+
+"Station" = "Secția";
+
+"Title.StationDetails" = "Detalii despre Secție";
+"Title.FormSetsFill" = "Toate Formularele";
+"Title.FormSetsSelect" = "Alocă chestionare";
+"Title.Question" = "Întrebarea";
+"Title.Note" = "Adaugă notă";
+"Title.NoteHistory" = "Istoricul Notelor";
+"Title.Section" = "Configurarea Secției";
+"Title.Language" = "Alege limba";
+"Title.NewVersion" = "Actualizare disponibilă";
+"Title.Patients" = "Lista beneficiari";
+"Title.Patients.Details" = "Detalii beneficiar";
+"Title.Patients.Add" = "Adăugare beneficiar nou";
+"Title.Patients.Edit" = "Editare beneficiar";
+"Title.Forms" = "Chestionare";
+
+"Next" = "Continuă";
+"Previous" = "Anterior";
+"Done" = "Gata";
+"Select" = "Selectează";
+"Cancel" = "Anulează";
+"Other" = "Altele";
+
+"Onboarding.Title" = "Bine ai venit!";
+"Onboarding.Description" = "Aplicația Case File te va ajuta să menții un jurnal de sănătate dedicat pentru fiecare dintre beneficiarii tăi.\n\nAdaugă în baza de date toate persoanele cu care vii în contact în mod regulat, pe care le ai în grijă, și completează la fiecare vizită câteva informații despre starea lor de sănătate pentru o minimă monitorizare, stocată digitală, care poate fi transferată către un doctor actunci când este cazul.\n\nÎn funcție de condiția pacientului, vei avea chestionare dedicate care să te ajute să pui întrebările corecte pentru a analiza starea sa generală.";
+"Onboarding.Continue" = "Continuă";
+
+"Onboarding.Title.Patient" = "Creează lista ta de pacienți";
+"Onboarding.Text.Patient" = "Adaugă un pacient nou și completează datele personale ale acestuia.";
+"Onboarding.Title.Forms" = "Poți completa chestionare";
+"Onboarding.Text.Forms" = "Alege din lista alocată fiecărui pacient un chestionar potrivit și răspunde la întrebări.";
+"Onboarding.Title.Notes" = "Atașează note și fotografii";
+"Onboarding.Text.Notes" = "Dacă ai de adăugat informații în plus la răspunsurile unei întrebări apasă butonul “Adaugă o notă”";
+"Onboarding.Title.Send" = "Trimite fișa pacientului pe email";
+"Onboarding.Text.Send" = "Fișa pacientului conține datele despre pacient și răspunsurile la chestionare. Apasă “Trimite fișa” și alege adresa de email a medicului curant.";
+
+"Instructions.Form.Select" = "Selectează din listă chestionarele potrivite pentru acest beneficiar";
+
+"Patients.Empty.Title" = "Lista ta e goală";
+"Patients.Empty.Description" = "Încă nu ai adăugat pacienți în listă. Începe prin a apăsa butonul “Adaugă pacient nou“";
+
+"Patients.Add.Field.Name.Title" = "Nume și prenume";
+"Patients.Add.Field.Name.Description" = "Ex. Dana Manole";
+"Patients.Add.Field.Date.Title" = "Data nașterii";
+"Patients.Add.Field.Date.Description" = "selectează data";
+"Patients.Add.Field.CivilStatus.Title" = "Stare civilă";
+"Patients.Add.Field.CivilStatus.Description" = "ex: căsătorită";
+"Patients.Add.Field.County.Title" = "Județ";
+"Patients.Add.Field.County.Description" = "ex: Arad";
+"Patients.Add.Field.City.Title" = "Localitate";
+"Patients.Add.Field.City.Description" = "ex: Aluniș";
+"Patients.Add.Field.Gender.Title" = "Gen";
+"Patients.Add.Field.Gender.Description" = "ex: feminin";
+"Patients.Add.Field.Relationship.Title" = "Relația familială";
+"Patients.Add.Field.Relationship.Description" = "ex: copil";
+
+"FamilyMembers.Title" = "Membri ai familiei";
+"FamilyMembers.Button.AddMembers" = "Adaugă";
+"FamilyMembers.Empty.Title" = "Nu există membri";
+"FamilyMembers.Empty.Description" = "Încă nu ai adaugat membri ai familiei.\nApasă butonul “Adaugă” de mai sus";
+
+"FormHistory.Title" = "Istoric evaluare beneficiar";
+"FormHistory.Empty.Title" = "Nu există istoric";
+"FormHistory.Empty.Description" = "Încă nu ai completat chestionare pentru acest beneficiar. Poți începe prin a apăsa butonul “Chestionar” de mai sus";
+
+"Notes.Title" = "Istoric note generale";
+"Notes.Button.AddNote" = "Adaugă";
+"Notes.Empty.Title" = "Nu există note";
+"Notes.Empty.Description" = "Încă nu ai adaugat note despre beneficiar.\nApasă butonul “Adaugă” de mai sus";
+
+"Patients.Summary.Age.Title" = "Vârstă";
+"Patients.Summary.CivilStatus.Title" = "Stare civilă";
+"Patients.Summary.County.Title" = "Județ";
+"Patients.Summary.City.Title" = "Localitate";
+
+"Enums.CivilStatus.NotMarried" = "Necăsătorit(ă)";
+"Enums.CivilStatus.NotMarried.Female" = "Necăsătorită";
+"Enums.CivilStatus.NotMarried.Male" = "Necăsătorit";
+"Enums.CivilStatus.Married" = "Căsătorit(ă)";
+"Enums.CivilStatus.Married.Female" = "Căsătorită";
+"Enums.CivilStatus.Married.Male" = "Căsătorit";
+"Enums.CivilStatus.Divorced" = "Divorțat(ă)";
+"Enums.CivilStatus.Divorced.Female" = "Divorțată";
+"Enums.CivilStatus.Divorced.Male" = "Divorțat";
+"Enums.CivilStatus.Widowed" = "Văduv(ă)";
+"Enums.CivilStatus.Widowed.Female" = "Văduvă";
+"Enums.CivilStatus.Widowed.Male" = "Văduv";
+
+"Enums.Gender.Female" = "Feminin";
+"Enums.Gender.Male" = "Masculin";
+
+"Validation.CountyNotSelected" = "Selectează județul";
+
+"Loading.Title.AddPatient" = "Creare beneficiar...";
+"Loading.Title.EditPatient" = "Actualizare beneficiar...";
+"Loading.Error.AddPatient" = "Eroare";
+"Loading.Success.AddPatient" = "Success";

@@ -1,48 +1,74 @@
-# Project name
+# CaseFile - iOS app
 
-[![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
+[![GitHub contributors](https://img.shields.io/github/contributors/code4romania/monitorizare-vot-ios.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ios/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/monitorizare-vot-ios.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ios/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-Insert bullets description of the project if available.
+[See the project live](https://votemonitor.org/)
 
-[See the project live](insert_link_here)
+CaseFile is a mobile app for monitoring elections by authorized observers. They can use the app in order to offer a real-time snapshot on what is going on at polling stations and they can report on any noticeable irregularities.
 
-Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
+The NGO-s with authorized observers for monitoring elections have real time access to the data the observers are transmitting therefore they can report on how voting is evolving and they can quickly signal to the authorities where issues need to be solved.
 
-[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+Moreover, where it is allowed, observers can also photograph and film specific situations and send the images to the NGO they belong to.
+
+The app also has a web version, available for every citizen who wants to report on election irregularities. Monitorizare Vot was launched in 2016 and it has been used for the Romanian parliamentary elections so far, but it is available for further use, regardless of the type of elections or voting process.
+
+[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
 ## Contributing
 
-This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
+This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
 
-Help us out by testing this project in the [staging environment](INSERT_LINK_HERE). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+__IMPORTANT:__ Please follow the Code4Romania [WORKFLOW](.github/WORKFLOW.MD)
 
-If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements. 
+## Important, before you start
+
+### Firebase
+
+This project uses Firebase for event and usage tracking and Crashlytics for crash reports. So before you start work on it, you'll need to go to your Firebase console and create an app for this project, then download its `GoogleService-Info.plist` file and copy it to the `Config` folder.
+
+### CocoaPods
+
+This project uses CocoaPods for its dependency management, so make sure you install it if you didn't already, then run a `pod install` before you build the project.
 
 ## Built With
 
-### Programming languages
+* Swift 5
+* Core Data
+* Firebase (Remote Config, Analytics, Crashlytics)
+* Alamofire
+* Reachability
 
-### Platforms
+Swagger docs for the API are available [here](https://mv-mobile-test.azurewebsites.net/swagger/index.html).
 
-### Frontend framework
+## Architecture
 
-### Package managers
+* The app is localized, meaning it's easier for any interested party to fork the project and use it in other countries, simply localizing the messages
+* The UI relies on the MvvM pattern
+* The data is stored in the local Core Data instance and is uploaded to the server using the API described above
+* In case of a faulty internet connection, the data is marked as unsynced (using the `synced` flag on interesting entities and we're automatically retrying when connection is re-established and when the user opening the app; there's also a manual sync function in the forms screen)
+* We rely on Firebase's RemoteConfig for remote settings
+* Most important events are logged using Firebase's Fabric events
+* We monitor crashes using Firebase's Crashlytics
+* The API client uses `Codable` models which are then transformed into Core Data models to be persisted locally
 
-### Database technology & provider
+## Localization & Internationalization
+
+The Localization files can be found in the `MonitorizareVot/Localizations` folder. If you want to add a new language, simply add it in Xcode, then copy the `Localizable.strings` and `InfoPlist.strings` files from the `Base`/`en` lproj folders and copy them in the new language's folder.
+
+You should only update the strings on the right side of the `=` (equals sign). Make sure they're enclosed in double quotes (`"`) and that every line ends with a semicolon `;`.
+
+In order to make the new language available (and maybe restrict other ones), make sure you edit the `ALLOWED_LANGUAGES` value in Build Settings (it's a comma separate list of language codes.
 
 ## Repos and projects
 
-Mention all related repos and projects.
+![alt text](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ios/develop/vote_monitor_diagram.png)
 
-## Deployment
+- repo for the API - https://github.com/code4romania/monitorizare-vot
+- repo for the Android app - https://github.com/code4romania/mon-vot-android-kotlin
 
-Guide users through getting your code up and running on their own system. In this section you can talk about:
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
+Other related projects:
 
-Describe and show how to build your code and run the tests.
+- https://github.com/code4romania/monitorizare-vot-ong
 
 ## Feedback
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Answer" representedClassName="Answer" syncable="YES">
+        <attribute name="fillDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="inputAvailable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="inputText" optional="YES" attributeType="String"/>
+        <attribute name="selected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="synced" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="beneficiary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="answers" inverseEntity="Beneficiary"/>
+        <relationship name="question" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" inverseName="answers" inverseEntity="Question"/>
+    </entity>
+    <entity name="Beneficiary" representedClassName="Beneficiary" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="birthDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="cityId" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="civilStatus" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="county" optional="YES" attributeType="String"/>
+        <attribute name="countyId" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="answers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Answer" inverseName="beneficiary" inverseEntity="Answer"/>
+        <relationship name="familyMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="familyMembers" inverseEntity="Beneficiary"/>
+        <relationship name="forms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Form" inverseName="beneficiaries" inverseEntity="Form"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="beneficiary" inverseEntity="Note"/>
+        <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="beneficiaries" inverseEntity="Revision"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="beneficiaries" inverseEntity="User"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Form" representedClassName="Form" syncable="YES" codeGenerationType="class">
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="formDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="forms" inverseEntity="Beneficiary"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SectionInfo" inverseName="form" inverseEntity="SectionInfo"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Note" representedClassName="Note" versionHashModifier="1" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="file" optional="YES" attributeType="Binary"/>
+        <attribute name="questionID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="synced" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="beneficiary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="notes" inverseEntity="Beneficiary"/>
+        <relationship name="sectionInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SectionInfo" inverseName="notes" inverseEntity="SectionInfo"/>
+    </entity>
+    <entity name="Question" representedClassName="Question" syncable="YES">
+        <attribute name="formId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="formVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="answers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Answer" inverseName="question" inverseEntity="Answer"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note"/>
+        <relationship name="sectionInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SectionInfo" inverseName="questions" inverseEntity="SectionInfo"/>
+    </entity>
+    <entity name="Revision" representedClassName="Revision" syncable="YES">
+        <attribute name="modified" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="propertyName" optional="YES" attributeType="String"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Beneficiary" inverseName="revisions" inverseEntity="Beneficiary"/>
+    </entity>
+    <entity name="SectionInfo" representedClassName="SectionInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="sectionDescription" optional="YES" attributeType="String"/>
+        <attribute name="sectionId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="synced" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="form" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Form" inverseName="sections" inverseEntity="Form"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="sectionInfo" inverseEntity="Note"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="sectionInfo" inverseEntity="Question"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="accessToken" optional="YES" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="expiresIn" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="beneficiaries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Beneficiary" inverseName="user" inverseEntity="Beneficiary"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="email"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="Answer" positionX="376" positionY="459" width="128" height="178"/>
+        <element name="Beneficiary" positionX="180" positionY="405" width="128" height="298"/>
+        <element name="Form" positionX="189" positionY="414" width="128" height="118"/>
+        <element name="Note" positionX="198" positionY="288" width="128" height="148"/>
+        <element name="Question" positionX="178" positionY="447" width="128" height="163"/>
+        <element name="Revision" positionX="198" positionY="423" width="128" height="88"/>
+        <element name="SectionInfo" positionX="-11" positionY="252" width="128" height="133"/>
+        <element name="User" positionX="180" positionY="405" width="128" height="103"/>
+    </elements>
+</model>
