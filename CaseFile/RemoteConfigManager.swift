@@ -62,9 +62,10 @@ class RemoteConfigManager: NSObject {
             self.isLoading = false
             if status == .success {
                 DebugLog("RemoteConfig loaded.")
-                self.config.activateFetched()
-                self.isLoaded = true
-                self.runWaitingBlocks()
+                self.config.activate(completion: { [weak self] (activated, error) in
+                    self?.isLoaded = true
+                    self?.runWaitingBlocks()
+                })
             } else {
                 DebugLog("RemoteConfig not loaded. " + (error?.localizedDescription ?? "") + ". Sticking with local config")
                 self.isLoaded = false

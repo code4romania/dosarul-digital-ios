@@ -77,6 +77,7 @@ class LoginViewModel: NSObject {
                 AccountManager.shared.accessToken = user?.accessToken
                 AccountManager.shared.expiresIn = user?.expiresIn
                 AccountManager.shared.firstLogin = user?.firstLogin
+                AccountManager.shared.requiresVerification = true
                 callback(nil)
             }
             self.isLoading = false

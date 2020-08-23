@@ -17,6 +17,20 @@ struct LoginRequest: Codable {
     var password: String
 }
 
+struct TwoFactorAuthenticationRequest: Codable {
+    var token: String
+}
+
+struct ResetPasswordRequest: Codable {
+    var newPassword: String
+    var newPasswordConfirmation: String
+    
+    enum CodingKeys: String, CodingKey {
+        case newPassword
+        case newPasswordConfirmation = "confirmPassword"
+    }
+}
+
 struct BeneficiaryRequest: Codable {
     var id: Int16?
     var userId: Int16?
@@ -123,11 +137,13 @@ struct LoginResponse: Codable {
 }
 
 struct TwoFactorAuthenticationResponse: Codable {
-    var success: Bool?
-}
-
-struct ResetPasswordResponse: Codable {
-    var success: Bool?
+    var success: Bool
+    var message: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case success = "succeeded"
+        case message
+    }
 }
 
 struct BeneficiaryListResponse: Codable {

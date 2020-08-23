@@ -37,7 +37,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
     }
     
     func showAppEntry(animated: Bool) {
-        if AccountManager.shared.accessToken != nil {
+        if AccountManager.shared.accessToken != nil && AccountManager.shared.requiresVerification == false {
             DB.shared.saveUser(AccountManager.shared, persistent: true)
             showLoadingScreen()
             downloadRequiredData { [weak self] (error) in

@@ -23,6 +23,7 @@ class CodeVerificationViewController: MVViewController {
     @IBOutlet weak var instructionsContainer: UIView!
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var resendLoader: UIActivityIndicatorView!
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var resendCodeButton: AttachButton!
     @IBOutlet weak var verifyButton: ActionButton!
@@ -51,6 +52,7 @@ class CodeVerificationViewController: MVViewController {
     fileprivate func configureViews() {
         
         codeTextField.defaultTextAttributes.updateValue(13.8, forKey: NSAttributedString.Key.kern)
+        codeTextField.tintColor = .white 
         codeTextField.becomeFirstResponder()
         
         loginViewBottomToKeyboardConstraint = outerCardContainer.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor,
@@ -87,18 +89,29 @@ class CodeVerificationViewController: MVViewController {
     
     fileprivate func updateLoginButtonState() {
         verifyButton.isEnabled = model.isReady
-        verifyButton.setTitle(model.isLoading ? "" : "Button_Verify".localized, for: .normal)
+        verifyButton.setTitle(model.isLoadingVerification ? "" : "Button_Verify".localized, for: .normal)
+    }
+    
+    fileprivate func updateResendButtonState() {
+        resendCodeButton.isEnabled = !model.isLoadingResend
+        resendCodeButton.setTitle(model.isLoadingResend ? "" : "Button_Resend".localized, for: .normal)
     }
     
     fileprivate func updateInterface() {
         updateLoginButtonState()
+        updateResendButtonState()
         if model.isReady {
             codeTextField.resignFirstResponder()
         }
-        if model.isLoading {
+        if model.isLoadingVerification {
             loader.startAnimating()
         } else {
             loader.stopAnimating()
+        }
+        if model.isLoadingResend {
+            resendLoader.startAnimating()
+        } else {
+            resendLoader.stopAnimating()
         }
     }
     
@@ -137,16 +150,31 @@ class CodeVerificationViewController: MVViewController {
         }
     }
     
+    func resend() {
+        guard !model.isLoadingResend else { return }
+        model.resend { [weak self] (error) in
+            if let error = error {
+                let alert = UIAlertController.error(withMessage: error.localizedDescription)
+                self?.present(alert, animated: true, completion: nil)
+                MVAnalytics.shared.log(event: .loginFailed(error: error.localizedDescription))
+            }
+        }
+    }
+    
     @objc private func toggleCodeInputVisibility(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
     }
-
-    @IBAction func handleLoginButtonTap(_ sender: Any) {
+    
+    @IBAction func handleResendButtonTap(_ sender: Any) {
+        resend()
+    }
+    
+    @IBAction func handleVerifyButtonTap(_ sender: Any) {
         verify()
     }
     
     func proceedToNextScreen() {
-        if AccountManager.shared.firstLogin ?? false {
+        if AccountManager.shared.firstLogin == true {
             navigationController?.pushViewController(ResetPasswordViewController(), animated: true)
         } else {
             OnboardingViewModel.shouldShowWelcome = true

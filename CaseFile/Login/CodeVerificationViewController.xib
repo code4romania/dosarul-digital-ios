@@ -19,6 +19,7 @@
                 <outlet property="loader" destination="K5b-wi-jhG" id="5XM-yQ-u29"/>
                 <outlet property="outerCardContainer" destination="FX9-mO-rLX" id="EcL-ZE-Dji"/>
                 <outlet property="resendCodeButton" destination="BBp-Gd-qvO" id="Qs8-kc-FLt"/>
+                <outlet property="resendLoader" destination="2UM-Dv-XQe" id="fBv-sM-92e"/>
                 <outlet property="verifyButton" destination="QbI-GJ-iXY" id="kuc-4e-fLm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewDescription" destination="28A-Zk-DeT" id="m9X-Bn-Klm"/>
@@ -175,16 +176,28 @@
                                         <constraint firstAttribute="height" constant="40" id="dNA-iu-pBX"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="handleResendButtonTap:" destination="-1" eventType="touchUpInside" id="jCM-S4-sYa"/>
+                                    </connections>
                                 </button>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2UM-Dv-XQe">
+                                    <rect key="frame" x="291" y="18.666666666666657" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="6xP-66-1Lh"/>
+                                        <constraint firstAttribute="width" constant="20" id="Q4N-ET-LfT"/>
+                                    </constraints>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="swJ-au-iFT" firstAttribute="leading" secondItem="Efc-bx-0rQ" secondAttribute="leading" id="5Ao-GF-Wj8"/>
                                 <constraint firstItem="swJ-au-iFT" firstAttribute="top" secondItem="Efc-bx-0rQ" secondAttribute="top" constant="16" id="5k6-GG-hZe"/>
                                 <constraint firstItem="BBp-Gd-qvO" firstAttribute="centerY" secondItem="Efc-bx-0rQ" secondAttribute="centerY" id="BUl-Cw-580"/>
+                                <constraint firstItem="2UM-Dv-XQe" firstAttribute="trailing" secondItem="BBp-Gd-qvO" secondAttribute="trailing" id="Daa-by-oAW"/>
                                 <constraint firstAttribute="bottom" secondItem="swJ-au-iFT" secondAttribute="bottom" constant="24" id="Ui1-d1-Tzn"/>
                                 <constraint firstAttribute="width" constant="311" id="Wta-0m-IqD"/>
                                 <constraint firstItem="BBp-Gd-qvO" firstAttribute="leading" secondItem="swJ-au-iFT" secondAttribute="trailing" id="ZOD-Xu-N7j"/>
+                                <constraint firstItem="2UM-Dv-XQe" firstAttribute="centerY" secondItem="BBp-Gd-qvO" secondAttribute="centerY" id="apz-79-Ia3"/>
                                 <constraint firstAttribute="trailing" secondItem="BBp-Gd-qvO" secondAttribute="trailing" id="zgU-3g-A3c"/>
                             </constraints>
                         </view>
@@ -203,7 +216,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="50"/>
                                     <state key="normal" title="Login"/>
                                     <connections>
-                                        <action selector="handleLoginButtonTap:" destination="-1" eventType="touchUpInside" id="urU-Us-quk"/>
+                                        <action selector="handleVerifyButtonTap:" destination="-1" eventType="touchUpInside" id="bNr-Jr-Acf"/>
                                     </connections>
                                 </button>
                             </subviews>

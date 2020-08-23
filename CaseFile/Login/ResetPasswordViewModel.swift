@@ -53,18 +53,17 @@ class ResetPasswordViewModel: NSObject {
     }
     
     func resetPassword(completion: ((ResetPasswordModelError?) -> Void)?) {
-        guard let password = password else { return }
+        guard let password = password, let passwordConfirmation = passwordConfirmation else {
+            completion?(ResetPasswordModelError.generic(reason: "Password mismatch"))
+            return
+        }
         isLoading = true
         onUpdate?()
-        AppDelegate.dataSourceManager.resetPassword(password: password) { (response, error) in
+        AppDelegate.dataSourceManager.resetPassword(password: password, confirmPassword: passwordConfirmation) { (error) in
             if let error = error {
                 completion?(.generic(reason: error.localizedDescription))
             } else {
-                if let success = response?.success, success == true {
-                    completion?(nil)
-                } else {
-                    completion?(.generic(reason: "Verification failed"))
-                }
+                completion?(nil)
             }
             self.isLoading = false
             self.onUpdate?()

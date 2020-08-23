@@ -10,6 +10,9 @@ import UIKit
 
 enum ApiURL {
     case login
+    case verify2FA
+    case resend2FA
+    case resetPassword
     case beneficiaries
     case beneficiariesDetailed
     case beneficiary(id: Int)
@@ -25,6 +28,9 @@ enum ApiURL {
         var uri = ""
         switch self {
         case .login: uri = "/v1/access/authorize"
+        case .verify2FA: uri = "/v1/access/verify"
+        case .resend2FA: uri = "/v1/access/resend"
+        case .resetPassword: uri = "/v1/user/reset"
         case .beneficiaries: uri = "/v1/beneficiary"
         case .beneficiariesDetailed: uri = "/v1/beneficiary/details"
         case .beneficiary(let id): uri = "/v1/beneficiary/\(id)"

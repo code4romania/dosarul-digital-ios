@@ -19,11 +19,14 @@ protocol APIManagerType: NSObject {
                password: String,
                completion: ((LoginResponse?, APIError?) -> Void)?)
     
-    /// POST TBD
+    /// POST /api/v1/access/verify
     func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?)
     
-    /// POST TBD
-    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?)
+    /// POST /api/v1/access/resend
+    func resend2FA(completion: ((APIError?) -> Void)?)
+    
+    /// POST /api/v1/user/reset
+    func resetPassword(password: String, confirmPassword: String, completion: ((APIError?) -> Void)?)
     
     /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?)
@@ -63,9 +66,19 @@ protocol APIManagerType: NSObject {
 // remove extension after all methods are implemented in all conforming classes
 extension APIManagerType {
     
+    /// POST /api/v1/access/authorize
+    func login(email: String,
+               password: String,
+               completion: ((LoginResponse?, APIError?) -> Void)?) { }
+    
+    /// POST /api/v1/access/verify
     func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?) { }
     
-    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?) { }
+    /// POST /api/v1/access/resend
+    func resend2FA(completion: ((APIError?) -> Void)?) { }
+    
+    /// POST /api/v1/user/reset
+    func resetPassword(password: String, confirmPassword: String, completion: ((APIError?) -> Void)?) { }
     
     /// GET /api/v1/county
     func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) { }
@@ -154,16 +167,60 @@ class APIManager: NSObject, APIManagerType {
     }
     
     func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?) {
-        #warning("Implement method")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            completion?(TwoFactorAuthenticationResponse(success: true), nil)
+        let url = ApiURL.verify2FA.url()
+        let headers = authorizationHeaders()
+        let request = TwoFactorAuthenticationRequest(token: code)
+        let parameters = encodableToParamaters(request)
+        
+        Alamofire
+            .request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let data = response.data {
+                    do {
+                        let response2FA = try JSONDecoder().decode(TwoFactorAuthenticationResponse.self, from: data)
+                        completion?(response2FA, nil)
+                    } catch {
+                        completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+                    }
+                } else {
+                    completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+                }
         }
     }
     
-    func resetPassword(password: String, completion: ((ResetPasswordResponse?, APIError?) -> Void)?) {
-        #warning("Implement method")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            completion?(ResetPasswordResponse(success: true), nil)
+    func resend2FA(completion: ((APIError?) -> Void)?) {
+        let url = ApiURL.resend2FA.url()
+        let headers = authorizationHeaders()
+        
+        Alamofire
+            .request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200 {
+                    completion?(nil)
+                } else {
+                    completion?(.incorrectFormat(reason: "Unknown reason"))
+                }
+        }
+    }
+    
+    func resetPassword(password: String, confirmPassword: String, completion: ((APIError?) -> Void)?) {
+        let url = ApiURL.resetPassword.url()
+        let headers = authorizationHeaders()
+        let request = ResetPasswordRequest(newPassword: password, newPasswordConfirmation: confirmPassword)
+        let parameters = encodableToParamaters(request)
+        
+        Alamofire
+            .request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+                let statusCode = response.response?.statusCode
+                if statusCode == 200 {
+                    completion?(nil)
+                } else {
+                    completion?(.incorrectFormat(reason: "Unknown reason"))
+                }
         }
     }
     

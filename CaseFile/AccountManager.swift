@@ -23,6 +23,9 @@ protocol AccountManagerType: NSObject {
     /// First login
     var firstLogin: Bool? { get set }
     
+    /// Requires verification
+    var requiresVerification: Bool? { get set }
+    
     func logout()
 }
 
@@ -33,6 +36,7 @@ class AccountManager: NSObject, AccountManagerType {
         static let token = "token"
         static let email = "email"
         static let expiresIn = "expires_in"
+        static let requiresVerification = "requires_verification"
     }
     
     static let shared: AccountManagerType = AccountManager()
@@ -73,6 +77,18 @@ class AccountManager: NSObject, AccountManagerType {
         }
     }
     
+    var requiresVerification: Bool? {
+        set {
+            if let value = newValue {
+                KeychainWrapper.standard.set(value, forKey: SettingKey.requiresVerification)
+            } else {
+                KeychainWrapper.standard.removeObject(forKey: SettingKey.requiresVerification)
+            }
+        } get {
+            return KeychainWrapper.standard.bool(forKey: SettingKey.requiresVerification)
+        }
+    }
+    
     var firstLogin: Bool?
     
     func logout() {
@@ -80,5 +96,6 @@ class AccountManager: NSObject, AccountManagerType {
         email = nil
         expiresIn = nil
         firstLogin = nil
+        requiresVerification = nil
     }
 }

@@ -23,14 +23,20 @@ class CodeVerificationViewModel: NSObject {
     
     var onUpdate: (() -> Void)?
     
-    var isLoading: Bool = false {
+    var isLoadingVerification: Bool = false {
+        didSet {
+            onUpdate?()
+        }
+    }
+    
+    var isLoadingResend: Bool = false {
         didSet {
             onUpdate?()
         }
     }
     
     var isReady: Bool {
-        if let code = code, code.count == 4, !isLoading {
+        if let code = code, code.count == 4, !isLoadingVerification {
             return true
         }
         return false
@@ -38,18 +44,31 @@ class CodeVerificationViewModel: NSObject {
     
     func performVerification(completion: ((CodeVerificationViewModelError?) -> Void)?) {
         guard let code = code else { return }
-        isLoading = true
+        isLoadingVerification = true
         AppDelegate.dataSourceManager.verify2FA(code: code) { (response, error) in
             if let error = error {
                 completion?(.generic(reason: error.localizedDescription))
             } else {
-                if let success = response?.success, success == true {
+                if response?.success == true {
+                    AccountManager.shared.requiresVerification = false
                     completion?(nil)
                 } else {
                     completion?(.generic(reason: "Verification failed"))
                 }
             }
-            self.isLoading = false
+            self.isLoadingVerification = false
+        }
+    }
+    
+    func resend(completion: ((CodeVerificationViewModelError?) -> Void)?) {
+        isLoadingResend = true
+        AppDelegate.dataSourceManager.resend2FA { (error) in
+            self.isLoadingResend = false
+            if let error = error {
+                completion?(.generic(reason: error.localizedDescription))
+            } else {
+                completion?(nil)
+            }
         }
     }
 }
