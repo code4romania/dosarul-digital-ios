@@ -258,6 +258,20 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
     
     func didTapRightBottomButton(in cell: BeneficiaryCell) {
         // send form
+        cell.bottomRightButton.isEnabled = false
+        guard let beneficiaryId = cell.beneficiary?.id else {
+            return
+        }
+        AppDelegate.dataSourceManager.sendForm(beneficiaryId: Int(beneficiaryId)) { (error) in
+            cell.bottomRightButton.isEnabled = true
+            if let error = error {
+                let alert = UIAlertController.error(withMessage: "Error.SendFileFailed".localized)
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController.info(withMessage: "AlertMessage_FormSent".localized)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     func didTapTopRightButton(in cell: BeneficiaryCell) {

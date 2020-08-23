@@ -155,6 +155,18 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         }
     }
     
+    func logout() {
+        AccountManager.shared.logout()
+        showAppEntry(animated: true)
+    }
+    
+    func logout(message: String) {
+        UIAlertController.error(withMessage: message) { (_) in
+            AccountManager.shared.logout()
+            self.showAppEntry(animated: true)
+        }.showOnKeyWindow()
+    }
+    
     func showLoadingScreen() {
         let loadingViewController = LaunchScreenViewController(nibName: "LaunchScreenViewController-\(isPad ? "iPad" : "iPhone")", bundle: nil)
         self.window?.rootViewController = loadingViewController
@@ -316,8 +328,7 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
         case 3:
             break
         case 4:
-            AccountManager.shared.logout()
-            self.showAppEntry(animated: true)
+            logout()
         default:
             break
         }

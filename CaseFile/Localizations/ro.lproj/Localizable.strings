@@ -76,6 +76,8 @@
 "AlertMessage_EnableCameraAccess" = "Te rugăm să accesezi setările și să ne oferi permisiuni de acces la librăria de poze.";
 "AlertMessage_NewVersion" = "O nouă versiune a aplicației este disponibilă. Te rugăm să faci update pentru a folosi cele mai recente funcționalități.";
 
+"AlertMessage_FormSent" = "Fișa beneficiarului a fost trimisă pe adresa ta de e-mail.";
+
 "Error_Unknown" = "A apărut o eroare necunoscută";
 "LoginError_Unknown" = "Nu te-am putut autentifica. Eroare necunoscută. Te rugăm să ne contactezi.";
 
@@ -91,6 +93,7 @@
 "Error.SelectCountyFirst" = "Te rugăm să alegi județul/sectorul pentru a putea alege secția";
 "Error.IncorrectStationNumber" = "Număr secție incorect. Te rugăm să verifici corectitudinea combinației județ - număr secție";
 "Error.InternetConnection" = "Ai nevoie de o conexiune la internet pentru a te conecta!";
+"Error.SendFileFailed" = "Nu am reușit să trimitem fișa beneficiarului. Te rugăm să încerci mai târziu.";
 
 "Info.DataNotSyncronised" = "Se pare că unele răspunsuri nu au fost sincronizate. Apasă butonul de mai jos pentru a trimite răspunsurile din nou";
 
@@ -191,4 +194,4 @@
 "Loading.Title.AddPatient" = "Creare beneficiar...";
 "Loading.Title.EditPatient" = "Actualizare beneficiar...";
 "Loading.Error.AddPatient" = "Eroare";
-"Loading.Success.AddPatient" = "Success";
+"Loading.Success.AddPatient" = "Succes";

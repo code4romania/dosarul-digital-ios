@@ -61,6 +61,9 @@ protocol APIManagerType: NSObject {
     func upload(answers: UploadAnswersRequest,
                 completion: ((APIError?) -> Void)?)
     
+    /// POST /api/v1/beneficiary/sendFile
+    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?)
+    
 }
 
 // remove extension after all methods are implemented in all conforming classes
@@ -100,6 +103,9 @@ extension APIManagerType {
     
     func upload(answers: UploadAnswersRequest,
                 completion: ((APIError?) -> Void)?) { }
+    
+    /// POST /api/v1/beneficiary/sendFile
+    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) { }
 }
 
 enum APIError: Error {
@@ -242,6 +248,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -266,6 +273,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -293,6 +301,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -317,6 +326,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -355,6 +365,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -380,6 +391,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if response.response?.statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -404,6 +416,7 @@ class APIManager: NSObject, APIManagerType {
                     }
                 } else if response.response?.statusCode == 401 {
                     completion?(nil, .unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(nil, .incorrectFormat(reason: "Unknown reason"))
                 }
@@ -428,6 +441,7 @@ class APIManager: NSObject, APIManagerType {
                     completion?(nil)
                 } else if response.response?.statusCode == 401 {
                     completion?(.unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(.incorrectFormat(reason: "Response code \(response.response?.statusCode ?? -1)"))
                 }
@@ -465,6 +479,7 @@ class APIManager: NSObject, APIManagerType {
                             completion?(nil)
                         } else if response.response?.statusCode == 401 {
                             completion?(.unauthorized)
+                            AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                         } else {
                             completion?(.incorrectFormat(reason: "Unknown reason"))
                         }
@@ -490,8 +505,28 @@ class APIManager: NSObject, APIManagerType {
                     completion?(nil)
                 } else if response.response?.statusCode == 401 {
                     completion?(.unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
                     completion?(.incorrectFormat(reason: "Unknown reason (code: \(response.response?.statusCode ?? -1))"))
+                }
+        }
+    }
+    
+    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) {
+        let url = ApiURL.sendForm.url()
+        let auth = authorizationHeaders()
+        let parameters = ["beneficiaryId": beneficiaryId]
+        
+        Alamofire
+            .request(url, method: .post, parameters: parameters, encoding: URLEncoding.queryString, headers: auth)
+            .response { response in
+                if response.response?.statusCode == 200 {
+                    completion?(nil)
+                } else if response.response?.statusCode == 401 {
+                    completion?(.unauthorized)
+                    AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
+                } else {
+                    completion?(.incorrectFormat(reason: "Unknown reason"))
                 }
         }
     }
