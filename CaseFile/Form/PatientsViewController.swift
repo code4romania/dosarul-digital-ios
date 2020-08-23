@@ -27,15 +27,50 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Title.Patients".localized
+        if #available(iOS 11.0, *) {
+            configureSearchBar()
+        } else {
+            // Fallback on earlier versions
+        }
         configureTableView()
         configureButton()
-        
+        configureBindings()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         model.operation = .view
         DebugLog("Application data view model:\n\(ApplicationData.shared.objectRepository)")
+    }
+    
+    @available(iOS 11.0, *)
+    func configureSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Button_Search".localized
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = model
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
+        if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textfield.backgroundColor = UIColor.white
+            textfield.tintColor = UIColor.navigationBarBackground
+            textfield.textColor = UIColor.defaultText
+        }
+        
+        if #available(iOS 13.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = UIColor.navigationBarBackground
+            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = UIColor.navigationBarBackground
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        }
     }
     
     func configureTableView() {
@@ -77,6 +112,12 @@ class PatientsViewController: MVViewController, EmptyDataSetSource, EmptyDataSet
         addNewPatientButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         addNewPatientButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         addNewPatientButton.addTarget(self, action: #selector(onTapNewPatient(sender:)), for: .touchUpInside)
+    }
+    
+    func configureBindings() {
+        model.onFilterBeneficiaryList = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     @objc func onTapNewPatient(sender: Any) {

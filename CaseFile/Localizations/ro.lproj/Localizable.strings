@@ -27,6 +27,7 @@
 "Button_Form" = "Chestionar";
 "Button_SendFile" = "Trimite fișă";
 "Button_Edit" = "Editează";
+"Button_Search" = "Căutare";
 
 "Label_MyPatients" = "Pacienții mei";
 "Label_Info" = "Info";

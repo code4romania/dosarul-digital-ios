@@ -77,7 +77,13 @@ enum PatientViewModelOperation {
     case view
 }
 
-class PatientViewModel: NSObject {
+class PatientViewModel: NSObject, UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        searchFilter = searchController.searchBar.text
+        onFilterBeneficiaryList?()
+    }
+    
     
     /// This specifies if the view model is to view, add or edit benficiary
     var operation: PatientViewModelOperation
@@ -108,10 +114,18 @@ class PatientViewModel: NSObject {
     /// If the beneficiary is set, decides whether the beneficiary name will be displayed in the header or not
     var shouldOverrideHeaderContent = true
     
+    var searchFilter: String?
+    
     /// List of beneficiaries
     var beneficiaryList: [Beneficiary]? {
         DB.shared.currentUser()?.beneficiaries?
             .compactMap({ $0 as? Beneficiary })
+            .filter({ (beneficiary) -> Bool in
+                guard let searchFilter = searchFilter, searchFilter.count > 0 else {
+                    return true
+                }
+                return beneficiary.name?.lowercased().contains(searchFilter.lowercased()) ?? false
+            })
             .sorted(by: { $0.id > $1.id })
     }
     
@@ -151,6 +165,9 @@ class PatientViewModel: NSObject {
     
     /// Be notified when a form is filled
     var onFormFilled: (() -> Void)?
+    
+    /// Be notified when filter update
+    var onFilterBeneficiaryList: (() -> Void)?
     
     var canContinue: Bool {
         return self.generalDataSource.allSatisfy { $0.value != nil }
