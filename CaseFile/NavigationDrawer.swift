@@ -81,9 +81,9 @@ class NavigationDrawer: UIViewController {
         topView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraint(equalTo: topView.centerXAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -58).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 146).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -43).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 212).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         imageView.image = self.dataSource?.headerImage(for: self)
         
