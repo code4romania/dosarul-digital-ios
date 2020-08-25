@@ -111,6 +111,13 @@
 		7535047A24E00FAA0067BFF4 /* CodeVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535047724E00FA90067BFF4 /* CodeVerificationViewController.swift */; };
 		7535047B24E00FAA0067BFF4 /* CodeVerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535047824E00FA90067BFF4 /* CodeVerificationViewController.xib */; };
 		7535047C24E00FAA0067BFF4 /* CodeVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535047924E00FA90067BFF4 /* CodeVerificationViewModel.swift */; };
+		75353FC424F56EE50014DA3B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75353FC224F56EE50014DA3B /* InfoViewController.swift */; };
+		75353FC524F56EE50014DA3B /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75353FC324F56EE50014DA3B /* InfoViewController.xib */; };
+		75353FCD24F57D6D0014DA3B /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75353FCB24F57D6C0014DA3B /* ContactsViewController.xib */; };
+		75353FCE24F57D6D0014DA3B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75353FCC24F57D6D0014DA3B /* ContactsViewController.swift */; };
+		75353FD024F57D9C0014DA3B /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75353FCF24F57D9C0014DA3B /* ContactsViewModel.swift */; };
+		75353FD324F57EFD0014DA3B /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75353FD124F57EFD0014DA3B /* ContactCell.swift */; };
+		75353FD424F57EFD0014DA3B /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75353FD224F57EFD0014DA3B /* ContactCell.xib */; };
 		754121B2248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B3248ECBCB002EE5C7 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271595B421465EBA00BECC9C /* String+Localization.swift */; };
 		754121B4248ECBF8002EE5C7 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA498247C57080048CC07 /* String+Validation.swift */; };
@@ -478,6 +485,13 @@
 		7535047724E00FA90067BFF4 /* CodeVerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewController.swift; sourceTree = "<group>"; };
 		7535047824E00FA90067BFF4 /* CodeVerificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CodeVerificationViewController.xib; sourceTree = "<group>"; };
 		7535047924E00FA90067BFF4 /* CodeVerificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewModel.swift; sourceTree = "<group>"; };
+		75353FC224F56EE50014DA3B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		75353FC324F56EE50014DA3B /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		75353FCB24F57D6C0014DA3B /* ContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
+		75353FCC24F57D6D0014DA3B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		75353FCF24F57D9C0014DA3B /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		75353FD124F57EFD0014DA3B /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		75353FD224F57EFD0014DA3B /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		7540059F2460D51400C6C1D9 /* LocalConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalConfiguration.xcconfig; sourceTree = "<group>"; };
 		754121BD248ED9CD002EE5C7 /* LoginResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LoginResponse.json; sourceTree = "<group>"; };
 		754121BF248EDA31002EE5C7 /* BeneficiariesResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BeneficiariesResponse.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
@@ -538,7 +552,7 @@
 		E7E8EB4A1DDB7344009EBE01 /* UIColor+Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Presets.swift"; sourceTree = "<group>"; };
 		EF13D1561DCF24A800349B43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF3DC3941DE9DB02006F9D73 /* CoreDataInitialiser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataInitialiser.swift; sourceTree = "<group>"; };
-		EF4BD3811D9D08DE0042BEC7 /* CaseFile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaseFile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF4BD3811D9D08DE0042BEC7 /* Dosarul Digital.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dosarul Digital.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4BD3911D9D08DE0042BEC7 /* s.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = s.xcdatamodel; sourceTree = "<group>"; };
 		EF4BD3981D9D08DE0042BEC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF4BD39D1D9D08DE0042BEC7 /* CaseFileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaseFileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -668,6 +682,8 @@
 		289E1E89235F2AA2000C92A0 /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
+				75353FD124F57EFD0014DA3B /* ContactCell.swift */,
+				75353FD224F57EFD0014DA3B /* ContactCell.xib */,
 				7501A95424AE53B800E4F85B /* BeneficiaryCell.swift */,
 				7501A95524AE53B800E4F85B /* BeneficiaryCell.xib */,
 				75B22E182498195100AD6BA8 /* FormTextCell.swift */,
@@ -795,13 +811,6 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		28FB66B823699DA000336DBA /* PollingStation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PollingStation;
-			sourceTree = "<group>";
-		};
 		67EE98C922A296B1006E4762 /* Logging */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,6 +837,25 @@
 				7501A91524ABB21C00E4F85B /* LaunchScreenViewController.swift */,
 			);
 			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		75353FC124F56EA30014DA3B /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				75353FC224F56EE50014DA3B /* InfoViewController.swift */,
+				75353FC324F56EE50014DA3B /* InfoViewController.xib */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		75353FC624F57D070014DA3B /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				75353FCF24F57D9C0014DA3B /* ContactsViewModel.swift */,
+				75353FCC24F57D6D0014DA3B /* ContactsViewController.swift */,
+				75353FCB24F57D6C0014DA3B /* ContactsViewController.xib */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		754121BC248ED9AA002EE5C7 /* Mocks */ = {
@@ -935,7 +963,7 @@
 		EF4BD3821D9D08DE0042BEC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EF4BD3811D9D08DE0042BEC7 /* CaseFile.app */,
+				EF4BD3811D9D08DE0042BEC7 /* Dosarul Digital.app */,
 				EF4BD39D1D9D08DE0042BEC7 /* CaseFileTests.xctest */,
 				EF4BD3A81D9D08DE0042BEC7 /* CaseFileUITests.xctest */,
 			);
@@ -999,11 +1027,12 @@
 		EF4BD3DE1D9E64720042BEC7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				75353FC624F57D070014DA3B /* Contacts */,
+				75353FC124F56EA30014DA3B /* Info */,
 				7501A91724ABB22E00E4F85B /* LaunchScreen */,
 				28DBDAA8236F4A7B004EAD83 /* Onboarding */,
 				281A4B88236D7B64001AD277 /* Login */,
 				28FB66B723699D8500336DBA /* Utility */,
-				28FB66B823699DA000336DBA /* PollingStation */,
 				289E1E81235F2665000C92A0 /* FormList */,
 				286D3863236439680091B23F /* Form */,
 			);
@@ -1082,7 +1111,7 @@
 			);
 			name = CaseFile;
 			productName = MonitorizareVot;
-			productReference = EF4BD3811D9D08DE0042BEC7 /* CaseFile.app */;
+			productReference = EF4BD3811D9D08DE0042BEC7 /* Dosarul Digital.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EF4BD39C1D9D08DE0042BEC7 /* CaseFileTests */ = {
@@ -1193,6 +1222,7 @@
 				28FB66A32366EAAC00336DBA /* QuestionAnswerViewController.xib in Resources */,
 				28FB66B523699D7400336DBA /* TextEntryViewController.xib in Resources */,
 				28C363902364512E0084065C /* QuestionTableCell.xib in Resources */,
+				75353FC524F56EE50014DA3B /* InfoViewController.xib in Resources */,
 				75EEA4A1247C5C6E0048CC07 /* LaunchScreen-iPad.xib in Resources */,
 				EF13D1571DCF24A800349B43 /* Assets.xcassets in Resources */,
 				759891FC2497E09800106BDF /* CitiesResponse.json in Resources */,
@@ -1205,6 +1235,7 @@
 				75D0848524855EF70034499D /* OnboardingLanguageViewController.xib in Resources */,
 				759892022497E99E00106BDF /* AddPatientViewController.xib in Resources */,
 				27EDBD2221465D190060DB8A /* Localizable.strings in Resources */,
+				75353FCD24F57D6D0014DA3B /* ContactsViewController.xib in Resources */,
 				7501A91B24ABED2200E4F85B /* LaunchScreenViewController-iPad.xib in Resources */,
 				75EEA49F247C5C390048CC07 /* LaunchScreen-iPhone.xib in Resources */,
 				28104131236B5CA500B7422C /* AttachNoteViewController.xib in Resources */,
@@ -1226,6 +1257,7 @@
 				2879CA3B2381C04F00CE4DC7 /* EmptyDetailsViewController.xib in Resources */,
 				286D38672364398C0091B23F /* QuestionListViewController.xib in Resources */,
 				75B22E1B2498195100AD6BA8 /* FormTextCell.xib in Resources */,
+				75353FD424F57EFD0014DA3B /* ContactCell.xib in Resources */,
 				28DBDAB4236F57C7004EAD83 /* WelcomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1468,6 +1500,7 @@
 				7561270624D21B4F00225A45 /* Beneficiary+CoreDataProperties.swift in Sources */,
 				755519EE24AF71590065BB86 /* PatientDetailsViewController.swift in Sources */,
 				28104140236C3A4900B7422C /* Formatters.swift in Sources */,
+				75353FD024F57D9C0014DA3B /* ContactsViewModel.swift in Sources */,
 				281A4B87236CC625001AD277 /* DropdownButton.swift in Sources */,
 				28104139236B5DEF00B7422C /* NoteViewModel.swift in Sources */,
 				75E7502D24E08D1200AED27C /* ResetPasswordViewModel.swift in Sources */,
@@ -1491,6 +1524,7 @@
 				7501A8F724A65ADD00E4F85B /* Enums.swift in Sources */,
 				28844A5F233F9C6400DEEA44 /* TimePickerViewModel.swift in Sources */,
 				28DBDAAE236F4A9B004EAD83 /* WelcomeViewModel.swift in Sources */,
+				75353FC424F56EE50014DA3B /* InfoViewController.swift in Sources */,
 				2817EA1A2358DF330029AD4C /* AccountManager.swift in Sources */,
 				28FB66AC23670B3500336DBA /* AttachButton.swift in Sources */,
 				28FB66A52366EAC700336DBA /* QuestionAnswerViewModel.swift in Sources */,
@@ -1503,6 +1537,8 @@
 				75D0848B248560900034499D /* OnboardingViewModel.swift in Sources */,
 				28B3DA8023A4F50E00BEF6C0 /* AppUpdateManager.swift in Sources */,
 				289E1E9123604F9D000C92A0 /* MVViewController.swift in Sources */,
+				75353FCE24F57D6D0014DA3B /* ContactsViewController.swift in Sources */,
+				75353FD324F57EFD0014DA3B /* ContactCell.swift in Sources */,
 				756126ED24CDB83B00225A45 /* Answer+CoreDataClass.swift in Sources */,
 				28E72466233F67280096454D /* Configuration.swift in Sources */,
 				28FB66B423699D7400336DBA /* TextEntryViewController.swift in Sources */,
@@ -1870,7 +1906,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dosarul Digital";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -1895,7 +1931,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dosarul Digital";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
 				SWIFT_OBJC_BRIDGING_HEADER = "";

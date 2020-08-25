@@ -322,9 +322,9 @@ class AppRouter: NSObject, NavigationDrawerDelegate, NavigationDrawerDataSource 
             let viewController = PatientsViewController(model: model)
             navigationDrawer.navigationController?.pushViewController(viewController, animated: true)
         case 1:
-            break
+            navigationDrawer.navigationController?.pushViewController(InfoViewController(), animated: true)
         case 2:
-            break
+            navigationDrawer.navigationController?.pushViewController(ContactsViewController(), animated: true)
         case 3:
             break
         case 4:

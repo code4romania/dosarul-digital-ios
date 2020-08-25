@@ -114,6 +114,8 @@
 "Title.Patients.Add" = "Adăugare beneficiar nou";
 "Title.Patients.Edit" = "Editare beneficiar";
 "Title.Forms" = "Chestionare";
+"Title.Info" = "Informații utile";
+"Title.Contacts" = "Contacte rapide";
 
 "Next" = "Continuă";
 "Previous" = "Anterior";
@@ -196,3 +198,6 @@
 "Loading.Title.EditPatient" = "Actualizare beneficiar...";
 "Loading.Error.AddPatient" = "Eroare";
 "Loading.Success.AddPatient" = "Succes";
+
+"Contacts.Phone" = "Telefon";
+"Contacts.Email" = "Email";

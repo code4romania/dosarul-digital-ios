@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>MOCK_API</key>
-	<false/>
 	<key>ALLOWED_LANGUAGES</key>
 	<string>$(ALLOWED_LANGUAGES)</string>
 	<key>API_URL</key>
@@ -11,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ro</string>
 	<key>CFBundleDisplayName</key>
-	<string>Case File</string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -32,6 +30,8 @@
 	<string>$(GUIDE_URL)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MOCK_API</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -47,10 +47,10 @@
 	<string>$(TEST_EMAIL)</string>
 	<key>TEST_PASSWORD</key>
 	<string>$(TEST_PASSWORD)</string>
-	<key>UILaunchStoryboardName~iphone</key>
-	<string>LaunchScreen-iPhone.xib</string>
 	<key>UILaunchStoryboardName~ipad</key>
 	<string>LaunchScreen-iPad.xib</string>
+	<key>UILaunchStoryboardName~iphone</key>
+	<string>LaunchScreen-iPhone.xib</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
