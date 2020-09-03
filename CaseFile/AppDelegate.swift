@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var dataSourceManager: APIManagerType = {
         if let infoDict = Bundle.main.infoDictionary,
             let mockAPI = infoDict["MOCK_API"] as? Bool,
-            mockAPI == true {
+            mockAPI == true || ProcessInfo.processInfo.environment["env"] == "test" {
                 return APIMock.shared
         } else {
                 return APIManager.shared
@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreData.containerName = "s"
         
         if PreferencesManager.shared.isNewApp {
+            handleFirstAppStart()
+        }
+        
+        if ProcessInfo.processInfo.environment["env"] == "test" {
+            AccountManager.shared.logout()
             handleFirstAppStart()
         }
         

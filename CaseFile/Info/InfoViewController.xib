@@ -66,13 +66,13 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsE-np-1aN">
                                             <rect key="frame" x="28" y="50" width="358" height="223.5"/>
-                                            <mutableString key="text">Aplicația Dosarul Digital te va ajuta să ai un sistem eficient de management al cazurilor pentru fiecare dintre beneficiarii tăi.
+                                            <string key="text">Aplicația Dosarul Digital te va ajuta să ai un sistem eficient de management al cazurilor pentru fiecare dintre beneficiarii tăi.
 
-Adaugă în baza de date toate informațiile necesare completării dosarului personal al beneficiarului și orice altă informație pe care o consideri relevantă, starea de sănătate a celui vizat sau a familiei extinse și pe care, în funcție de necesitate, să o poți transfera unui medic sau alt specialist.</mutableString>
+Adaugă în baza de date toate informațiile necesare completării dosarului personal al beneficiarului și orice altă informație pe care o consideri relevantă, starea de sănătate a celui vizat sau a familiei extinse și pe care, în funcție de necesitate, să o poți transfera unui medic sau alt specialist.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
-                                            <mutableString key="userLabel">Aplicația Dosarul Digital te va ajuta să ai un sistem eficient de management al cazurilor pentru fiecare dintre beneficiarii tăi.  Adaugă în baza de date toate informațiile necesare completării dosarului personal al beneficiarului și orice altă informație pe care o consideri relevantă, starea de sănătate a celui vizat sau a familiei extinse și pe care, în funcție de necesitate, să o poți transfera unui medic sau alt specialist.</mutableString>
+                                            <string key="userLabel">Aplicația Dosarul Digital te va ajuta să ai un sistem eficient de management al cazurilor pentru fiecare dintre beneficiarii tăi.  Adaugă în baza de date toate informațiile necesare completării dosarului personal al beneficiarului și orice altă informație pe care o consideri relevantă, starea de sănătate a celui vizat sau a familiei extinse și pe care, în funcție de necesitate, să o poți transfera unui medic sau alt specialist.</string>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

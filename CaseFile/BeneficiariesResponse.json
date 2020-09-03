@@ -1,5 +1,5 @@
 {
-    "200": {
+    "200": [{
         "data": [
             {
                 "beneficiaryId": 285,
@@ -16,7 +16,7 @@
                 "forms": [
                     {
                         "formId": 1,
-                        "completionDate": "0001-01-01T00:00:00",
+                        "date": "0001-01-01T00:00:00",
                         "description": "Description A",
                         "code": "A",
                         "totalQuestionsNo": 4,
@@ -45,7 +45,7 @@
                 "forms": [
                     {
                         "formId": 1,
-                        "completionDate": "0001-01-01T00:00:00",
+                        "date": "0001-01-01T00:00:00",
                         "description": "Description A",
                         "code": "A",
                         "totalQuestionsNo": 4,
@@ -53,7 +53,7 @@
                     },
                     {
                         "formId": 7,
-                        "completionDate": "0001-01-01T00:00:00",
+                        "date": "0001-01-01T00:00:00",
                         "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
                         "code": "FR",
                         "totalQuestionsNo": 23,
@@ -82,7 +82,7 @@
                 "forms": [
                     {
                         "formId": 1,
-                        "completionDate": "0001-01-01T00:00:00",
+                        "date": "0001-01-01T00:00:00",
                         "description": "Description A",
                         "code": "A",
                         "totalQuestionsNo": 4,
@@ -90,7 +90,7 @@
                     },
                     {
                         "formId": 7,
-                        "completionDate": "0001-01-01T00:00:00",
+                        "date": "0001-01-01T00:00:00",
                         "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
                         "code": "FR",
                         "totalQuestionsNo": 23,
@@ -104,8 +104,9 @@
         "totalPages": 1,
         "page": 1,
         "pageSize": 20
-    },
-    "400": "Bad request",
-    "401": "Unauthorized",
-    "500": "Internal server error"
+    }
+    ],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "500": ["Internal server error"]
 }

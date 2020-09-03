@@ -1,13 +1,13 @@
 {
-    "200": {
+    "200": [
         [
             {
                 "cityId": 1,
                 "name": "TestCity"
             }
         ]
-    },
-    "400": "Bad request",
-    "401": "Unauthorized",
-    "500": "Internal server error"
+    ],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "500": ["Internal server error"]
 }

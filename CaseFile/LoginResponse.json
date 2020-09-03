@@ -1,13 +1,12 @@
-
 {
-    "200": {
+    "200": [{
         "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdEBhbmRyZWkuY29tIiwic3ViIjoidGVzdEBhbmRyZWkuY29tIiwianRpIjoiOWUyMjYwNjUtNmFiOC00MjY4LThlYjUtZTRmZDhiZGUyNTJmIiwiaWF0IjoxNTk1NTA5NjU2LCJJZE5nbyI6IjEiLCJVc2VyVHlwZSI6IkFzc2lzdGFudCIsIlVzZXJJZCI6IjQiLCJuYmYiOjE1OTU1MDk2NTYsImV4cCI6MTU5NTU5NjA1NiwiaXNzIjoiQ2FzZUZpbGVKd3RJc3N1ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUzNDEzLyJ9.0r9R7OvjtBPUhRWcbbhwEHHsvKVZi9-NKO6oSZueEWI",
         "expires_in": 86400
-    },
-    "400": "Bad request",
-    "401": "Unauthorized",
-    "418": {
+    }],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "418": [{
         "error": "You know what a teapot does, don't you?"
-    },
-    "500": "Internal server error"
+    }],
+    "500": ["Internal server error"]
 }

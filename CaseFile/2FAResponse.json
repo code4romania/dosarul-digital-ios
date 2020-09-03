@@ -1,0 +1,16 @@
+{
+    "200": [{
+        "succeeded": true,
+        "message": "{\"message\":\"Verification code is correct.\",\"success\":true}"
+    },
+    {
+        "succeeded": false,
+        "message": "{\"message\":\"No pending verifications for your phone number found.\",\"success\":false,\"errors\":{\"message\":\"No pending verifications for your phone number found.\"},\"error_code\":\"60023\"}"
+    }],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "418": [{
+        "error": "You know what a teapot does, don't you?"
+    }],
+    "500": ["Internal server error"]
+}

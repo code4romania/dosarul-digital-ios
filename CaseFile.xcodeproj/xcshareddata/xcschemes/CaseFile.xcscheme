@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-               BuildableName = "CaseFile.app"
+               BuildableName = "Dosarul Digital.app"
                BlueprintName = "CaseFile"
                ReferencedContainer = "container:CaseFile.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "CaseFile.app"
+            BuildableName = "Dosarul Digital.app"
             BlueprintName = "CaseFile"
             ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>
@@ -51,9 +51,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2817EA202358FA8E0029AD4C"
-               BuildableName = "APITests.xctest"
-               BlueprintName = "APITests"
+               BlueprintIdentifier = "751D123824FEB2AA001CA123"
+               BuildableName = "CaseFileUITests.xctest"
+               BlueprintName = "CaseFileUITests"
                ReferencedContainer = "container:CaseFile.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "CaseFile.app"
+            BuildableName = "Dosarul Digital.app"
             BlueprintName = "CaseFile"
             ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF4BD3801D9D08DE0042BEC7"
-            BuildableName = "CaseFile.app"
+            BuildableName = "Dosarul Digital.app"
             BlueprintName = "CaseFile"
             ReferencedContainer = "container:CaseFile.xcodeproj">
          </BuildableReference>

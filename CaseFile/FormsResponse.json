@@ -1,5 +1,5 @@
 {
-    "200": {
+    "200": [{
         "formVersions": [
             {
                 "id": 1,
@@ -18,8 +18,8 @@
                 "userName": "Testing Casefile"
             }
         ]
-    },
-    "400": "Bad request",
-    "401": "Unauthorized",
-    "500": "Internal server error"
+    }],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "500": ["Internal server error"]
 }

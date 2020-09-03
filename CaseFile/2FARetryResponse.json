@@ -1,0 +1,9 @@
+{
+    "200": ["{\"carrier\":\"Vodafone Romania\",\"is_cellphone\":true,\"message\":\"Text message sent to your phone nunmber.\",\"seconds_to_expire\":520,\"uuid\":\"da334b90-d033-0138-8de0-0ebbd1ad6eb3\",\"success\":true}"],
+    "400": ["Bad request"],
+    "401": ["Unauthorized"],
+    "418": [{
+        "error": "You know what a teapot does, don't you?"
+    }],
+    "500": ["Internal server error"]
+}

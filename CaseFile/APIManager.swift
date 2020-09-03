@@ -13,6 +13,10 @@ import SwiftKeychainWrapper
 protocol APIManagerType: NSObject {
     var apiDateFormatter: DateFormatter { get }
     
+    /// For unit testing
+    var expectedStatusCode: Int? { get set }
+    var expectedIndex: Int? { get set }
+    
     /// General requests
     /// POST /api/v1/access/authorize
     func login(email: String,
@@ -129,7 +133,11 @@ enum APIError: Error {
 }
 
 class APIManager: NSObject, APIManagerType {
+    
     static let shared: APIManagerType = APIManager()
+    
+    var expectedStatusCode: Int?
+    var expectedIndex: Int?
     
     /// Use this to format dates to and from the API
     lazy var apiDateFormatter: DateFormatter = {
@@ -566,10 +574,12 @@ extension APIManager {
     }
 }
 
-
 class APIMock: NSObject, APIManagerType {
     
     static let shared: APIManagerType = APIMock()
+    
+    var expectedStatusCode: Int?
+    var expectedIndex: Int?
     
     /// Use this to format dates to and from the API
     lazy var apiDateFormatter: DateFormatter = {
@@ -581,12 +591,12 @@ class APIMock: NSObject, APIManagerType {
     }()
     
     func login(email: String, password: String, completion: ((LoginResponse?, APIError?) -> Void)?) {
-        guard let data = fromFile(filename: "LoginResponse", ext: "json", statusCode: 200) else {
+        guard let data = fromFile(filename: "LoginResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
             completion?(nil, .incorrectFormat(reason: "Missing mock file"))
             return
         }
         do {
-            var loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+            var loginResponse = try JSONDecoder().decode(Array<LoginResponse>.self, from: data)[expectedIndex ?? 0]
             if loginResponse.accessToken != nil {
                 // login response doesn't contain an email so we'll add it here
                 loginResponse.email = email
@@ -599,28 +609,101 @@ class APIMock: NSObject, APIManagerType {
         }
     }
     
+    func verify2FA(code: String, completion: ((TwoFactorAuthenticationResponse?, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "2FAResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        do {
+            let twoFAResponse = try JSONDecoder().decode(Array<TwoFactorAuthenticationResponse>.self, from: data)[expectedIndex ?? 0]
+                completion?(twoFAResponse, nil)
+        } catch {
+            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
+
+    func resend2FA(completion: ((APIError?) -> Void)?) {
+        expectedStatusCode = expectedStatusCode ?? 200
+        guard let data = fromFile(filename: "2FARetryResponse", ext: "json", statusCode: expectedStatusCode!) else {
+            completion?(.incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        if expectedStatusCode == 200 {
+            completion?(nil)
+        } else {
+            completion?(.generic(reason: String(data: data, encoding: .utf8)))
+        }
+    }
+
+    func resetPassword(password: String, confirmPassword: String, completion: ((APIError?) -> Void)?) {
+        expectedStatusCode = expectedStatusCode ?? 200
+        guard let data = fromFile(filename: "ResetPasswordResponse", ext: "json", statusCode: expectedStatusCode!) else {
+            completion?(.incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        if expectedStatusCode == 200 {
+            completion?(nil)
+        } else {
+            completion?(.generic(reason: String(data: data, encoding: .utf8)))
+        }
+    }
+
+    func fetchCounties(completion: (([CountyResponse]?, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "CountyResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        do {
+            let countyResponse = try JSONDecoder().decode(Array<[CountyResponse]>.self, from: data)[expectedIndex ?? 0]
+            completion?(countyResponse, nil)
+        } catch {
+            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
+
+    func fetchCities(countyId: Int, completion: (([CityResponse]?, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "CitiesResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        do {
+            let cityResponse = try JSONDecoder().decode(Array<[CityResponse]>.self, from: data)[expectedIndex ?? 0]
+            completion?(cityResponse, nil)
+        } catch {
+            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
+    
     func fetchBeneficiaries(completion:(([BeneficiaryDetailedResponse]?, APIError?) -> Void)?) {
-        guard let data = fromFile(filename: "BeneficiariesResponse", ext: "json", statusCode: 200) else {
+        guard let data = fromFile(filename: "BeneficiariesResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
             completion?(nil, .incorrectFormat(reason: "Missing mock file"))
             return
         }
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(self.apiDateFormatter)
-            let beneficiaries = try decoder.decode(BeneficiaryDetailedListResponse.self, from: data)
+            let beneficiaries = try decoder.decode(Array<BeneficiaryDetailedListResponse>.self, from: data)[expectedIndex ?? 0]
             completion?(beneficiaries.beneficiaries, nil)
         } catch {
             completion?(nil, .incorrectFormat(reason: error.localizedDescription))
         }
     }
     
+//    func fetchBeneficiary(beneficiaryId: Int, completion: ((BeneficiaryResponse?, APIError?) -> Void)?) {
+//           <#code#>
+//       }
+//
+//    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?) {
+//        <#code#>
+//    }
+    
     func fetchForms(completion: (([FormResponse]?, APIError?) -> Void)?) {
-        guard let data = fromFile(filename: "FormsResponse", ext: "json", statusCode: 200) else {
+        guard let data = fromFile(filename: "FormsResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
             completion?(nil, .incorrectFormat(reason: "Missing mock file"))
             return
         }
         do {
-            let response = try JSONDecoder().decode(FormListResponse.self, from: data)
+            let response = try JSONDecoder().decode(Array<FormListResponse>.self, from: data)[expectedIndex ?? 0]
             completion?(response.forms, nil)
         } catch {
             completion?(nil, .incorrectFormat(reason: error.localizedDescription))
@@ -628,18 +711,34 @@ class APIMock: NSObject, APIManagerType {
     }
     
     func fetchForm(formId: Int, completion: (([FormSectionResponse]?, APIError?) -> Void)?) {
-        guard let data = fromFile(filename: "FormResponse\(formId)", ext: "json", statusCode: 200) else {
+        guard let data = fromFile(filename: "FormResponse\(formId)", ext: "json", statusCode: expectedStatusCode ?? 200) else {
             completion?(nil, .incorrectFormat(reason: "Missing mock file"))
             return
         }
         
         do {
-            let response = try JSONDecoder().decode([FormSectionResponse].self, from: data)
+            let response = try JSONDecoder().decode(Array<[FormSectionResponse]>.self, from: data)[expectedIndex ?? 0]
             completion?(response, nil)
         } catch {
             completion?(nil, .incorrectFormat(reason: error.localizedDescription))
         }
     }
+    
+//    func upload(pollingStation: UpdatePollingStationRequest, completion: ((APIError?) -> Void)?) {
+//        <#code#>
+//    }
+//
+//    func upload(note: UploadNoteRequest, completion: ((APIError?) -> Void)?) {
+//        <#code#>
+//    }
+//
+//    func upload(answers: UploadAnswersRequest, completion: ((APIError?) -> Void)?) {
+//        <#code#>
+//    }
+//
+//    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) {
+//        <#code#>
+//    }
 }
 
 extension APIMock {
@@ -647,11 +746,18 @@ extension APIMock {
         guard let url = Bundle.main.url(forResource: filename, withExtension: ext),
             let data = try? Data(contentsOf: url),
             let fullContents = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-            let statusCodeContents = fullContents[String(statusCode)],
-            let responseData = try? JSONSerialization.data(withJSONObject: statusCodeContents,
-                                                             options: .prettyPrinted) else {
-                return nil;
+            let statusCodeContents = fullContents[String(statusCode)] else {
+                return nil
         }
-        return responseData
+        if JSONSerialization.isValidJSONObject(statusCodeContents) {
+            if let responseData = try? JSONSerialization.data(withJSONObject: statusCodeContents,
+                                                              options: .prettyPrinted) {
+                return responseData
+            }
+        }
+        if let responseString = statusCodeContents as? String {
+            return Data(responseString.utf8)
+        }
+        return nil
     }
 }
