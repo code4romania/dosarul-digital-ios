@@ -1,0 +1,51 @@
+{
+    "200": [
+        {
+            "userId": 4,
+            "beneficiaryId": 285,
+            "name": "Test User",
+            "birthDate": "1991-11-26T23:00:00",
+            "civilStatus": 0,
+            "countyId": 27,
+            "cityId": 1941,
+            "gender": 0,
+            "forms": [
+                {
+                    "formId": 7,
+                    "date": "2013-08-09T22:00:00",
+                    "description": "Fisa de semnalare a riscului de separare a copilului de familie (pentru copii 0 - 3 ani)",
+                    "code": "FR",
+                    "totalQuestionsNo": 26,
+                    "questionsAnsweredNo": 5,
+                    "userName": "Test"
+                }
+            ],
+            "familyMembers": [
+                {
+                    "beneficiaryId": 348,
+                    "name": "Test User 1"
+                },
+                {
+                    "beneficiaryId": 349,
+                    "name": "Test User 2"
+                },
+                {
+                    "beneficiaryId": 350,
+                    "name": "Test User 3"
+                },
+                {
+                    "beneficiaryId": 351,
+                    "name": "Test User 4"
+                },
+                {
+                    "beneficiaryId": 352,
+                    "name": "Test User 5"
+                }
+            ]
+        }
+        
+    ],
+    "400": ["Could not find beneficiary with id = 1"],
+    "401": ["Unauthorized"],
+    "500": ["Internal server error"]
+}

@@ -1,0 +1,6 @@
+{
+    "200": [true, false],
+    "400": "Invalid server response",
+    "401": "Unauthorized",
+    "500": "Internal server error"
+}

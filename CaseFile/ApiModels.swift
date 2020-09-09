@@ -191,7 +191,7 @@ struct BeneficiaryResponse: Codable {
     var countyId: Int16?                    // received on /api/v1/beneficiary/{id}
     var cityId: Int16?                      // received on /api/v1/beneficiary/{id}
     var gender: Int16?                      // always received
-    var familyMembers: [Int16]?             // received on /api/v1/beneficiary/{id}
+    var familyMembers: [FamilyMemberResponse]?             // received on /api/v1/beneficiary/{id}
     var forms: [FormBeneficiaryResponse]?   // received on /api/v1/beneficiary/{id}
     
     enum CodingKeys: String, CodingKey {

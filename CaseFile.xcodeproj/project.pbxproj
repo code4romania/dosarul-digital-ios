@@ -101,6 +101,10 @@
 		751D124425014E3D001CA123 /* 2FAResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D124325014E3D001CA123 /* 2FAResponse.json */; };
 		751D12462501575C001CA123 /* 2FARetryResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D12452501575B001CA123 /* 2FARetryResponse.json */; };
 		751D124A25015AFD001CA123 /* ResetPasswordResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D124925015AFD001CA123 /* ResetPasswordResponse.json */; };
+		751D124D25069AEA001CA123 /* BeneficiaryResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D124C25069AEA001CA123 /* BeneficiaryResponse.json */; };
+		751D124F2506A0C7001CA123 /* CreateBeneficiaryResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D124E2506A0C7001CA123 /* CreateBeneficiaryResponse.json */; };
+		751D12512506A0D8001CA123 /* UpdateBeneficiary.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D12502506A0D8001CA123 /* UpdateBeneficiary.json */; };
+		751D12532508F2BD001CA123 /* SendFormResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 751D12522508F2BD001CA123 /* SendFormResponse.json */; };
 		7535045724DB15740067BFF4 /* FormDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535045524DB15740067BFF4 /* FormDateViewController.swift */; };
 		7535045824DB15740067BFF4 /* FormDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7535045624DB15740067BFF4 /* FormDateViewController.xib */; };
 		7535045A24DB15B60067BFF4 /* FormDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7535045924DB15B60067BFF4 /* FormDateViewModel.swift */; };
@@ -432,6 +436,10 @@
 		751D124325014E3D001CA123 /* 2FAResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = 2FAResponse.json; sourceTree = "<group>"; };
 		751D12452501575B001CA123 /* 2FARetryResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = 2FARetryResponse.json; sourceTree = "<group>"; };
 		751D124925015AFD001CA123 /* ResetPasswordResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResetPasswordResponse.json; sourceTree = "<group>"; };
+		751D124C25069AEA001CA123 /* BeneficiaryResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BeneficiaryResponse.json; sourceTree = "<group>"; };
+		751D124E2506A0C7001CA123 /* CreateBeneficiaryResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CreateBeneficiaryResponse.json; sourceTree = "<group>"; };
+		751D12502506A0D8001CA123 /* UpdateBeneficiary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UpdateBeneficiary.json; sourceTree = "<group>"; };
+		751D12522508F2BD001CA123 /* SendFormResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SendFormResponse.json; sourceTree = "<group>"; };
 		7535045524DB15740067BFF4 /* FormDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDateViewController.swift; sourceTree = "<group>"; };
 		7535045624DB15740067BFF4 /* FormDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormDateViewController.xib; sourceTree = "<group>"; };
 		7535045924DB15B60067BFF4 /* FormDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDateViewModel.swift; sourceTree = "<group>"; };
@@ -844,6 +852,9 @@
 			isa = PBXGroup;
 			children = (
 				754121BF248EDA31002EE5C7 /* BeneficiariesResponse.json */,
+				751D124C25069AEA001CA123 /* BeneficiaryResponse.json */,
+				751D124E2506A0C7001CA123 /* CreateBeneficiaryResponse.json */,
+				751D12502506A0D8001CA123 /* UpdateBeneficiary.json */,
 			);
 			name = Beneficiaries;
 			sourceTree = "<group>";
@@ -863,6 +874,7 @@
 				756126E724C9D6AA00225A45 /* FormsResponse.json */,
 				756126F524D0922000225A45 /* FormResponse1.json */,
 				756126F724D0926B00225A45 /* FormResponse7.json */,
+				751D12522508F2BD001CA123 /* SendFormResponse.json */,
 			);
 			name = Forms;
 			sourceTree = "<group>";
@@ -1175,6 +1187,8 @@
 				75E7502B24E08D1200AED27C /* ResetPasswordViewController.xib in Resources */,
 				75D0847924855EF70034499D /* OnboardingChildViewController.xib in Resources */,
 				75D08491248560900034499D /* OnboardingViewController.xib in Resources */,
+				751D12532508F2BD001CA123 /* SendFormResponse.json in Resources */,
+				751D124D25069AEA001CA123 /* BeneficiaryResponse.json in Resources */,
 				28104137236B5DE000B7422C /* NoteViewController.xib in Resources */,
 				7561270C24D77D4B00225A45 /* FamilyMemberTableCell.xib in Resources */,
 				756126F624D0922000225A45 /* FormResponse1.json in Resources */,
@@ -1184,6 +1198,7 @@
 				75353FC524F56EE50014DA3B /* InfoViewController.xib in Resources */,
 				75EEA4A1247C5C6E0048CC07 /* LaunchScreen-iPad.xib in Resources */,
 				EF13D1571DCF24A800349B43 /* Assets.xcassets in Resources */,
+				751D124F2506A0C7001CA123 /* CreateBeneficiaryResponse.json in Resources */,
 				759891FC2497E09800106BDF /* CitiesResponse.json in Resources */,
 				756126E824C9D6AA00225A45 /* FormsResponse.json in Resources */,
 				281A4B8C236D7B85001AD277 /* LoginViewController.xib in Resources */,
@@ -1208,6 +1223,7 @@
 				28DBDABB23701DBD004EAD83 /* InfoPlist.strings in Resources */,
 				7501A95924AE53B900E4F85B /* BeneficiaryCell.xib in Resources */,
 				751D12462501575C001CA123 /* 2FARetryResponse.json in Resources */,
+				751D12512506A0D8001CA123 /* UpdateBeneficiary.json in Resources */,
 				7535045824DB15740067BFF4 /* FormDateViewController.xib in Resources */,
 				759891FA2497E02B00106BDF /* CountyResponse.json in Resources */,
 				75D08463247FFD3F0034499D /* PatientsViewController.xib in Resources */,

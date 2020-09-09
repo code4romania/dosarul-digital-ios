@@ -192,7 +192,7 @@ class APITests: XCTestCase {
         wait(for: [waiter], timeout: 10)
     }
     
-    func testCounties() {
+    func testFetchCounties() {
         var waiter = expectation(description: "Fetch Counties Success")
         sut?.expectedStatusCode = 200
         sut?.fetchCounties() { (counties, error) in
@@ -308,16 +308,168 @@ class APITests: XCTestCase {
         }
         wait(for: [waiter], timeout: 10)
     }
+    
+    func testFetchBeneficiary() {
+        var waiter = expectation(description: "Fetch Beneficiary Success")
+        sut?.expectedStatusCode = 200
+        sut?.fetchBeneficiary(beneficiaryId: 0, completion: { (beneficiary, error) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(beneficiary)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Beneficiary Bad Request")
+        sut?.expectedStatusCode = 400
+        sut?.fetchBeneficiary(beneficiaryId: 0, completion: { (beneficiary, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(beneficiary)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Beneficiary Unauthorized")
+        sut?.expectedStatusCode = 401
+        sut?.fetchBeneficiary(beneficiaryId: 0, completion: { (beneficiary, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(beneficiary)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Beneficiary Internal Server Error")
+        sut?.expectedStatusCode = 500
+        sut?.fetchBeneficiary(beneficiaryId: 0, completion: { (beneficiary, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(beneficiary)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+    }
 
-    func testGetFormsInFirstSet() {
-        let waiter = expectation(description: "Forms")
-        sut?.login(email: email, password: password, completion: { [weak self] (response, error) in
-            self?.sut?.fetchForms(completion: { (forms, error) in
-                XCTAssertNil(error)
-                XCTAssertNotNil(forms)
-                XCTAssert(forms!.count > 0)
-                waiter.fulfill()
-            })
+    func testFetchForms() {
+        var waiter = expectation(description: "Fetch Forms Success")
+        sut?.expectedStatusCode = 200
+        sut?.fetchForms(completion: { (forms, error) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(forms)
+            XCTAssert(forms!.count > 0)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Forms Bad Request")
+        sut?.expectedStatusCode = 400
+        sut?.fetchForms(completion: { (forms, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(forms)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Forms Unauthorized")
+        sut?.expectedStatusCode = 401
+        sut?.fetchForms(completion: { (forms, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(forms)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Forms Internal Server Error")
+        sut?.expectedStatusCode = 500
+        sut?.fetchForms(completion: { (forms, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(forms)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+    }
+    
+    func testFetchForm() {
+        var waiter = expectation(description: "Fetch Form id 7 Success")
+        sut?.expectedStatusCode = 200
+        sut?.fetchForm(formId: 7, completion: { (form, error) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(form)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Form id 7 Bad Request")
+        sut?.expectedStatusCode = 400
+        sut?.fetchForm(formId: 7, completion: { (form, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(form)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Form id 7 Unauthorized")
+        sut?.expectedStatusCode = 401
+        sut?.fetchForm(formId: 7, completion: { (form, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(form)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Fetch Form id 7 Internal Server Error")
+        sut?.expectedStatusCode = 500
+        sut?.fetchForm(formId: 7, completion: { (form, error) in
+            XCTAssertNotNil(error)
+            XCTAssertNil(form)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+    }
+    
+    func testSendForm() {
+        var waiter = expectation(description: "Send Form Response Success")
+        sut?.expectedStatusCode = 200
+        sut?.expectedIndex = 0
+        sut?.sendForm(beneficiaryId: 0, completion: { (success, error) in
+            XCTAssert(success)
+            XCTAssertNil(error)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Send Form Response Failure")
+        sut?.expectedStatusCode = 200
+        sut?.expectedIndex = 1
+        sut?.sendForm(beneficiaryId: 0, completion: { (success, error) in
+            XCTAssert(!success)
+            XCTAssertNotNil(error)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Send Form Bad Request")
+        sut?.expectedStatusCode = 400
+        sut?.expectedIndex = 0
+        sut?.sendForm(beneficiaryId: 0, completion: { (success, error) in
+            XCTAssert(!success)
+            XCTAssertNotNil(error)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Send Form Unauthorized")
+        sut?.expectedStatusCode = 401
+        sut?.sendForm(beneficiaryId: 0, completion: { (success, error) in
+            XCTAssert(!success)
+            XCTAssertNotNil(error)
+            waiter.fulfill()
+        })
+        wait(for: [waiter], timeout: 10)
+        
+        waiter = expectation(description: "Send Form Internal Server Error")
+        sut?.expectedStatusCode = 500
+        sut?.sendForm(beneficiaryId: 0, completion: { (success, error) in
+            XCTAssert(!success)
+            XCTAssertNotNil(error)
+            waiter.fulfill()
         })
         wait(for: [waiter], timeout: 10)
     }

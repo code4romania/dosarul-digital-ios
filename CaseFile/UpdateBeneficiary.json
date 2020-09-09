@@ -1,0 +1,6 @@
+{
+    "200": ["true"],
+    "400": ["Could not find beneficiary with id = 1"],
+    "401": ["Unauthorized"],
+    "500": [1]
+}

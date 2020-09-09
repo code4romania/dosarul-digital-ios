@@ -262,9 +262,9 @@ class PatientDetailsViewController: MVViewController, UITableViewDelegate, UITab
         guard let beneficiaryId = cell.beneficiary?.id else {
             return
         }
-        AppDelegate.dataSourceManager.sendForm(beneficiaryId: Int(beneficiaryId)) { (error) in
+        AppDelegate.dataSourceManager.sendForm(beneficiaryId: Int(beneficiaryId)) { (success, error) in
             cell.bottomRightButton.isEnabled = true
-            if let error = error {
+            if error != nil || success == false {
                 let alert = UIAlertController.error(withMessage: "Error.SendFileFailed".localized)
                 self.present(alert, animated: true, completion: nil)
             } else {

@@ -66,7 +66,7 @@ protocol APIManagerType: NSObject {
                 completion: ((APIError?) -> Void)?)
     
     /// POST /api/v1/beneficiary/sendFile
-    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?)
+    func sendForm(beneficiaryId: Int, completion: ((Bool, APIError?) -> Void)?)
     
 }
 
@@ -109,7 +109,7 @@ extension APIManagerType {
                 completion: ((APIError?) -> Void)?) { }
     
     /// POST /api/v1/beneficiary/sendFile
-    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) { }
+    func sendForm(beneficiaryId: Int, completion: ((Bool, APIError?) -> Void)?) { }
 }
 
 enum APIError: Error {
@@ -327,7 +327,9 @@ class APIManager: NSObject, APIManagerType {
                 if statusCode == 200,
                     let data = response.data {
                     do {
-                        let beneficiary = try JSONDecoder().decode(BeneficiaryResponse.self, from: data)
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .formatted(self.apiDateFormatter)
+                        let beneficiary = try decoder.decode(BeneficiaryResponse.self, from: data)
                         completion?(beneficiary, nil)
                     } catch {
                         completion?(nil, .incorrectFormat(reason: error.localizedDescription))
@@ -520,7 +522,7 @@ class APIManager: NSObject, APIManagerType {
         }
     }
     
-    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) {
+    func sendForm(beneficiaryId: Int, completion: ((Bool, APIError?) -> Void)?) {
         let url = ApiURL.sendForm.url()
         let auth = authorizationHeaders()
         let parameters = ["beneficiaryId": beneficiaryId]
@@ -528,13 +530,15 @@ class APIManager: NSObject, APIManagerType {
         Alamofire
             .request(url, method: .post, parameters: parameters, encoding: URLEncoding.queryString, headers: auth)
             .response { response in
-                if response.response?.statusCode == 200 {
-                    completion?(nil)
+                if response.response?.statusCode == 200,
+                    let data = response.data,
+                    let success = try? JSONDecoder().decode(Bool.self, from: data) {
+                    completion?(success, nil)
                 } else if response.response?.statusCode == 401 {
-                    completion?(.unauthorized)
+                    completion?(false, .unauthorized)
                     AppRouter.shared.logout(message: APIError.unauthorized.localizedDescription)
                 } else {
-                    completion?(.incorrectFormat(reason: "Unknown reason"))
+                    completion?(false, .incorrectFormat(reason: "Unknown reason"))
                 }
         }
     }
@@ -689,13 +693,59 @@ class APIMock: NSObject, APIManagerType {
         }
     }
     
-//    func fetchBeneficiary(beneficiaryId: Int, completion: ((BeneficiaryResponse?, APIError?) -> Void)?) {
-//           <#code#>
-//       }
-//
-//    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?) {
-//        <#code#>
-//    }
+    func fetchBeneficiary(beneficiaryId: Int, completion: ((BeneficiaryResponse?, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "BeneficiaryResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(self.apiDateFormatter)
+            let beneficiary = try decoder.decode(Array<BeneficiaryResponse>.self, from: data)[expectedIndex ?? 0]
+            completion?(beneficiary, nil)
+        } catch {
+            completion?(nil, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
+    
+    func createOrUpdateBeneficiary(_ beneficiary: BeneficiaryRequest, isNew: Bool, completion: ((Int?, APIError?) -> Void)?) {
+        let createData = fromFile(filename: "CreateBeneficiaryResponse", ext: "json", statusCode: expectedStatusCode ?? 200)
+        guard createData != nil, isNew else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        let updateData = fromFile(filename: "UpdateBeneficiaryResponse", ext: "json", statusCode: expectedStatusCode ?? 200)
+        guard updateData != nil, !isNew else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        guard let data = createData ?? updateData else {
+            completion?(nil, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        if expectedStatusCode == 200 {
+            if isNew {
+                if let beneficiaryStringId = String(data: data, encoding: .utf8),
+                    let beneficiaryId = Int(beneficiaryStringId) {
+                    completion?(beneficiaryId, nil)
+                } else {
+                    completion?(nil, .generic(reason: "Unknown reason"))
+                }
+            } else {
+                if let beneficiaryId = beneficiary.id,
+                    let result = NSString(data: data, encoding: String.Encoding.utf8.rawValue)?.boolValue,
+                    result == true {
+                    completion?(Int(beneficiaryId), nil)
+                } else {
+                    completion?(nil, .generic(reason: "Unknown reason"))
+                }
+            }
+        } else if expectedStatusCode == 401 {
+            completion?(nil, .unauthorized)
+        } else {
+            completion?(nil, .incorrectFormat(reason: "Unknown reason"))
+        }
+    }
     
     func fetchForms(completion: (([FormResponse]?, APIError?) -> Void)?) {
         guard let data = fromFile(filename: "FormsResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
@@ -723,22 +773,20 @@ class APIMock: NSObject, APIManagerType {
             completion?(nil, .incorrectFormat(reason: error.localizedDescription))
         }
     }
-    
-//    func upload(pollingStation: UpdatePollingStationRequest, completion: ((APIError?) -> Void)?) {
-//        <#code#>
-//    }
-//
-//    func upload(note: UploadNoteRequest, completion: ((APIError?) -> Void)?) {
-//        <#code#>
-//    }
-//
-//    func upload(answers: UploadAnswersRequest, completion: ((APIError?) -> Void)?) {
-//        <#code#>
-//    }
-//
-//    func sendForm(beneficiaryId: Int, completion: ((APIError?) -> Void)?) {
-//        <#code#>
-//    }
+
+    func sendForm(beneficiaryId: Int, completion: ((Bool, APIError?) -> Void)?) {
+        guard let data = fromFile(filename: "SendFormResponse", ext: "json", statusCode: expectedStatusCode ?? 200) else {
+            completion?(false, .incorrectFormat(reason: "Missing mock file"))
+            return
+        }
+        
+        do {
+            let response = try JSONDecoder().decode(Array<Bool>.self, from: data)[expectedIndex ?? 0]
+            completion?(response, response ? nil : .generic(reason: ""))
+        } catch {
+            completion?(false, .incorrectFormat(reason: error.localizedDescription))
+        }
+    }
 }
 
 extension APIMock {
