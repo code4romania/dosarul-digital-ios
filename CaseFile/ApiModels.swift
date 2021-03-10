@@ -137,10 +137,17 @@ struct LoginResponse: Codable {
 }
 
 struct TwoFactorAuthenticationResponse: Codable {
-    var success: Bool
+    // success
+    var expiresIn: Int?
+    var accessToken: String?
+    
+    // fail
+    var success: Bool?
     var message: String?
     
     enum CodingKeys: String, CodingKey {
+        case expiresIn = "expires_in"
+        case accessToken = "access_token"
         case success = "succeeded"
         case message
     }
@@ -395,5 +402,12 @@ struct AppInformationResponse: Decodable {
     
     var resultCount: Int
     var results: [ResultResponse]
+}
+
+struct NoteResponse: Codable {
+    var questionId: Int?
+    var text: String?
+    var attachmentPath: String?
+    var lastModified: Date?
 }
 

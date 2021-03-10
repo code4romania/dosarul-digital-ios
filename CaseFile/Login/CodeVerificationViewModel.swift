@@ -49,8 +49,9 @@ class CodeVerificationViewModel: NSObject {
             if let error = error {
                 completion?(.generic(reason: error.localizedDescription))
             } else {
-                if response?.success == true {
+                if let accessToken = response?.accessToken {
                     AccountManager.shared.requiresVerification = false
+                    AccountManager.shared.accessToken = accessToken
                     completion?(nil)
                 } else {
                     completion?(.generic(reason: "Verification failed"))
